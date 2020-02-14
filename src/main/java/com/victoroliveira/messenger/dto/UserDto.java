@@ -1,49 +1,30 @@
-package com.victoroliveira.messenger.models;
+package com.victoroliveira.messenger.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import com.victoroliveira.messenger.models.User;
+
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "USERS")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDto implements Serializable { // VIEW
     private Long id;
-
-    @Size(max = 32)
-    @Column(nullable = false)
     private String name;
-
-    @Size(max = 16)
-    @Column(unique=true, nullable = false)
     private String username;
-
-    @Email
-    @Column(unique=true)
     private String email;
-
-    @Temporal(TemporalType.DATE)
-    @Column(nullable=true) //temp
     private Date birthday;
-
-    @Column(nullable=false)
     private String password;
-
-    @Column(nullable = false)
     private boolean online;
 
-    public User() {
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.birthday = user.getBirthday();
+        this.password = user.getPassword();
+        this.online = user.isOnline();
     }
 
-    public User(String name, String username, String email, String password) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.online = false;
+    public UserDto() {
     }
 
     public Long getId() {
@@ -70,6 +51,14 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Date getBirthday() {
         return birthday;
     }
@@ -86,14 +75,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public boolean isOnline() {
         return online;
     }
@@ -101,5 +82,4 @@ public class User implements Serializable {
     public void setOnline(boolean online) {
         this.online = online;
     }
-
 }
