@@ -1,12 +1,12 @@
 package com.victoroliveira.messenger.dto;
 
-import com.victoroliveira.messenger.models.UserModel;
+import com.victoroliveira.messenger.models.Profile;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class UserDto implements Serializable { // VIEW
+public class ProfileDto implements Serializable { // VIEW
     private Long id;
     private String name;
     private String username;
@@ -14,18 +14,20 @@ public class UserDto implements Serializable { // VIEW
     private Date birthday;
     private String password;
     private boolean online;
+    private Set<Profile> friends;
 
-    public UserDto(UserModel userModel) {
-        this.id = userModel.getId();
-        this.name = userModel.getName();
-        this.username = userModel.getUsername();
-        this.email = userModel.getEmail();
-        this.birthday = userModel.getBirthday();
-        this.password = userModel.getPassword();
-        this.online = userModel.isOnline();
+    public ProfileDto(Profile profile) {
+        this.id = profile.getId();
+        this.name = profile.getName();
+        this.username = profile.getUsername();
+        this.email = profile.getEmail();
+        this.birthday = profile.getBirthday();
+        this.password = profile.getPassword();
+        this.online = profile.isOnline();
+        this.friends = profile.getFriends();
     }
 
-    public UserDto() {
+    public ProfileDto() {
     }
 
     public Long getId() {
@@ -84,4 +86,11 @@ public class UserDto implements Serializable { // VIEW
         this.online = online;
     }
 
+    public Set<Profile> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<Profile> friends) {
+        this.friends = friends;
+    }
 }

@@ -12,11 +12,11 @@ public class Message {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable=false)
-    private UserModel sourceUserModel;
+    private Profile sourceProfile;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable=false)
-    private UserModel destinationUserModel;
+    private Profile destinationProfile;
 
     //@Temporal(TemporalType.DATE)
     @Column(nullable=false)
@@ -25,9 +25,9 @@ public class Message {
     public Message() {
     }
 
-    public Message(UserModel sourceUserModel, UserModel destinationUserModel) {
-        this.sourceUserModel = sourceUserModel;
-        this.destinationUserModel = destinationUserModel;
+    public Message(Profile sourceProfile, Profile destinationProfile) {
+        this.sourceProfile = sourceProfile;
+        this.destinationProfile = destinationProfile;
         this.sendTime = LocalDateTime.now();
     }
 
@@ -39,20 +39,20 @@ public class Message {
         this.id = id;
     }
 
-    public UserModel getSourceUserModel() {
-        return sourceUserModel;
+    public Profile getSourceProfile() {
+        return sourceProfile;
     }
 
-    public void setSourceUserModel(UserModel sourceUserModel) {
-        this.sourceUserModel = sourceUserModel;
+    public void setSourceProfile(Profile sourceProfile) {
+        this.sourceProfile = sourceProfile;
     }
 
-    public UserModel getDestinationUserModel() {
-        return destinationUserModel;
+    public Profile getDestinationProfile() {
+        return destinationProfile;
     }
 
-    public void setDestinationUserModel(UserModel destinationUserModel) {
-        this.destinationUserModel = destinationUserModel;
+    public void setDestinationProfile(Profile destinationProfile) {
+        this.destinationProfile = destinationProfile;
     }
 
     public LocalDateTime getSendTime() {

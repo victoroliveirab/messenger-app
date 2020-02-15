@@ -1,17 +1,17 @@
 package com.victoroliveira.messenger.repository;
 
-import com.victoroliveira.messenger.models.UserModel;
+import com.victoroliveira.messenger.models.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 // Repository access data base (?)
 
-public interface UserRepository extends JpaRepository<UserModel, Long> {
+public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
-    Optional<UserModel> findByUsername(String username);
+    Optional<Profile> findByUsername(String username);
 
-    Optional<UserModel> findByEmail(String email);
+    Optional<Profile> findByEmail(String email);
 
     /*
     User getUserById(Long id);

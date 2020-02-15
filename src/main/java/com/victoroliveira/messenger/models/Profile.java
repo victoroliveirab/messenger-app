@@ -1,5 +1,9 @@
 package com.victoroliveira.messenger.models;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -10,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
-public class UserModel implements Serializable {
+public class Profile implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,23 +41,26 @@ public class UserModel implements Serializable {
     @Column(nullable = false)
     private boolean online;
 
-    /*
     @ManyToOne
-    private UserModel userModel;
+    @JoinColumn(name="profile_id")
+    private Profile profile;
 
-    @OneToMany(mappedBy = "userModel")
-    private Set<UserModel> friends;
-     */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "profile")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private Set<Profile> friends;
 
-    public UserModel() {
+
+    public Profile() {
     }
 
-    public UserModel(String name, String username, String email, String password) {
+    public Profile(String name, String username, String email, String password) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.online = false;
+        this.friends = new HashSet<>();
     }
 
     public Long getId() {
@@ -111,4 +118,17 @@ public class UserModel implements Serializable {
     public void setOnline(boolean online) {
         this.online = online;
     }
+
+    public Set<Profile> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<Profile> friends) {
+        this.friends = friends;
+    }
+
+    public void addFriend(Profile friend) {
+        this.friends.add(friend);
+    }
 }
+

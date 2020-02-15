@@ -2,22 +2,21 @@ package com.victoroliveira.messenger.security;
 
 import static java.util.Collections.emptyList;
 
-import com.victoroliveira.messenger.repository.UserRepository;
+import com.victoroliveira.messenger.repository.ProfileRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private ProfileRepository profileRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(ProfileRepository profileRepository) {
         super();
-        this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
     }
 
     @Override
