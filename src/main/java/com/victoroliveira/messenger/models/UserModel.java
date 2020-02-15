@@ -5,10 +5,12 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable {
+public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,10 +37,18 @@ public class User implements Serializable {
     @Column(nullable = false)
     private boolean online;
 
-    public User() {
+    /*
+    @ManyToOne
+    private UserModel userModel;
+
+    @OneToMany(mappedBy = "userModel")
+    private Set<UserModel> friends;
+     */
+
+    public UserModel() {
     }
 
-    public User(String name, String username, String email, String password) {
+    public UserModel(String name, String username, String email, String password) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -101,5 +111,4 @@ public class User implements Serializable {
     public void setOnline(boolean online) {
         this.online = online;
     }
-
 }

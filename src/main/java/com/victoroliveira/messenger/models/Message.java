@@ -12,11 +12,11 @@ public class Message {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable=false)
-    private User sourceUser;
+    private UserModel sourceUserModel;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable=false)
-    private User destinationUser;
+    private UserModel destinationUserModel;
 
     //@Temporal(TemporalType.DATE)
     @Column(nullable=false)
@@ -25,9 +25,9 @@ public class Message {
     public Message() {
     }
 
-    public Message(User sourceUser, User destinationUser) {
-        this.sourceUser = sourceUser;
-        this.destinationUser = destinationUser;
+    public Message(UserModel sourceUserModel, UserModel destinationUserModel) {
+        this.sourceUserModel = sourceUserModel;
+        this.destinationUserModel = destinationUserModel;
         this.sendTime = LocalDateTime.now();
     }
 
@@ -39,20 +39,20 @@ public class Message {
         this.id = id;
     }
 
-    public User getSourceUser() {
-        return sourceUser;
+    public UserModel getSourceUserModel() {
+        return sourceUserModel;
     }
 
-    public void setSourceUser(User sourceUser) {
-        this.sourceUser = sourceUser;
+    public void setSourceUserModel(UserModel sourceUserModel) {
+        this.sourceUserModel = sourceUserModel;
     }
 
-    public User getDestinationUser() {
-        return destinationUser;
+    public UserModel getDestinationUserModel() {
+        return destinationUserModel;
     }
 
-    public void setDestinationUser(User destinationUser) {
-        this.destinationUser = destinationUser;
+    public void setDestinationUserModel(UserModel destinationUserModel) {
+        this.destinationUserModel = destinationUserModel;
     }
 
     public LocalDateTime getSendTime() {
