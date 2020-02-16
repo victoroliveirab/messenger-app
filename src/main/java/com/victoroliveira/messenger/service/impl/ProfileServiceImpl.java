@@ -39,6 +39,18 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public void addFriend(Profile owner, Profile friend) {
+        owner.addFriend(friend);
+        profileRepository.save(owner);
+    }
+
+    @Override
+    public void addFollower(Profile follower, Profile followed) {
+        followed.addFollowedBy(follower);
+        profileRepository.save(followed);
+    }
+
+    @Override
     public Optional<Profile> findById(Long id) {
         return profileRepository.findById(id);
     }

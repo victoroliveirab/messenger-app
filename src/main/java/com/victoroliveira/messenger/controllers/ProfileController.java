@@ -58,6 +58,10 @@ public class ProfileController {
         if (!user1.isPresent() || !user2.isPresent()) {
             return "ERROR";
         }
+        Profile owner = user1.get();
+        Profile target = user2.get();
+        profileService.addFriend(owner, target);
+        profileService.addFollower(owner, target);
         return "ADDED";
     }
 

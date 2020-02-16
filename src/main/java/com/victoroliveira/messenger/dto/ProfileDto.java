@@ -4,6 +4,7 @@ import com.victoroliveira.messenger.models.Profile;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class ProfileDto implements Serializable { // VIEW
@@ -14,7 +15,8 @@ public class ProfileDto implements Serializable { // VIEW
     private Date birthday;
     private String password;
     private boolean online;
-    private Set<Profile> friends;
+    private List<Profile> friends;
+    private List<Profile> followedBy;
 
     public ProfileDto(Profile profile) {
         this.id = profile.getId();
@@ -25,6 +27,7 @@ public class ProfileDto implements Serializable { // VIEW
         this.password = profile.getPassword();
         this.online = profile.isOnline();
         this.friends = profile.getFriends();
+        this.followedBy = profile.getFollowedBy();
     }
 
     public ProfileDto() {
@@ -86,11 +89,19 @@ public class ProfileDto implements Serializable { // VIEW
         this.online = online;
     }
 
-    public Set<Profile> getFriends() {
+    public List<Profile> getFriends() {
         return friends;
     }
 
-    public void setFriends(Set<Profile> friends) {
+    public void setFriends(List<Profile> friends) {
         this.friends = friends;
+    }
+
+    public List<Profile> getFollowedBy() {
+        return followedBy;
+    }
+
+    public void setFollowedBy(List<Profile> followedBy) {
+        this.followedBy = followedBy;
     }
 }

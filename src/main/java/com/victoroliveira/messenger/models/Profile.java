@@ -1,5 +1,6 @@
 package com.victoroliveira.messenger.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -8,9 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Entity
 @Table(name = "USERS")
@@ -41,15 +41,20 @@ public class Profile implements Serializable {
     @Column(nullable = false)
     private boolean online;
 
-    @ManyToOne
-    @JoinColumn(name="profile_id")
-    private Profile profile;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "following",
+               joinColumns = {@JoinColumn(name="user_id")},
+               inverseJoinColumns = {@JoinColumn(name="follower_id")}
+               )
+    private List<Profile> friends = new ArrayList<>();
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "profile")
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
-    private Set<Profile> friends;
-
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "following",
+               joinColumns = {@JoinColumn(name="follower_id")},
+               inverseJoinColumns = {@JoinColumn(name="user_id")}
+               )
+    private List<Profile> followedBy = new ArrayList<>();
 
     public Profile() {
     }
@@ -60,7 +65,6 @@ public class Profile implements Serializable {
         this.email = email;
         this.password = password;
         this.online = false;
-        this.friends = new HashSet<>();
     }
 
     public Long getId() {
@@ -119,16 +123,28 @@ public class Profile implements Serializable {
         this.online = online;
     }
 
-    public Set<Profile> getFriends() {
+    public List<Profile> getFriends() {
         return friends;
     }
 
-    public void setFriends(Set<Profile> friends) {
+    public void setFriends(List<Profile> friends) {
         this.friends = friends;
     }
 
     public void addFriend(Profile friend) {
         this.friends.add(friend);
+    }
+
+    public List<Profile> getFollowedBy() {
+        return followedBy;
+    }
+
+    public void setFollowedBy(List<Profile> followedBy) {
+        this.followedBy = followedBy;
+    }
+
+    public void addFollowedBy(Profile follower) {
+        this.followedBy.add(follower);
     }
 }
 
