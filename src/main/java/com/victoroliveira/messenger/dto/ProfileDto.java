@@ -1,5 +1,6 @@
 package com.victoroliveira.messenger.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.victoroliveira.messenger.models.Profile;
 
 import java.io.Serializable;
@@ -13,18 +14,16 @@ public class ProfileDto implements Serializable { // VIEW
     private String username;
     private String email;
     private Date birthday;
-    private String password;
     private boolean online;
     private List<Profile> friends;
     private List<Profile> followedBy;
 
-    public ProfileDto(Profile profile) {
+    public ProfileDto(Profile profile) throws JsonProcessingException {
         this.id = profile.getId();
         this.name = profile.getName();
         this.username = profile.getUsername();
         this.email = profile.getEmail();
         this.birthday = profile.getBirthday();
-        this.password = profile.getPassword();
         this.online = profile.isOnline();
         this.friends = profile.getFriends();
         this.followedBy = profile.getFollowedBy();
@@ -71,14 +70,6 @@ public class ProfileDto implements Serializable { // VIEW
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public boolean isOnline() {

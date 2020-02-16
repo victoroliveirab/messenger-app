@@ -1,16 +1,15 @@
 package com.victoroliveira.messenger.models;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.*;
+
+// https://www.baeldung.com/jpa-many-to-many
 
 @Entity
 @Table(name = "USERS")
@@ -41,6 +40,7 @@ public class Profile implements Serializable {
     @Column(nullable = false)
     private boolean online;
 
+    @JsonFilter("friendsFilter")
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "following",
                joinColumns = {@JoinColumn(name="user_id")},
@@ -48,7 +48,10 @@ public class Profile implements Serializable {
                )
     private List<Profile> friends = new ArrayList<>();
 
+    //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+    //http://springquay.blogspot.com/2016/01/new-approach-to-solve-json-recursive.html
     @JsonIgnore
+    //@JsonIgnoreProperties({"name", "password", "id", "birthday", "email", "friends", "followedBy"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "following",
                joinColumns = {@JoinColumn(name="follower_id")},
