@@ -1,12 +1,10 @@
 package com.victoroliveira.messenger.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.victoroliveira.messenger.models.Profile;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public class ProfileDto implements Serializable { // VIEW
     private Long id;
@@ -14,19 +12,21 @@ public class ProfileDto implements Serializable { // VIEW
     private String username;
     private String email;
     private Date birthday;
+    private String password;
     private boolean online;
-    private List<Profile> friends;
-    private List<Profile> followedBy;
+    private List<String> friends;
+    private List<String> followedBy;
 
-    public ProfileDto(Profile profile) throws JsonProcessingException {
+    public ProfileDto(Profile profile) {
         this.id = profile.getId();
         this.name = profile.getName();
         this.username = profile.getUsername();
         this.email = profile.getEmail();
+        this.password = profile.getPassword();
         this.birthday = profile.getBirthday();
         this.online = profile.isOnline();
-        this.friends = profile.getFriends();
-        this.followedBy = profile.getFollowedBy();
+        this.friends = null;
+        this.followedBy = null;
     }
 
     public ProfileDto() {
@@ -56,6 +56,14 @@ public class ProfileDto implements Serializable { // VIEW
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -80,19 +88,19 @@ public class ProfileDto implements Serializable { // VIEW
         this.online = online;
     }
 
-    public List<Profile> getFriends() {
+    public List<String> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<Profile> friends) {
+    public void setFriends(List<String> friends) {
         this.friends = friends;
     }
 
-    public List<Profile> getFollowedBy() {
+    public List<String> getFollowedBy() {
         return followedBy;
     }
 
-    public void setFollowedBy(List<Profile> followedBy) {
+    public void setFollowedBy(List<String> followedBy) {
         this.followedBy = followedBy;
     }
 }

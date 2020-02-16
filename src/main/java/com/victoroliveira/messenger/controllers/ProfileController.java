@@ -3,6 +3,7 @@ package com.victoroliveira.messenger.controllers;
 import com.victoroliveira.messenger.dto.ProfileDto;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ProfileService;
+import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,7 @@ public class ProfileController {
     public List<ProfileDto> getUsers() {
         List<ProfileDto> dtos = new ArrayList<>();
         for (Profile profile : profileService.getUsers()) {
-            ProfileDto dto = new ProfileDto();
-            BeanUtils.copyProperties(profile, dto);
+            ProfileDto dto = ProfileToProfileDtoConverter.convert(profile);
             dtos.add(dto);
         }
         return dtos;

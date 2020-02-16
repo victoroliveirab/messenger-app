@@ -1,6 +1,5 @@
 package com.victoroliveira.messenger.models;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -40,12 +39,13 @@ public class Profile implements Serializable {
     @Column(nullable = false)
     private boolean online;
 
-    @JsonFilter("friendsFilter")
+    //@JsonFilter("friendsFilter")
+    @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "following",
-               joinColumns = {@JoinColumn(name="user_id")},
-               inverseJoinColumns = {@JoinColumn(name="follower_id")}
-               )
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name="follower_id")}
+    )
     private List<Profile> friends = new ArrayList<>();
 
     //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
@@ -54,12 +54,16 @@ public class Profile implements Serializable {
     //@JsonIgnoreProperties({"name", "password", "id", "birthday", "email", "friends", "followedBy"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "following",
-               joinColumns = {@JoinColumn(name="follower_id")},
-               inverseJoinColumns = {@JoinColumn(name="user_id")}
-               )
+            joinColumns = {@JoinColumn(name="follower_id")},
+            inverseJoinColumns = {@JoinColumn(name="user_id")}
+    )
     private List<Profile> followedBy = new ArrayList<>();
 
+    //@Transient
+    //private final SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+
     public Profile() {
+        //filterProvider.addFilter("friendsFilter", SimpleBeanPropertyFilter.filterOutAllExcept("username"));
     }
 
     public Profile(String name, String username, String email, String password) {
@@ -126,7 +130,22 @@ public class Profile implements Serializable {
         this.online = online;
     }
 
+//    public String getFriends() throws JsonProcessingException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.setFilterProvider(filterProvider);
+//        return mapper.writeValueAsString(friends);
+//    }
+
+
     public List<Profile> getFriends() {
+        return friends;
+    }
+
+    public List<String> getFriendsUsernames() {
+        List<String> friends = new ArrayList<>();
+        for (Profile friend : this.getFriends()) {
+            friends.add(friend.getUsername());
+        }
         return friends;
     }
 
@@ -139,6 +158,14 @@ public class Profile implements Serializable {
     }
 
     public List<Profile> getFollowedBy() {
+        return followedBy;
+    }
+
+    public List<String> getFollowersUsernames() {
+        List<String> followedBy = new ArrayList<>();
+        for (Profile follower : this.getFollowedBy()) {
+            followedBy.add(follower.getUsername());
+        }
         return followedBy;
     }
 
