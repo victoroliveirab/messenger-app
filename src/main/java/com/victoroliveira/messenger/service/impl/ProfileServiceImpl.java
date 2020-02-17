@@ -52,6 +52,24 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public Profile updateUser(Profile profile) {
+        checkEmptiness(profile);
+        checkSize(profile);
+        checkFormat(profile);
+        checkBirthday(profile);
+        return profileRepository.save(profile);
+    }
+
+    @Override
+    public void removeUser(String username) {
+        Optional<Profile> profile = profileRepository.findByUsername(username);
+        if (profile.isPresent()) {
+            profileRepository.delete(profile.get());
+        }
+
+    }
+
+    @Override
     public void addFriend(Profile owner, Profile friend) {
         owner.addFriend(friend);
         profileRepository.save(owner);

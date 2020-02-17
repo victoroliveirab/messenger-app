@@ -61,14 +61,6 @@ public class Profile implements Serializable {
     public Profile() {
     }
 
-    public Profile(String name, String username, String email, String password) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.online = false;
-    }
-
     public Long getId() {
         return id;
     }
@@ -90,7 +82,7 @@ public class Profile implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     public LocalDate getBirthday() {
@@ -114,7 +106,7 @@ public class Profile implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public boolean isOnline() {

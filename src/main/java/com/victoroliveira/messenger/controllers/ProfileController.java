@@ -5,6 +5,7 @@ import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,26 @@ public class ProfileController {
         profileService.addUser(newUser);
         ProfileDto dto = ProfileToProfileDtoConverter.convertNew(newUser);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{username}") // todo: @PatchMapping
+    public ResponseEntity<ProfileDto> updateUser(@PathVariable String username, @RequestBody ProfileDto profileDto) {
+        if (profileDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // NO_CONTENT?
+        }
+        if (!username.equals(profileDto.getUsername())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Profile profile = ProfileDtoToProfileConverter.convert(profileDto);
+        profileService.updateUser(profile);
+        return new ResponseEntity<>(ProfileToProfileDtoConverter.convert(profile), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/{username}")
+    public ResponseEntity<ProfileDto> deleteUser(@PathVariable String username) {
+        if (username == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        profileService.removeUser(username);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/users/{id1}/add/{id2}")
