@@ -1,17 +1,19 @@
 package com.victoroliveira.messenger.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.victoroliveira.messenger.models.Profile;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-public class ProfileDto implements Serializable { // VIEW
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProfileDto implements Serializable {
     private Long id;
     private String name;
     private String username;
     private String email;
-    private Date birthday;
+    private LocalDate birthday;
     private String password;
     private boolean online;
     private List<String> friends;
@@ -72,11 +74,11 @@ public class ProfileDto implements Serializable { // VIEW
         this.email = email;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

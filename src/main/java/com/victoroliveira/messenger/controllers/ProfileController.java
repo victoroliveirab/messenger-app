@@ -3,8 +3,8 @@ package com.victoroliveira.messenger.controllers;
 import com.victoroliveira.messenger.dto.ProfileDto;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ProfileService;
+import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,33 +21,26 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-
-//    @GetMapping(value="/users")
-//    public List<UserDto> getUsers() {
-//        System.out.println("GET /users");
-//        return userService.getUsers().stream().map(UserDto::new).collect(Collectors.toList());
-//    }
-
     @GetMapping(value="/users")
-    public List<ProfileDto> getUsers() {
+    public ResponseEntity<List<ProfileDto>> getUsers() {
         List<ProfileDto> dtos = new ArrayList<>();
         for (Profile profile : profileService.getUsers()) {
             ProfileDto dto = ProfileToProfileDtoConverter.convert(profile);
             dtos.add(dto);
         }
-        return dtos;
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @PostMapping("/users")
     @ResponseBody
-    public ResponseEntity<ProfileDto> newUser(@RequestBody ProfileDto newUser) {
-        if (newUser == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ProfileDto> newUser(@RequestBody ProfileDto newUserDto) {
+        if (newUserDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // NO_CONTENT?
         }
-        Profile newEntry = new Profile();
-        BeanUtils.copyProperties(newUser, newEntry);
-        profileService.addUser(newEntry);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Profile newUser = ProfileDtoToProfileConverter.convert(newUserDto);
+        profileService.addUser(newUser);
+        ProfileDto dto = ProfileToProfileDtoConverter.convertNew(newUser);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping("/users/{id1}/add/{id2}")

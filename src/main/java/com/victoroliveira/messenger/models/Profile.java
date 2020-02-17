@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 // https://www.baeldung.com/jpa-many-to-many
@@ -17,21 +18,20 @@ public class Profile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 32)
+    @Size(min = 3, max = 32)
     @Column(nullable = false)
     private String name;
 
-    @Size(max = 16)
+    @Size(min = 3, max = 16)
     @Column(unique=true, nullable = false)
     private String username;
 
     @Email
-    @Column(unique=true)
+    @Column(unique=true, nullable=false)
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable=true) //temp
-    private Date birthday;
+    @Column(nullable=false) //temp
+    private LocalDate birthday;
 
     @Column(nullable=false)
     private String password;
@@ -39,7 +39,6 @@ public class Profile implements Serializable {
     @Column(nullable = false)
     private boolean online;
 
-    //@JsonFilter("friendsFilter")
     @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "following",
@@ -51,7 +50,6 @@ public class Profile implements Serializable {
     //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     //http://springquay.blogspot.com/2016/01/new-approach-to-solve-json-recursive.html
     @JsonIgnore
-    //@JsonIgnoreProperties({"name", "password", "id", "birthday", "email", "friends", "followedBy"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "following",
             joinColumns = {@JoinColumn(name="follower_id")},
@@ -59,11 +57,8 @@ public class Profile implements Serializable {
     )
     private List<Profile> followedBy = new ArrayList<>();
 
-    //@Transient
-    //private final SimpleFilterProvider filterProvider = new SimpleFilterProvider();
 
     public Profile() {
-        //filterProvider.addFilter("friendsFilter", SimpleBeanPropertyFilter.filterOutAllExcept("username"));
     }
 
     public Profile(String name, String username, String email, String password) {
@@ -98,11 +93,11 @@ public class Profile implements Serializable {
         this.username = username;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -129,13 +124,6 @@ public class Profile implements Serializable {
     public void setOnline(boolean online) {
         this.online = online;
     }
-
-//    public String getFriends() throws JsonProcessingException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.setFilterProvider(filterProvider);
-//        return mapper.writeValueAsString(friends);
-//    }
-
 
     public List<Profile> getFriends() {
         return friends;
