@@ -137,6 +137,10 @@ public class Profile implements Serializable {
         this.friends.add(friend);
     }
 
+    public void removeFriend(Profile friend) {
+        this.friends.remove(friend);
+    }
+
     public List<Profile> getFollowedBy() {
         return followedBy;
     }

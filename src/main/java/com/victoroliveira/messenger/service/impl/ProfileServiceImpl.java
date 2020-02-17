@@ -71,7 +71,19 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void addFriend(Profile owner, Profile friend) {
+        if (owner.getFriendsUsernames().contains(friend.getUsername())) {
+            throw new FriendAlreadyAddedException(friend.getUsername());
+        }
         owner.addFriend(friend);
+        profileRepository.save(owner);
+    }
+
+    @Override
+    public void removeFriend(Profile owner, Profile friend) throws FriendNotAddedException {
+        if (!owner.getFriendsUsernames().contains(friend.getUsername())) {
+            throw new FriendNotAddedException(friend.getUsername());
+        }
+        owner.removeFriend(friend);
         profileRepository.save(owner);
     }
 

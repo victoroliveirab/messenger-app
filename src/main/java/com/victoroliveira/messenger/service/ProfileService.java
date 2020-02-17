@@ -1,5 +1,6 @@
 package com.victoroliveira.messenger.service;
 
+import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
 
 import java.util.List;
@@ -10,8 +11,10 @@ public interface ProfileService {
     Optional<Profile> findByUsername(String username);
     Profile addUser(Profile profile);
     Profile updateUser(Profile profile);
-    //UserModel addFriend(UserModel userAdding, UserModel userAdded);
+
     void addFriend(Profile owner, Profile friend);
+    void removeFriend(Profile owner, Profile friend) throws FriendNotAddedException;
+
     void addFollower(Profile follower, Profile followed);
 
     Optional<Profile> findById(Long id);

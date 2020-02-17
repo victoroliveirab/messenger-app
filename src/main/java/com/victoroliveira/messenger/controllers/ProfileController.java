@@ -1,13 +1,14 @@
 package com.victoroliveira.messenger.controllers;
 
 import com.victoroliveira.messenger.dto.ProfileDto;
+import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -17,9 +18,11 @@ import java.util.*;
 @RestController
 public class ProfileController {
     private ProfileService profileService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.profileService = profileService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping(value="/users")
@@ -39,8 +42,19 @@ public class ProfileController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // NO_CONTENT?
         }
         Profile newUser = ProfileDtoToProfileConverter.convert(newUserDto);
+        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         profileService.addUser(newUser);
         ProfileDto dto = ProfileToProfileDtoConverter.convertNew(newUser);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{username}")
+    public ResponseEntity<ProfileDto> getUser(@PathVariable String username) {
+        Optional<Profile> profileOpt = profileService.findByUsername(username);
+        if (!profileOpt.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        ProfileDto dto = ProfileToProfileDtoConverter.convert(profileOpt.get());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -64,25 +78,33 @@ public class ProfileController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/users/{id1}/add/{id2}")
+    @PostMapping("/users/add/{id}")
     @ResponseBody
-    public String addFriend(@PathVariable long id1, @PathVariable long id2) {
-        Optional<Profile> user1 = profileService.findById(id1);
-        Optional<Profile> user2 = profileService.findById(id2);
-        if (!user1.isPresent() || !user2.isPresent()) {
-            return "ERROR";
+    public ResponseEntity<ProfileDto> addFriend(@PathVariable long id, @RequestBody ProfileDto profileDto) {
+        Optional<Profile> addedFriend = profileService.findById(id);
+        if (!addedFriend.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Profile owner = user1.get();
-        Profile target = user2.get();
+        Profile owner = ProfileDtoToProfileConverter.convert(profileDto);
+        Profile target = addedFriend.get();
         profileService.addFriend(owner, target);
         profileService.addFollower(owner, target);
-        return "ADDED";
+        ProfileDto dto = ProfileToProfileDtoConverter.convert(owner);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @GetMapping("/users/{username}")
-    Optional<Profile> getUser(@PathVariable String username) {
-        System.out.println("Find user with username = " + username);
-        return profileService.findByUsername(username);
+    @DeleteMapping("/users/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<ProfileDto> deleteFriend(@PathVariable long id, @RequestBody ProfileDto profileDto) throws FriendNotAddedException {
+        Optional<Profile> deletedFriendOpt = profileService.findById(id);
+        if (!deletedFriendOpt.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Profile deletedFriend = deletedFriendOpt.get();
+        Profile owner = ProfileDtoToProfileConverter.convert(profileDto);
+        profileService.removeFriend(owner, deletedFriend);
+        ProfileDto newDto = ProfileToProfileDtoConverter.convert(owner);
+        return new ResponseEntity<>(newDto, HttpStatus.OK);
     }
 
 }
