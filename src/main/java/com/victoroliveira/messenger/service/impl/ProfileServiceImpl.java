@@ -6,6 +6,8 @@ import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -159,4 +161,12 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        Optional<Profile> profileOpt =  this.findByUsername(s);
+        if (!profileOpt.isPresent()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return profileOpt.get();
+    }
 }

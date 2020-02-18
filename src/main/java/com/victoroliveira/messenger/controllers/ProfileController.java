@@ -3,6 +3,7 @@ package com.victoroliveira.messenger.controllers;
 import com.victoroliveira.messenger.dto.ProfileDto;
 import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
+import com.victoroliveira.messenger.security.JwtUtil;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
@@ -23,6 +24,21 @@ public class ProfileController {
     public ProfileController(ProfileService profileService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.profileService = profileService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @PostMapping(value="/login")
+    public ResponseEntity<ProfileDto> login(@RequestBody ProfileDto profileDto) {
+        Optional<Profile> profileOpt = profileService.findById(profileDto.getId());
+        if (!profileOpt.isPresent()) {
+            return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
+        }
+        if (!profileDto.getPassword().equals(profileOpt.get().getPassword())) {
+            return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
+        }
+        String token = JwtUtil.create(profileDto.getUsername());
+        profileDto.setToken(token);
+        return new ResponseEntity<>(profileDto, HttpStatus.OK);
+
     }
 
     @GetMapping(value="/users")

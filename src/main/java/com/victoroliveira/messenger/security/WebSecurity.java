@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
 @Configuration
@@ -27,18 +29,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().sameOrigin();
-        http.csrf()
-                .disable()
-                .authorizeRequests().antMatchers("/h2-console**").permitAll()
-                .antMatchers("/user**").permitAll()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        ;
+        http.authorizeRequests()
+                .anyRequest().hasAnyRole().and()
+                .formLogin().loginPage("/login").permitAll()
+                .successHandler(loginSuccessHandler())
+                .failureHandler(loginFailureHandler());
+    }
+
+    public AuthenticationSuccessHandler loginSuccessHandler() {
+        return (request, response, authentication) -> response.sendRedirect("/");
+    }
+
+    public AuthenticationFailureHandler loginFailureHandler() {
+        return (request, response, authentication) -> {
+            //request.getSession().setAttribute("flash", new FlashMessage("Incorrect username and/or passord", FlashMessage.Status.FAILURE));
+            response.sendRedirect("/login");
+        };
     }
 
 }

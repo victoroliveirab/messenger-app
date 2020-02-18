@@ -18,6 +18,7 @@ public class ProfileDto implements Serializable {
     private boolean online;
     private List<String> friends;
     private List<String> followedBy;
+    private String token;
 
     public ProfileDto(Profile profile) {
         this.id = profile.getId();
@@ -29,6 +30,7 @@ public class ProfileDto implements Serializable {
         this.online = profile.isOnline();
         this.friends = null;
         this.followedBy = null;
+        this.token = null;
     }
 
     public ProfileDto() {
@@ -104,5 +106,13 @@ public class ProfileDto implements Serializable {
 
     public void setFollowedBy(List<String> followedBy) {
         this.followedBy = followedBy;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
