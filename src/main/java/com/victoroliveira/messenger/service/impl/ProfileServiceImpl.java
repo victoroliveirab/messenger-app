@@ -6,19 +6,22 @@ import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class ProfileServiceImpl implements ProfileService {
+public class ProfileServiceImpl implements ProfileService, UserDetailsService {
 
     private static final String nameRegex = "^[\\p{L} .'-]+$";
 
@@ -102,7 +105,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     //helpers
 
-    private void checkEmptiness(Profile profile) {
+    private void checkEmptiness(Profile profile) { //instead of throwing when exception found, wait for others fields and throw the list of wrong fields
         if (StringUtils.isEmpty(profile.getName())) {
             throw new EmptyFieldException("name");
         }
@@ -161,12 +164,15 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+
+
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<Profile> profileOpt =  this.findByUsername(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Profile> profileOpt = profileRepository.findByUsername(username);
         if (!profileOpt.isPresent()) {
             throw new UsernameNotFoundException("User not found");
         }
-        return profileOpt.get();
+        Profile profile = profileOpt.get();
+        return new User(profile.getUsername(), profile.getPassword(), new ArrayList<>());
     }
 }

@@ -3,7 +3,6 @@ package com.victoroliveira.messenger.controllers;
 import com.victoroliveira.messenger.dto.ProfileDto;
 import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
-import com.victoroliveira.messenger.security.JwtUtil;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
@@ -28,6 +27,7 @@ public class ProfileController {
 
     @PostMapping(value="/login")
     public ResponseEntity<ProfileDto> login(@RequestBody ProfileDto profileDto) {
+        System.out.println("HERE");
         Optional<Profile> profileOpt = profileService.findById(profileDto.getId());
         if (!profileOpt.isPresent()) {
             return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
@@ -35,8 +35,9 @@ public class ProfileController {
         if (!profileDto.getPassword().equals(profileOpt.get().getPassword())) {
             return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
         }
-        String token = JwtUtil.create(profileDto.getUsername());
-        profileDto.setToken(token);
+        System.out.println("Login here");
+        //String token = JwtUtil.create(profileDto.getUsername());
+        //profileDto.setToken(token);
         return new ResponseEntity<>(profileDto, HttpStatus.OK);
 
     }
@@ -57,6 +58,7 @@ public class ProfileController {
         if (newUserDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // NO_CONTENT?
         }
+        System.out.println("Creating new user...");
         Profile newUser = ProfileDtoToProfileConverter.convert(newUserDto);
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         profileService.addUser(newUser);
