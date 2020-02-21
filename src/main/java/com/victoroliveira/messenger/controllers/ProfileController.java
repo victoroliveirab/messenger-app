@@ -25,20 +25,20 @@ public class ProfileController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @PostMapping(value="/login")
-    public ResponseEntity<ProfileDto> login(@RequestBody ProfileDto profileDto) {
-        System.out.println("HERE");
-        Optional<Profile> profileOpt = profileService.findById(profileDto.getId());
-        if (!profileOpt.isPresent()) {
-            return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
-        }
-        if (!profileDto.getPassword().equals(profileOpt.get().getPassword())) {
-            return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
-        }
-        System.out.println("Login here");
-        return new ResponseEntity<>(profileDto, HttpStatus.OK);
-
-    }
+//    @PostMapping(value="/login")
+//    public ResponseEntity<ProfileDto> login(@RequestBody ProfileDto profileDto) {
+//        System.out.println("HERE");
+//        Optional<Profile> profileOpt = profileService.findById(profileDto.getId());
+//        if (!profileOpt.isPresent()) {
+//            return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
+//        }
+//        if (!profileDto.getPassword().equals(profileOpt.get().getPassword())) {
+//            return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
+//        }
+//        System.out.println("Login here");
+//        return new ResponseEntity<>(profileDto, HttpStatus.OK);
+//
+//    }
 
     @GetMapping(value="/users")
     public ResponseEntity<List<ProfileDto>> getUsers() {
