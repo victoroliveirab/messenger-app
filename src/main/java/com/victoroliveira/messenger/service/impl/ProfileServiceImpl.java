@@ -21,7 +21,7 @@ import java.util.Optional;
 
 
 @Service
-public class ProfileServiceImpl implements ProfileService, UserDetailsService {
+public class ProfileServiceImpl implements ProfileService {
 
     private static final String nameRegex = "^[\\p{L} .'-]+$";
 
@@ -105,7 +105,8 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
 
     //helpers
 
-    private void checkEmptiness(Profile profile) { //instead of throwing when exception found, wait for others fields and throw the list of wrong fields
+    private void checkEmptiness(Profile profile) {
+        //instead of throwing when exception found, wait for others fields and throw the list of wrong fields
         if (StringUtils.isEmpty(profile.getName())) {
             throw new EmptyFieldException("name");
         }
@@ -170,7 +171,7 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Profile> profileOpt = profileRepository.findByUsername(username);
         if (!profileOpt.isPresent()) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("User not found: " + username);
         }
         Profile profile = profileOpt.get();
         return new User(profile.getUsername(), profile.getPassword(), new ArrayList<>());

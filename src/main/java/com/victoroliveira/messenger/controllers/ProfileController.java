@@ -36,8 +36,6 @@ public class ProfileController {
             return new ResponseEntity<>(profileDto, HttpStatus.BAD_REQUEST);
         }
         System.out.println("Login here");
-        //String token = JwtUtil.create(profileDto.getUsername());
-        //profileDto.setToken(token);
         return new ResponseEntity<>(profileDto, HttpStatus.OK);
 
     }
@@ -52,7 +50,7 @@ public class ProfileController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<ProfileDto> newUser(@RequestBody ProfileDto newUserDto) {
         if (newUserDto == null) {

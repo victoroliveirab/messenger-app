@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 public class ProfileToProfileDtoConverter {
     public static ProfileDto convert(Profile profile) {
         ProfileDto dto = new ProfileDto();
-        BeanUtils.copyProperties(profile, dto, "password", "friends", "followedBy");
+        BeanUtils.copyProperties(profile, dto, "password", "friends", "followedBy", "id");
         dto.setFriends(profile.getFriendsUsernames());
         dto.setFollowedBy(profile.getFollowersUsernames());
         return dto;
@@ -19,7 +19,7 @@ public class ProfileToProfileDtoConverter {
 
     public static ProfileDto convertNew(Profile profile) {
         ProfileDto dto = new ProfileDto();
-        BeanUtils.copyProperties(profile, dto, "password", "friends", "followedBy");
+        BeanUtils.copyProperties(profile, dto, "password", "friends", "followedBy", "id");
         return dto;
     }
 }

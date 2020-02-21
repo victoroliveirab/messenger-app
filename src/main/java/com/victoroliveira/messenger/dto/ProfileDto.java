@@ -19,6 +19,7 @@ public class ProfileDto implements Serializable {
     private List<String> friends;
     private List<String> followedBy;
     private String token;
+    private boolean confirmed;
 
     public ProfileDto(Profile profile) {
         this.id = profile.getId();

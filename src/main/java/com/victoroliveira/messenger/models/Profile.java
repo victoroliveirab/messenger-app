@@ -24,7 +24,7 @@ public class Profile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 3, max = 32)
+    @Size(min = 3, max = 64)
     @Column(nullable = false)
     private String name;
 
@@ -62,6 +62,9 @@ public class Profile implements Serializable {
             inverseJoinColumns = {@JoinColumn(name="user_id")}
     )
     private List<Profile> followedBy = new ArrayList<>();
+
+    @Column
+    private boolean confirmed = false;
     //endregion
 
     public Profile() {
@@ -123,6 +126,15 @@ public class Profile implements Serializable {
     public void setOnline(boolean online) {
         this.online = online;
     }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
     //endregion
 
     //region Getters and Setters of Friends and Followers
