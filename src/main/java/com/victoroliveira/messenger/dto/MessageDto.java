@@ -1,39 +1,31 @@
-package com.victoroliveira.messenger.models;
+package com.victoroliveira.messenger.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.victoroliveira.messenger.models.Profile;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "MESSAGE")
-public class Message {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class MessageDto {
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable=false)
     private Profile sourceProfile;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable=false)
     private Profile destinationProfile;
-
-    //@Temporal(TemporalType.DATE)
-    @Column(nullable=false)
+    private String sourceUsername;
+    private String destinationUsername;
     private LocalDateTime sendTime;
-
-    @Size(min = 1, max = 2048)
-    @Column(nullable = false)
     private String message;
 
-    public Message() {
+    public MessageDto() {
     }
 
-    public Message(Profile sourceProfile, Profile destinationProfile) {
+    public MessageDto(Long id, Profile sourceProfile, Profile destinationProfile, LocalDateTime sendTime) {
+        this.id = id;
         this.sourceProfile = sourceProfile;
         this.destinationProfile = destinationProfile;
-        this.sendTime = LocalDateTime.now();
+        this.sendTime = sendTime;
     }
 
     public Long getId() {
@@ -50,6 +42,7 @@ public class Message {
 
     public void setSourceProfile(Profile sourceProfile) {
         this.sourceProfile = sourceProfile;
+        this.sourceUsername = sourceProfile.getUsername();
     }
 
     public Profile getDestinationProfile() {
@@ -58,6 +51,7 @@ public class Message {
 
     public void setDestinationProfile(Profile destinationProfile) {
         this.destinationProfile = destinationProfile;
+        this.destinationUsername = destinationProfile.getUsername();
     }
 
     public LocalDateTime getSendTime() {
@@ -74,5 +68,21 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getSourceUsername() {
+        return sourceUsername;
+    }
+
+    public void setSourceUsername(String sourceUsername) {
+        this.sourceUsername = sourceUsername;
+    }
+
+    public String getDestinationUsername() {
+        return destinationUsername;
+    }
+
+    public void setDestinationUsername(String destinationUsername) {
+        this.destinationUsername = destinationUsername;
     }
 }
