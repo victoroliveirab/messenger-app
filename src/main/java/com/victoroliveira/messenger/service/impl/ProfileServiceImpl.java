@@ -94,8 +94,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void addFollower(Profile follower, Profile followed) {
-        followed.addFollowedBy(follower);
-        profileRepository.save(followed);
+        //followed.addFollowedBy(follower);
+        //profileRepository.save(followed);
     }
 
     @Override

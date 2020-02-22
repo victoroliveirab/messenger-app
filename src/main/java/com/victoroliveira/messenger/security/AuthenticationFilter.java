@@ -5,10 +5,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.victoroliveira.messenger.dto.ProfileDto;
 import com.victoroliveira.messenger.models.Profile;
+import com.victoroliveira.messenger.repository.ProfileRepository;
+import com.victoroliveira.messenger.service.ProfileService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import io.jsonwebtoken.Jwts;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
@@ -54,12 +58,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String username = ((User) authResult.getPrincipal()).getUsername();
-        System.out.println(request);
+        String id = "test";
         Date expiration = new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME);
         String token = Jwts.builder().setSubject(username).setExpiration(expiration)
                 .signWith(SecurityConstants.TOKEN_SECURITY).compact();
         response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
         //response.addHeader("user_id", username); // make it better later TODO
+        response.addHeader("id", id);
     }
 
     /*
