@@ -79,6 +79,9 @@ public class ProfileServiceImpl implements ProfileService {
         if (owner.getFriendsUsernames().contains(friend.getUsername())) {
             throw new FriendAlreadyAddedException(friend.getUsername());
         }
+        if (owner.getUsername().equals(friend.getUsername())) {
+            throw new AutoAddException();
+        }
         owner.addFriend(friend);
         profileRepository.save(owner);
     }
