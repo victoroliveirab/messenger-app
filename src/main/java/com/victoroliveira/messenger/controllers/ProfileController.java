@@ -21,11 +21,9 @@ import java.util.*;
 @RestController
 public class ProfileController {
     private ProfileService profileService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public ProfileController(ProfileService profileService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public ProfileController(ProfileService profileService) {
         this.profileService = profileService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 //    @PostMapping(value="/login")
@@ -58,11 +56,11 @@ public class ProfileController {
     @ResponseBody
     public ResponseEntity<ProfileDto> newUser(@RequestBody ProfileDto newUserDto) {
         if (newUserDto == null) {
+            System.out.println("Received empty body");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // NO_CONTENT?
         }
-        System.out.println("Creating new user...");
+        System.out.println("Creating new user called " + newUserDto.getUsername());
         Profile newUser = ProfileDtoToProfileConverter.convert(newUserDto);
-        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         profileService.addUser(newUser);
         ProfileDto dto = ProfileToProfileDtoConverter.convertNew(newUser);
         return new ResponseEntity<>(dto, HttpStatus.OK);

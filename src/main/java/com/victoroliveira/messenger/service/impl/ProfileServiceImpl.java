@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,8 +27,13 @@ public class ProfileServiceImpl implements ProfileService {
 
     private static final String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
 
+    private static final String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@!#$%^&+=])(?=\\S+$).{8,}$";
+
     //RECOMMENDED
     //private static final String emailRegex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -37,7 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
         return profileRepository.findAll().size() != 0 ? profileRepository.findAll() : null;
     }
 
-    @Override
+    @Override // TODO: remove Optional<Profile> by checking existence and returning null if not found
     public Optional<Profile> findByUsername(String username) {
         return profileRepository.findByUsername(username);
     }
@@ -50,6 +56,7 @@ public class ProfileServiceImpl implements ProfileService {
         checkFormat(profile);
         checkBirthday(profile);
         profile.setOnline(false);
+        profile.setPassword(bCryptPasswordEncoder.encode(profile.getPassword()));
         return profileRepository.save(profile);
     }
 
@@ -98,7 +105,7 @@ public class ProfileServiceImpl implements ProfileService {
         //profileRepository.save(followed);
     }
 
-    @Override
+    @Override // TODO: remove Optional<Profile> by checking existence and returning null if not found
     public Optional<Profile> findById(Long id) {
         return profileRepository.findById(id);
     }
@@ -131,6 +138,9 @@ public class ProfileServiceImpl implements ProfileService {
         if (profile.getUsername().length() < 3 || profile.getUsername().length() > 16) {
             throw new InvalidLengthException("username");
         }
+        if (profile.getPassword().length() < 8) {
+            throw new PasswordTooWeakException();
+        }
     }
 
     private void checkUniqueness(Profile profile) {
@@ -151,6 +161,9 @@ public class ProfileServiceImpl implements ProfileService {
         }
         if (!profile.getEmail().matches(emailRegex)) {
             throw new InvalidInputException("email");
+        }
+        if (!profile.getPassword().matches(passwordRegex)) {
+            throw new PasswordTooWeakException();
         }
     }
 
