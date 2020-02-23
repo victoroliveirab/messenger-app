@@ -17,7 +17,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "USERS")
-public class Profile extends Message implements Serializable {
+public class Profile implements Serializable {
 
     //region Attributes Section
     @Id
