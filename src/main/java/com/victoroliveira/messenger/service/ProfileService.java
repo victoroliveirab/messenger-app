@@ -13,11 +13,6 @@ public interface ProfileService extends UserDetailsService {
     Profile addUser(Profile profile);
     Profile updateUser(Profile profile);
 
-    void addFriend(Profile owner, Profile friend);
-    void removeFriend(Profile owner, Profile friend) throws FriendNotAddedException;
-
-    void addFollower(Profile follower, Profile followed);
-
     Optional<Profile> findById(Long id);
 
     void removeUser(String username);

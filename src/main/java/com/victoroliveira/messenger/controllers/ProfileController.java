@@ -9,6 +9,7 @@ import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
 import com.victoroliveira.messenger.utils.TokenToUsername;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,11 +21,9 @@ import java.util.*;
 
 @RestController
 public class ProfileController {
-    private ProfileService profileService;
 
-    public ProfileController(ProfileService profileService) {
-        this.profileService = profileService;
-    }
+    @Autowired
+    private ProfileService profileService;
 
 //    @PostMapping(value="/login")
 //    public ResponseEntity<ProfileDto> login(@RequestBody ProfileDto profileDto) {
@@ -43,7 +42,6 @@ public class ProfileController {
 
     @GetMapping(value="/users")
     public ResponseEntity<List<ProfileDto>> getUsers() {
-        System.out.println("GET /users");
         List<ProfileDto> dtos = new ArrayList<>();
         for (Profile profile : profileService.getUsers()) {
             ProfileDto dto = ProfileToProfileDtoConverter.convert(profile);
@@ -94,37 +92,6 @@ public class ProfileController {
         if (username == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         profileService.removeUser(username);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/users/add/{friend}")
-    @ResponseBody
-    public ResponseEntity<ProfileDto> addFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) {
-        Optional<Profile> addedFriend = profileService.findByUsername(friend);
-        if (!addedFriend.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        String username = TokenToUsername.convert(token);
-        Profile owner = profileService.findByUsername(username).get();
-        Profile target = addedFriend.get();
-        profileService.addFriend(owner, target);
-        //profileService.addFollower(owner, target);
-        ProfileDto dto = ProfileToProfileDtoConverter.convert(owner);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/users/delete/{friend}") //delete friend
-    @ResponseBody
-    public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) throws FriendNotAddedException {
-        Optional<Profile> deletedFriendOpt = profileService.findByUsername(friend);
-        if (!deletedFriendOpt.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Profile deletedFriend = deletedFriendOpt.get();
-        String username = TokenToUsername.convert(token);
-        Profile owner = profileService.findByUsername(username).get();
-        profileService.removeFriend(owner, deletedFriend);
-        ProfileDto newDto = ProfileToProfileDtoConverter.convert(owner);
-        return new ResponseEntity<>(newDto, HttpStatus.OK);
     }
 
 }

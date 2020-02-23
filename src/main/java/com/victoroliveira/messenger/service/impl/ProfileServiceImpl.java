@@ -78,39 +78,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     }
 
-    @Override
-    public void addFriend(Profile owner, Profile friend) {
-        if (owner.getFriendsUsernames().contains(friend.getUsername())) {
-            throw new FriendAlreadyAddedException(friend.getUsername());
-        }
-        if (owner.getUsername().equals(friend.getUsername())) {
-            throw new AutoAddException();
-        }
-        owner.addFriend(friend);
-        profileRepository.save(owner);
-    }
-
-    @Override
-    public void removeFriend(Profile owner, Profile friend) throws FriendNotAddedException {
-        if (!owner.getFriendsUsernames().contains(friend.getUsername())) {
-            throw new FriendNotAddedException(friend.getUsername());
-        }
-        owner.removeFriend(friend);
-        profileRepository.save(owner);
-    }
-
-    @Override
-    public void addFollower(Profile follower, Profile followed) {
-        //followed.addFollowedBy(follower);
-        //profileRepository.save(followed);
-    }
-
     @Override // TODO: remove Optional<Profile> by checking existence and returning null if not found
     public Optional<Profile> findById(Long id) {
         return profileRepository.findById(id);
     }
 
-    //helpers
+    // HELPERS
 
     private void checkEmptiness(Profile profile) {
         //instead of throwing when exception found, wait for others fields and throw the list of wrong fields
