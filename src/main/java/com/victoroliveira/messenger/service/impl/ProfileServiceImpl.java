@@ -43,7 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
         return profileRepository.findAll().size() != 0 ? profileRepository.findAll() : null;
     }
 
-    @Override // TODO: remove Optional<Profile> by checking existence and returning null if not found
+    @Override
     public Profile findByUsername(String username) {
         return profileRepository.findByUsername(username);
     }
