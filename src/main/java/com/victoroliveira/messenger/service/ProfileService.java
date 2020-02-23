@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface ProfileService extends UserDetailsService {
     List<Profile> getUsers();
-    Optional<Profile> findByUsername(String username);
+    Profile findByUsername(String username);
     Profile addUser(Profile profile);
     Profile updateUser(Profile profile);
 
-    Optional<Profile> findById(Long id);
+    Profile findById(Long id);
 
     void removeUser(String username);
 }

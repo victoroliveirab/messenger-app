@@ -34,14 +34,13 @@ public class ContactController {
     @PostMapping("/users/add/{friend}")
     @ResponseBody
     public ResponseEntity<ProfileDto> addFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) {
-        Optional<Profile> addedFriend = profileService.findByUsername(friend);
-        if (!addedFriend.isPresent()) {
+        Profile addedFriend = profileService.findByUsername(friend);
+        if (addedFriend == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         String username = TokenToUsername.convert(token);
-        Profile owner = profileService.findByUsername(username).get();
-        Profile target = addedFriend.get();
-        contactService.addFriend(owner, target);
+        Profile owner = profileService.findByUsername(username);
+        contactService.addFriend(owner, addedFriend);
         ProfileDto dto = ProfileToProfileDtoConverter.convert(owner);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -49,13 +48,12 @@ public class ContactController {
     @DeleteMapping("/users/delete/{friend}") //delete friend
     @ResponseBody
     public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) throws FriendNotAddedException {
-        Optional<Profile> deletedFriendOpt = profileService.findByUsername(friend);
-        if (!deletedFriendOpt.isPresent()) {
+        Profile deletedFriend = profileService.findByUsername(friend);
+        if (deletedFriend == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Profile deletedFriend = deletedFriendOpt.get();
         String username = TokenToUsername.convert(token);
-        Profile owner = profileService.findByUsername(username).get();
+        Profile owner = profileService.findByUsername(username);
         contactService.removeFriend(owner, deletedFriend);
         ProfileDto newDto = ProfileToProfileDtoConverter.convert(owner);
         return new ResponseEntity<>(newDto, HttpStatus.OK);

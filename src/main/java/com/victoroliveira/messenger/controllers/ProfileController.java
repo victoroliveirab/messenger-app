@@ -66,11 +66,12 @@ public class ProfileController {
 
     @GetMapping("/users/{username}")
     public ResponseEntity<ProfileDto> getUser(@PathVariable String username) {
-        Optional<Profile> profileOpt = profileService.findByUsername(username);
-        if (!profileOpt.isPresent()) {
+        //Optional<Profile> profileOpt = profileService.findByUsername(username);
+        Profile profile = profileService.findByUsername(username);
+        if (profile == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ProfileDto dto = ProfileToProfileDtoConverter.convert(profileOpt.get());
+        ProfileDto dto = ProfileToProfileDtoConverter.convert(profile);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

@@ -44,7 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override // TODO: remove Optional<Profile> by checking existence and returning null if not found
-    public Optional<Profile> findByUsername(String username) {
+    public Profile findByUsername(String username) {
         return profileRepository.findByUsername(username);
     }
 
@@ -71,16 +71,15 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void removeUser(String username) {
-        Optional<Profile> profile = profileRepository.findByUsername(username);
-        if (profile.isPresent()) {
-            profileRepository.delete(profile.get());
+        Profile profile = profileRepository.findByUsername(username);
+        if (profile != null) {
+            profileRepository.delete(profile);
         }
-
     }
 
-    @Override // TODO: remove Optional<Profile> by checking existence and returning null if not found
-    public Optional<Profile> findById(Long id) {
-        return profileRepository.findById(id);
+    @Override
+    public Profile findById(Long id) {
+        return profileRepository.findById(id).orElse(null);
     }
 
     // HELPERS
@@ -117,10 +116,10 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     private void checkUniqueness(Profile profile) {
-        if (profileRepository.findByUsername(profile.getUsername()).isPresent()) {
+        if (profileRepository.findByUsername(profile.getUsername()) != null) {
             throw new UniqueUsernameException(profile.getUsername());
         }
-        if (profileRepository.findByEmail(profile.getEmail()).isPresent()) {
+        if (profileRepository.findByEmail(profile.getEmail()) != null) {
             throw new UniqueEmailException(profile.getEmail());
         }
     }
@@ -155,11 +154,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Profile> profileOpt = profileRepository.findByUsername(username);
-        if (!profileOpt.isPresent()) {
+        Profile profile = profileRepository.findByUsername(username);
+        if (profile == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
-        Profile profile = profileOpt.get();
         return new User(profile.getUsername(), profile.getPassword(), new ArrayList<>());
     }
 }
