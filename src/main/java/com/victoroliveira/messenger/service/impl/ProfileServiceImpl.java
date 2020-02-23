@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
@@ -32,11 +31,13 @@ public class ProfileServiceImpl implements ProfileService {
     //RECOMMENDED
     //private static final String emailRegex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
 
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
     private ProfileRepository profileRepository;
+
+    public ProfileServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRepository profileRepository) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.profileRepository = profileRepository;
+    }
 
     @Override
     public List<Profile> getUsers() {

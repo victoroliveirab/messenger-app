@@ -6,6 +6,6 @@ import com.victoroliveira.messenger.models.Profile;
 import java.util.List;
 
 public interface MessageService {
-    void sendMessage(Message message);
-    List<Message> getMessages(Profile requester, Profile target);
+    void sendMessage(Message message, String senderUsername, String receiverUsername);
+    List<Message> getMessages(String requester, String target);
 }
