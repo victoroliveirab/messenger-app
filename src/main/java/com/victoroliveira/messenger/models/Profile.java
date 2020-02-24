@@ -42,8 +42,8 @@ public class Profile implements Serializable {
     @Column(nullable=false)
     private String password;
 
-    @Column(nullable = false)
-    private boolean online;
+    @Column
+    private boolean online = false;
 
     @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL)

@@ -47,7 +47,7 @@ public class ContactController {
 
     @DeleteMapping("/users/delete/{friend}") //delete friend
     @ResponseBody
-    public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) throws FriendNotAddedException {
+    public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) {
         Profile deletedFriend = profileService.findByUsername(friend);
         if (deletedFriend == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

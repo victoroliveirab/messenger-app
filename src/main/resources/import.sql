@@ -1,3 +1,0 @@
---insert into USERS(name, username, email, password, online) values('victor','victorob', 'vob@cesar.school', '1234', true);
---insert into USERS(name, username, email, password, online) values('fulano','foobar', 'foobar@baz.com' ,'pass', true);
---insert into USERS(name, username, email, password, online, confirmed)
