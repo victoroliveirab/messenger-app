@@ -1,12 +1,12 @@
 package com.victoroliveira.messenger.service;
 
 import com.victoroliveira.messenger.exceptions.AutoAddException;
-import com.victoroliveira.messenger.exceptions.FriendAlreadyAddedException;
+import com.victoroliveira.messenger.exceptions.ContactAlreadyAddedException;
+import com.victoroliveira.messenger.exceptions.ContactNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.MessageRepository;
 import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.impl.ContactServiceImpl;
-import com.victoroliveira.messenger.service.impl.ProfileServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,51 +66,63 @@ class ContactServiceTest {
     }
 
     @Test
-    void addFriendThatIsNew() {
-        contactService.addFriend(adder, added);
-        contactService.addFriend(adder, other);
-        contactService.addFriend(other, added);
-        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getFriendsUsernames())
+    void addContactThatIsNew() {
+        contactService.addContact(adder, added);
+        contactService.addContact(adder, other);
+        contactService.addContact(other, added);
+        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getContactsUsernames())
                 .contains(added.getUsername());
-        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getFriendsUsernames())
+        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getContactsUsernames())
                 .contains(other.getUsername());
-        Assertions.assertThat(profileRepository.findByUsername(other.getUsername()).getFriendsUsernames())
+        Assertions.assertThat(profileRepository.findByUsername(other.getUsername()).getContactsUsernames())
                 .contains(added.getUsername());
-        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getFriends()).hasSize(0);
-        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getFollowedBy()).hasSize(2);
-        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getFollowedBy()).hasSize(0);
+        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getContacts()).hasSize(0);
+        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getContactOf()).hasSize(2);
+        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getContactOf()).hasSize(0);
     }
 
     @Test
-    void addFriendAutoAdd() {
+    void addContactAutoAdd() {
         try {
-            contactService.addFriend(adder, adder);
+            contactService.addContact(adder, adder);
             Assertions.fail("Cannot add yourself as contact");
         } catch (AutoAddException ignore) {
         }
     }
 
     @Test
-    void addFriendThatIsAlreadyAdded() {
-        contactService.addFriend(adder, added);
+    void addContactThatIsAlreadyAdded() {
+        contactService.addContact(adder, added);
         try {
-            contactService.addFriend(adder, added);
+            contactService.addContact(adder, added);
             Assertions.fail("Cannot add a contact that is already added");
-        } catch (FriendAlreadyAddedException ignore) {
+        } catch (ContactAlreadyAddedException ignore) {
         }
     }
 
     @Test
-    void removeFriend() {
-        contactService.addFriend(adder, added);
-        contactService.addFriend(adder, other);
-        contactService.addFriend(other, added);
-        contactService.removeFriend(adder, other);
-        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getFriends()).hasSize(1);
-        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getFollowedBy()).hasSize(2);
-        contactService.removeFriend(other, added);
-        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getFriends()).hasSize(1);
-        Assertions.assertThat(profileRepository.findByUsername(other.getUsername()).getFollowedBy()).hasSize(1);
-        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getFriends()).hasSize(0);
+    void removeContactThatIsAdded() {
+        contactService.addContact(adder, added);
+        contactService.addContact(adder, other);
+        contactService.addContact(other, added);
+        contactService.removeContact(adder, other);
+        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getContacts()).hasSize(1);
+        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getContactOf()).hasSize(2);
+        contactService.removeContact(other, added);
+        Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getContacts()).hasSize(1);
+        Assertions.assertThat(profileRepository.findByUsername(other.getUsername()).getContactOf()).hasSize(1);
+        Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getContacts()).hasSize(0);
+    }
+
+    @Test
+    void removeContactNotAdded() {
+        contactService.addContact(adder, added);
+        contactService.addContact(adder, other);
+        contactService.addContact(other, added);
+        try {
+            contactService.removeContact(added, adder);
+            Assertions.fail("Cannot remove a contact that you did not added");
+        } catch (ContactNotAddedException ignore) {
+        }
     }
 }

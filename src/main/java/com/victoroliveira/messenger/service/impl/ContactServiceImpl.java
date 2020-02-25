@@ -1,8 +1,8 @@
 package com.victoroliveira.messenger.service.impl;
 
 import com.victoroliveira.messenger.exceptions.AutoAddException;
-import com.victoroliveira.messenger.exceptions.FriendAlreadyAddedException;
-import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
+import com.victoroliveira.messenger.exceptions.ContactAlreadyAddedException;
+import com.victoroliveira.messenger.exceptions.ContactNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.ContactService;
@@ -18,27 +18,27 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void addFriend(Profile owner, Profile friend) {
-        if (owner.getFriendsUsernames().contains(friend.getUsername())) {
-            throw new FriendAlreadyAddedException(friend.getUsername());
+    public void addContact(Profile owner, Profile contact) {
+        if (owner.getContactsUsernames().contains(contact.getUsername())) {
+            throw new ContactAlreadyAddedException(contact.getUsername());
         }
-        if (owner.getUsername().equals(friend.getUsername())) {
+        if (owner.getUsername().equals(contact.getUsername())) {
             throw new AutoAddException();
         }
-        owner.addFriend(friend);
+        owner.addContact(contact);
         profileRepository.save(owner);
-        profileRepository.save(friend);
-        friend.addFollowedBy(owner);
+        profileRepository.save(contact);
+        contact.addContactOf(owner);
     }
 
     @Override
-    public void removeFriend(Profile owner, Profile friend) {
-        if (!owner.getFriendsUsernames().contains(friend.getUsername())) {
-            throw new FriendNotAddedException(friend.getUsername());
+    public void removeContact(Profile owner, Profile contact) {
+        if (!owner.getContactsUsernames().contains(contact.getUsername())) {
+            throw new ContactNotAddedException(contact.getUsername());
         }
-        owner.removeFriend(friend);
+        owner.removeContact(contact);
         profileRepository.save(owner);
-        profileRepository.save(friend);
+        profileRepository.save(contact);
     }
 
 }

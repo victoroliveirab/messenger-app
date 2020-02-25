@@ -1,18 +1,13 @@
 package com.victoroliveira.messenger.controllers;
 
 import com.victoroliveira.messenger.dto.ProfileDto;
-import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
-import com.victoroliveira.messenger.security.SecurityConstants;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.ProfileDtoToProfileConverter;
 import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
-import com.victoroliveira.messenger.utils.TokenToUsername;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;

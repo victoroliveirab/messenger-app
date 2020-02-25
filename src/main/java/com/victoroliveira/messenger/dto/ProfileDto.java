@@ -16,8 +16,8 @@ public class ProfileDto implements Serializable {
     private LocalDate birthday;
     private String password;
     private boolean online;
-    private List<String> friends;
-    private List<String> followedBy;
+    private List<String> contacts;
+    private List<String> contactOf;
     private String token;
     private boolean confirmed;
 
@@ -29,8 +29,8 @@ public class ProfileDto implements Serializable {
         this.password = profile.getPassword();
         this.birthday = profile.getBirthday();
         this.online = profile.isOnline();
-        this.friends = null;
-        this.followedBy = null;
+        this.contacts = null;
+        this.contactOf = null;
         this.token = null;
     }
 
@@ -93,20 +93,20 @@ public class ProfileDto implements Serializable {
         this.online = online;
     }
 
-    public List<String> getFriends() {
-        return friends;
+    public List<String> getContacts() {
+        return contacts;
     }
 
-    public void setFriends(List<String> friends) {
-        this.friends = friends;
+    public void setContacts(List<String> contacts) {
+        this.contacts = contacts;
     }
 
-    public List<String> getFollowedBy() {
-        return followedBy;
+    public List<String> getContactOf() {
+        return contactOf;
     }
 
-    public void setFollowedBy(List<String> followedBy) {
-        this.followedBy = followedBy;
+    public void setContactOf(List<String> contactOf) {
+        this.contactOf = contactOf;
     }
 
     public String getToken() {

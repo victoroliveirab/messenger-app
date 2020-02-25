@@ -47,21 +47,21 @@ public class Profile implements Serializable {
 
     @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name = "following",
-            joinColumns = {@JoinColumn(name="user_id")},
-            inverseJoinColumns = {@JoinColumn(name="follower_id")}
+    @JoinTable(name = "contacts",
+            joinColumns = {@JoinColumn(name="owner_id")},
+            inverseJoinColumns = {@JoinColumn(name="contact_id")}
     )
-    private List<Profile> friends = new ArrayList<>();
+    private List<Profile> contacts = new ArrayList<>();
 
     //https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     //http://springquay.blogspot.com/2016/01/new-approach-to-solve-json-recursive.html
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "following",
-            joinColumns = {@JoinColumn(name="follower_id")},
-            inverseJoinColumns = {@JoinColumn(name="user_id")}
+    @JoinTable(name = "contacts",
+            joinColumns = {@JoinColumn(name="contact_id")},
+            inverseJoinColumns = {@JoinColumn(name="owner_id")}
     )
-    private List<Profile> followedBy = new ArrayList<>();
+    private List<Profile> contactOf = new ArrayList<>();
 
     @Column
     private boolean confirmed = false;
@@ -138,48 +138,48 @@ public class Profile implements Serializable {
     //endregion
 
     //region Getters and Setters of Friends and Followers
-    public List<Profile> getFriends() {
-        return friends;
+    public List<Profile> getContacts() {
+        return contacts;
     }
 
-    public List<String> getFriendsUsernames() {
-        List<String> friends = new ArrayList<>();
-        for (Profile friend : this.getFriends()) {
-            friends.add(friend.getUsername());
+    public List<String> getContactsUsernames() {
+        List<String> contacts = new ArrayList<>();
+        for (Profile contact : this.getContacts()) {
+            contacts.add(contact.getUsername());
         }
-        return friends;
+        return contacts;
     }
 
-    public void setFriends(List<Profile> friends) {
-        this.friends = friends;
+    public void setContacts(List<Profile> contacts) {
+        this.contacts = contacts;
     }
 
-    public void addFriend(Profile friend) {
-        this.friends.add(friend);
+    public void addContact(Profile contact) {
+        this.contacts.add(contact);
     }
 
-    public void removeFriend(Profile friend) {
-        this.friends.remove(friend);
+    public void removeContact(Profile contact) {
+        this.contacts.remove(contact);
     }
 
-    public List<Profile> getFollowedBy() {
-        return followedBy;
+    public List<Profile> getContactOf() {
+        return contactOf;
     }
 
-    public List<String> getFollowersUsernames() {
-        List<String> followedBy = new ArrayList<>();
-        for (Profile follower : this.getFollowedBy()) {
-            followedBy.add(follower.getUsername());
+    public List<String> getContactOfUsernames() {
+        List<String> contactsOf = new ArrayList<>();
+        for (Profile follower : this.getContactOf()) {
+            contactsOf.add(follower.getUsername());
         }
-        return followedBy;
+        return contactsOf;
     }
 
-    public void setFollowedBy(List<Profile> followedBy) {
-        this.followedBy = followedBy;
+    public void setContactOf(List<Profile> contactOf) {
+        this.contactOf = contactOf;
     }
 
-    public void addFollowedBy(Profile follower) {
-        this.followedBy.add(follower);
+    public void addContactOf(Profile owner) {
+        this.contactOf.add(owner);
     }
     //endregion
 

@@ -1,7 +1,6 @@
 package com.victoroliveira.messenger.controllers;
 
 import com.victoroliveira.messenger.dto.ProfileDto;
-import com.victoroliveira.messenger.exceptions.FriendNotAddedException;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ContactService;
 import com.victoroliveira.messenger.service.ProfileService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ContactController {
@@ -27,34 +25,34 @@ public class ContactController {
 
     @GetMapping("/users/contacts")
     public ResponseEntity<List<ProfileDto>> friendsList(@RequestHeader(name = "Authorization") String token) { //TODO
-        List<ProfileDto> friends = new ArrayList<>();
-        return new ResponseEntity<>(friends, HttpStatus.OK);
+        List<ProfileDto> contacts = new ArrayList<>();
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
-    @PostMapping("/users/add/{friend}")
+    @PostMapping("/users/add/{contact}")
     @ResponseBody
-    public ResponseEntity<ProfileDto> addFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) {
-        Profile addedFriend = profileService.findByUsername(friend);
-        if (addedFriend == null) {
+    public ResponseEntity<ProfileDto> addContact(@RequestHeader(name = "Authorization") String token, @PathVariable String contact) {
+        Profile contactProfile = profileService.findByUsername(contact);
+        if (contactProfile == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         String username = TokenToUsername.convert(token);
         Profile owner = profileService.findByUsername(username);
-        contactService.addFriend(owner, addedFriend);
+        contactService.addContact(owner, contactProfile);
         ProfileDto dto = ProfileToProfileDtoConverter.convert(owner);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/delete/{friend}") //delete friend
+    @DeleteMapping("/users/delete/{contact}") //delete contact
     @ResponseBody
-    public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String friend) {
-        Profile deletedFriend = profileService.findByUsername(friend);
-        if (deletedFriend == null) {
+    public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String contact) {
+        Profile deletedContact = profileService.findByUsername(contact);
+        if (deletedContact == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         String username = TokenToUsername.convert(token);
         Profile owner = profileService.findByUsername(username);
-        contactService.removeFriend(owner, deletedFriend);
+        contactService.removeContact(owner, deletedContact);
         ProfileDto newDto = ProfileToProfileDtoConverter.convert(owner);
         return new ResponseEntity<>(newDto, HttpStatus.OK);
     }

@@ -18,8 +18,8 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @GetMapping(value="/msg/{username}")
-    public ResponseEntity<List<Message>> getMessagesToAFriend(@RequestHeader(name = "Authorization") String token,
+    @GetMapping(value="/msg/{target}")
+    public ResponseEntity<List<Message>> getMessagesToAContact(@RequestHeader(name = "Authorization") String token,
                                                                  @PathVariable String target) {
         String requester = TokenToUsername.convert(token);
         List<Message> messages = messageService.getMessages(requester, target);
@@ -27,7 +27,7 @@ public class MessageController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-    @PostMapping(value="/msg/{username}/send")
+    @PostMapping(value="/msg/{receiver}/send")
     public String sendMessage(@RequestHeader(name = "Authorization") String token, @PathVariable String receiver,
                               @RequestBody MessageDto messageDto) {
         String sender = TokenToUsername.convert(token);

@@ -11,8 +11,8 @@ public class ProfileToProfileDtoConverter {
     public static ProfileDto convert(Profile profile) {
         ProfileDto dto = new ProfileDto();
         BeanUtils.copyProperties(profile, dto, "password", "friends", "followedBy", "id");
-        dto.setFriends(profile.getFriendsUsernames());
-        dto.setFollowedBy(profile.getFollowersUsernames());
+        dto.setContacts(profile.getContactsUsernames());
+        dto.setContactOf(profile.getContactOfUsernames());
         return dto;
     }
 
