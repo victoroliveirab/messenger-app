@@ -4,14 +4,13 @@ import com.victoroliveira.messenger.dto.ProfileDto;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ContactService;
 import com.victoroliveira.messenger.service.ProfileService;
-import com.victoroliveira.messenger.utils.ProfileToProfileDtoConverter;
-import com.victoroliveira.messenger.utils.TokenToUsername;
+import com.victoroliveira.messenger.utils.converters.ProfileToProfileDtoConverter;
+import com.victoroliveira.messenger.utils.converters.TokenToUsernameConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,9 +23,11 @@ public class ContactController {
     private ContactService contactService;
 
     @GetMapping("/users/contacts")
-    public ResponseEntity<List<ProfileDto>> friendsList(@RequestHeader(name = "Authorization") String token) { //TODO
-        List<ProfileDto> contacts = new ArrayList<>();
-        return new ResponseEntity<>(contacts, HttpStatus.OK);
+    public ResponseEntity<List<ProfileDto>> contactsList(@RequestHeader(name = "Authorization") String token) { //TODO
+        String username = TokenToUsernameConverter.convert(token);
+        List<Profile> contacts = profileService.findByUsername(username).getContacts();
+        List<ProfileDto> contactsDtos = ProfileToProfileDtoConverter.convertAll(contacts);
+        return new ResponseEntity<>(contactsDtos, HttpStatus.OK);
     }
 
     @PostMapping("/users/add/{contact}")
@@ -36,7 +37,7 @@ public class ContactController {
         if (contactProfile == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        String username = TokenToUsername.convert(token);
+        String username = TokenToUsernameConverter.convert(token);
         Profile owner = profileService.findByUsername(username);
         contactService.addContact(owner, contactProfile);
         ProfileDto dto = ProfileToProfileDtoConverter.convert(owner);
@@ -45,12 +46,12 @@ public class ContactController {
 
     @DeleteMapping("/users/delete/{contact}") //delete contact
     @ResponseBody
-    public ResponseEntity<ProfileDto> deleteFriend(@RequestHeader(name = "Authorization") String token, @PathVariable String contact) {
+    public ResponseEntity<ProfileDto> deleteContact(@RequestHeader(name = "Authorization") String token, @PathVariable String contact) {
         Profile deletedContact = profileService.findByUsername(contact);
         if (deletedContact == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        String username = TokenToUsername.convert(token);
+        String username = TokenToUsernameConverter.convert(token);
         Profile owner = profileService.findByUsername(username);
         contactService.removeContact(owner, deletedContact);
         ProfileDto newDto = ProfileToProfileDtoConverter.convert(owner);

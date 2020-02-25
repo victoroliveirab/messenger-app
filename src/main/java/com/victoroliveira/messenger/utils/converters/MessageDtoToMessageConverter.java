@@ -1,4 +1,4 @@
-package com.victoroliveira.messenger.utils;
+package com.victoroliveira.messenger.utils.converters;
 
 import com.victoroliveira.messenger.dto.MessageDto;
 import com.victoroliveira.messenger.models.Message;
