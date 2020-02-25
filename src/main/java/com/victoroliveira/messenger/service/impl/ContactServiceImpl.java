@@ -28,6 +28,7 @@ public class ContactServiceImpl implements ContactService {
         owner.addFriend(friend);
         profileRepository.save(owner);
         profileRepository.save(friend);
+        friend.addFollowedBy(owner);
     }
 
     @Override

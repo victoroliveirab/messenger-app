@@ -1,5 +1,7 @@
 package com.victoroliveira.messenger.service;
 
+import com.victoroliveira.messenger.exceptions.AutoAddException;
+import com.victoroliveira.messenger.exceptions.FriendAlreadyAddedException;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.MessageRepository;
 import com.victoroliveira.messenger.repository.ProfileRepository;
@@ -64,7 +66,7 @@ class ContactServiceTest {
     }
 
     @Test
-    void addFriend() {
+    void addFriendThatIsNew() {
         contactService.addFriend(adder, added);
         contactService.addFriend(adder, other);
         contactService.addFriend(other, added);
@@ -77,6 +79,25 @@ class ContactServiceTest {
         Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getFriends()).hasSize(0);
         Assertions.assertThat(profileRepository.findByUsername(added.getUsername()).getFollowedBy()).hasSize(2);
         Assertions.assertThat(profileRepository.findByUsername(adder.getUsername()).getFollowedBy()).hasSize(0);
+    }
+
+    @Test
+    void addFriendAutoAdd() {
+        try {
+            contactService.addFriend(adder, adder);
+            Assertions.fail("Cannot add yourself as contact");
+        } catch (AutoAddException ignore) {
+        }
+    }
+
+    @Test
+    void addFriendThatIsAlreadyAdded() {
+        contactService.addFriend(adder, added);
+        try {
+            contactService.addFriend(adder, added);
+            Assertions.fail("Cannot add a contact that is already added");
+        } catch (FriendAlreadyAddedException ignore) {
+        }
     }
 
     @Test

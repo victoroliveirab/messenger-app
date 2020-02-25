@@ -1,15 +1,9 @@
 package com.victoroliveira.messenger.controllers;
 
 import com.victoroliveira.messenger.dto.MessageDto;
-import com.victoroliveira.messenger.exceptions.InvalidDestinationException;
-import com.victoroliveira.messenger.exceptions.UserNotFoundException;
 import com.victoroliveira.messenger.models.Message;
-import com.victoroliveira.messenger.models.Profile;
-import com.victoroliveira.messenger.repository.MessageRepository;
 import com.victoroliveira.messenger.service.MessageService;
-import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.MessageDtoToMessageConverter;
-import com.victoroliveira.messenger.utils.MessageToMessageDtoConverter;
 import com.victoroliveira.messenger.utils.TokenToUsername;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class MessageController {

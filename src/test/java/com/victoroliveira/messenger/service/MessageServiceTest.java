@@ -1,6 +1,6 @@
 package com.victoroliveira.messenger.service;
 
-import com.victoroliveira.messenger.exceptions.InvalidDestinationException;
+import com.victoroliveira.messenger.exceptions.SameOriginDestinationException;
 import com.victoroliveira.messenger.models.Message;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.MessageRepository;
@@ -8,7 +8,6 @@ import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.impl.MessageServiceImpl;
 import com.victoroliveira.messenger.service.impl.ProfileServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,8 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -69,12 +66,21 @@ class MessageServiceTest {
     }
 
     @Test
-    void getMessages() {
+    void getMessagesFromAnotherProfile() {
         Profile profile1 = profileRepository.findByUsername(username1);
         Profile profile2 = profileRepository.findByUsername(username2);
         Assertions.assertThat(messageService.getMessages(profile1.getUsername(), profile2.getUsername())).hasSize(1);
         Assertions.assertThat(messageService.getMessages(profile1.getUsername(), profile2.getUsername()).get(0)
                 .getMessage()).isEqualTo(message.getMessage());
+    }
+
+    @Test
+    void getMessagesFromSameProfile() {
+        try {
+            messageService.sendMessage(message, username1, username1);
+            Assertions.fail("Cannot get messages from yourself");
+        } catch (SameOriginDestinationException ignored) {
+        }
     }
 
     @Test
@@ -95,7 +101,7 @@ class MessageServiceTest {
         try {
             messageService.sendMessage(message, username1, username1);
             Assertions.fail("Cannot send message to yourself");
-        } catch (InvalidDestinationException ignored) {
+        } catch (SameOriginDestinationException ignored) {
         }
     }
 }
