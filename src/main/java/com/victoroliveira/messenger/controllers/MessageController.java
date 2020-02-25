@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class MessageController {
         return new ResponseEntity<>(messagesDtos, HttpStatus.OK);
     }
 
-    @PostMapping(value="/msg/{receiver}/send")
+    @PostMapping(value="/msg/{receiver}")
     public ResponseEntity<List<MessageDto>> sendMessage(@RequestHeader(name = "Authorization") String token,
                                                         @PathVariable String receiver,
                                                         @RequestBody MessageDto messageDto) {
@@ -40,12 +41,27 @@ public class MessageController {
         return new ResponseEntity<>(messagesDtos, HttpStatus.OK);
     }
 
-    @DeleteMapping(value="/msg/delete/{id}")
+    @DeleteMapping(value="/msg/delete/msg/{id}")
     public ResponseEntity<List<MessageDto>> deleteOneMessage(@RequestHeader(name = "Authorization") String token,
                                                              @PathVariable Long id) {
         String requester = TokenToUsernameConverter.convert(token);
         List<Message> messages = messageService.deleteMessage(requester, id);
         List<MessageDto> messagesDtos = MessageToMessageDtoConverter.convertAll(messages);
         return new ResponseEntity<>(messagesDtos, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value="/msg/delete/{contact}")
+    public ResponseEntity<List<MessageDto>> deleteChat(@RequestHeader(name = "Authorization") String token,
+                                                       @PathVariable String contact) {
+        String requester = TokenToUsernameConverter.convert(token);
+        messageService.deleteChat(requester, contact);
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value="/msg/delete/all")
+    public ResponseEntity<List<MessageDto>> deleteAllMessages(@RequestHeader(name = "Authorization") String token) {
+        String requester = TokenToUsernameConverter.convert(token);
+        messageService.deleteAllMessages(requester);
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
 }

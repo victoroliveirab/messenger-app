@@ -11,6 +11,7 @@ import com.victoroliveira.messenger.service.MessageService;
 import com.victoroliveira.messenger.service.ProfileService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -50,12 +51,30 @@ public class MessageServiceImpl implements MessageService {
         return messages;
     }
 
+    @Override
     public List<Message> deleteMessage(String requester, Long id) {
         Message message = checkMessageExistence(requester, id);
         Profile requesterProfile = message.getSourceProfile();
         Profile targetProfile = message.getDestinationProfile();
         messageRepository.delete(message);
         return this.getMessages(requesterProfile.getUsername(), targetProfile.getUsername());
+    }
+
+    @Transactional
+    @Override
+    public void deleteChat(String requester, String target) {
+        Profile requesterProfile = profileService.findByUsername(requester);
+        Profile targetProfile = profileService.findByUsername(target);
+        messageRepository.deleteMessagesByDestinationProfileAndSourceProfile(requesterProfile, targetProfile);
+        messageRepository.deleteMessagesByDestinationProfileAndSourceProfile(targetProfile, requesterProfile);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllMessages(String requester) {
+        Profile requesterProfile = profileService.findByUsername(requester);
+        messageRepository.deleteMessagesBySourceProfile(requesterProfile);
+        messageRepository.deleteMessagesByDestinationProfile(requesterProfile);
     }
 
     private void checkProfilesInvolved(String requester, String target) {

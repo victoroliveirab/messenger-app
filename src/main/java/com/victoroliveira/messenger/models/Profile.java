@@ -16,7 +16,7 @@ import java.util.*;
 // https://www.baeldung.com/jpa-many-to-many
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class Profile implements Serializable {
 
     //region Attributes Section

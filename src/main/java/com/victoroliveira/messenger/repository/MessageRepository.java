@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findAllBySourceProfileAndDestinationProfile(Profile sourceProfile, Profile destinationProfile);
+    void deleteMessagesByDestinationProfileAndSourceProfile(Profile sourceProfile, Profile destinationProfile);
+    void deleteMessagesBySourceProfile(Profile sourceProfile);
+    void deleteMessagesByDestinationProfile(Profile destinationProfile);
 }

@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "MESSAGE")
+@Table(name = "messages")
 public class Message {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,12 +28,6 @@ public class Message {
     private String message;
 
     public Message() {
-    }
-
-    public Message(Profile sourceProfile, Profile destinationProfile) {
-        this.sourceProfile = sourceProfile;
-        this.destinationProfile = destinationProfile;
-        this.sendTime = LocalDateTime.now();
     }
 
     public Long getId() {

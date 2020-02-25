@@ -9,8 +9,9 @@ import java.util.stream.Collectors;
 
 public class MessageToMessageDtoConverter {
     public static MessageDto convert(Message message) {
-        MessageDto messageDto = new MessageDto();
-        BeanUtils.copyProperties(messageDto, message);
+        System.out.println(message);
+        MessageDto messageDto = new MessageDto();;
+        BeanUtils.copyProperties(message, messageDto, "destinationProfile", "sourceProfile");
         return messageDto;
     }
 
