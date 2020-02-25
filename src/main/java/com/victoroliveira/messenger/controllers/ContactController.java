@@ -24,6 +24,7 @@ public class ContactController {
 
     @GetMapping("/users/contacts")
     public ResponseEntity<List<ProfileDto>> contactsList(@RequestHeader(name = "Authorization") String token) { //TODO
+        System.out.println("here");
         String username = TokenToUsernameConverter.convert(token);
         List<Profile> contacts = profileService.findByUsername(username).getContacts();
         List<ProfileDto> contactsDtos = ProfileToProfileDtoConverter.convertAll(contacts);

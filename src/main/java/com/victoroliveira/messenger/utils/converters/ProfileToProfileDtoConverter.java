@@ -27,6 +27,6 @@ public class ProfileToProfileDtoConverter {
     }
 
     public static List<ProfileDto> convertAll(List<Profile> profiles) {
-            return profiles.stream().map(ProfileToProfileDtoConverter::convert).collect(Collectors.toList());
+            return profiles.stream().map(ProfileToProfileDtoConverter::convertNew).collect(Collectors.toList());
     }
 }
