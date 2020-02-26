@@ -4,6 +4,7 @@ import com.victoroliveira.messenger.exceptions.*;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.ProfileService;
+import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import com.victoroliveira.messenger.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -31,10 +32,10 @@ public class ProfileServiceImpl implements ProfileService {
     //RECOMMENDED
     //private static final String emailRegex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CustomPasswordEncoder bCryptPasswordEncoder;
     private ProfileRepository profileRepository;
 
-    public ProfileServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, ProfileRepository profileRepository) {
+    public ProfileServiceImpl(CustomPasswordEncoder bCryptPasswordEncoder, ProfileRepository profileRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.profileRepository = profileRepository;
     }

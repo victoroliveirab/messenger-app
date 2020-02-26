@@ -7,6 +7,7 @@ import com.victoroliveira.messenger.repository.MessageRepository;
 import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.impl.MessageServiceImpl;
 import com.victoroliveira.messenger.service.impl.ProfileServiceImpl;
+import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class MessageServiceTest {
 
     @BeforeEach
     void setup() {
-        messageService = new MessageServiceImpl(new ProfileServiceImpl(new BCryptPasswordEncoder(), profileRepository), messageRepository);
+        messageService = new MessageServiceImpl(new ProfileServiceImpl(/*new BCryptPasswordEncoder()*/ new CustomPasswordEncoder(), profileRepository), messageRepository);
 
         Profile profile1 = new Profile();
         Profile profile2 = new Profile();

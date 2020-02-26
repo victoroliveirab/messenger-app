@@ -1,5 +1,6 @@
 package com.victoroliveira.messenger;
 
+import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -11,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class MessengerApplication {
 
 	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+	public CustomPasswordEncoder bCryptPasswordEncoder() {
+		return new CustomPasswordEncoder();
 	}
 
 	public static void main(String[] args) {

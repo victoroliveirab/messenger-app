@@ -5,6 +5,7 @@ import com.victoroliveira.messenger.exceptions.UniqueUsernameException;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.ProfileRepository;
 import com.victoroliveira.messenger.service.impl.ProfileServiceImpl;
+import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -38,7 +39,7 @@ class ProfileServiceTest {
 
     @BeforeEach
     public void createProfiles() {
-        profileService = new ProfileServiceImpl(new BCryptPasswordEncoder(), profileRepository);
+        profileService = new ProfileServiceImpl(/*new BCryptPasswordEncoder()*/new CustomPasswordEncoder(), profileRepository);
         profile1 = new Profile();
         profile2 = new Profile();
         profile3 = new Profile();

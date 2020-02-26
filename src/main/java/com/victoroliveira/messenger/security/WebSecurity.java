@@ -1,6 +1,7 @@
 package com.victoroliveira.messenger.security;
 
 import com.victoroliveira.messenger.service.ProfileService;
+import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,7 +18,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private ProfileService profileService;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CustomPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
