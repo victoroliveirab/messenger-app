@@ -37,6 +37,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
             String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECURITY).parseClaimsJws(token).getBody().getSubject();
             if (user != null) {
                 System.out.println("User who requested: " + user);
+                //TODO users without confirmation should not have access to some pages
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
         }

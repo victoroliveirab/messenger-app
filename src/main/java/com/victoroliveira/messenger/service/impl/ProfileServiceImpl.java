@@ -3,6 +3,7 @@ package com.victoroliveira.messenger.service.impl;
 import com.victoroliveira.messenger.exceptions.*;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.repository.ProfileRepository;
+import com.victoroliveira.messenger.service.ConfirmationTokenService;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import com.victoroliveira.messenger.utils.DateUtils;
@@ -34,10 +35,13 @@ public class ProfileServiceImpl implements ProfileService {
 
     private CustomPasswordEncoder bCryptPasswordEncoder;
     private ProfileRepository profileRepository;
+    private ConfirmationTokenService confirmationTokenService;
 
-    public ProfileServiceImpl(CustomPasswordEncoder bCryptPasswordEncoder, ProfileRepository profileRepository) {
+    public ProfileServiceImpl(CustomPasswordEncoder bCryptPasswordEncoder, ProfileRepository profileRepository,
+                              ConfirmationTokenService confirmationTokenService) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.profileRepository = profileRepository;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     @Override
@@ -59,6 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
         checkBirthday(profile);
         profile.setOnline(false);
         profile.setPassword(bCryptPasswordEncoder.encode(profile.getPassword()));
+        confirmationTokenService.sendEmail(profile);
         return profileRepository.save(profile);
     }
 
