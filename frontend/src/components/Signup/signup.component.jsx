@@ -60,7 +60,7 @@ class Signup extends Component {
         }
         const birthday = this.state.birthday.replace(/\//g, "-");
         try {
-            await axios.post(
+            const response = await axios.post(
                 "/signup",
                 {
                     name,
@@ -73,6 +73,7 @@ class Signup extends Component {
                     "Content-Type": "application/json"
                 })
             );
+            console.log(response);
         } catch (err) {}
     };
 
