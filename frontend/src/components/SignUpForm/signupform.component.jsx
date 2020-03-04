@@ -2,24 +2,25 @@ import React, { Component } from "react";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+//import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import DatePicker from "../DatePicker/datepicker.component";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
-import "./signup.styles.css";
+import "./signupform.styles.css";
 const axios = require("axios");
 
-// const useStyles = makeStyles(theme => ({
-//     form: {
-//         width: "100%"
-//     },
-//     submit: {
-//         margin: theme.spacing(1, 0, 2)
-//     }
-// }));
+const styles = theme => ({
+    form: {
+        width: "100%"
+    },
+    submit: {
+        margin: theme.spacing(1, 0, 2)
+    }
+});
 
 class Signup extends Component {
     constructor(props) {
@@ -33,17 +34,10 @@ class Signup extends Component {
         };
     }
 
-    useStyles = makeStyles(theme => ({
-        form: {
-            width: "100%"
-        },
-        submit: {
-            margin: theme.spacing(1, 0, 2)
-        }
-    }));
-
     handleSubmit = async event => {
         event.preventDefault();
+        console.log(this.state);
+        console.log("--------------------");
         const {
             name,
             username,
@@ -51,11 +45,9 @@ class Signup extends Component {
             password,
             password_confirmation
         } = this.state;
-        if (password != password_confirmation) {
-            console.log(password);
-            console.log(password_confirmation);
+        console.log(this.state);
+        if (password !== password_confirmation) {
             alert("Passwords dont match");
-            console.log(this.state);
             return;
         }
         const birthday = this.state.birthday.replace(/\//g, "-");
@@ -69,26 +61,31 @@ class Signup extends Component {
                     email,
                     birthday
                 },
-                ("headers": {
-                    "Content-Type": "application/json"
-                })
+                { headers: { "Content-Type": "application/json" } }
             );
             console.log(response);
-        } catch (err) {}
+        } catch (err) {
+            console.log(this.state);
+            console.error(err);
+        }
     };
 
     handleChange = event => {
+        //TODO when leave email or username field, async a get from the server to see if
+        // entry already in use!
         const { name, value } = event.target;
         this.setState({ [name]: value });
         console.log(this.state);
     };
 
+    handleBirthday = date => this.setState({ birthday: date });
+
     render() {
-        //const classes = this.useStyles();
+        const classes = this.props;
         return (
             <Container maxWidth="xs">
                 <form
-                    // className={classes.form}
+                    className={classes.form}
                     noValidate
                     onSubmit={this.handleSubmit}
                 >
@@ -126,16 +123,7 @@ class Signup extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            {/* <DatePicker /> */}
-                            <TextField
-                                name="birthday"
-                                label="Birthday"
-                                required
-                                placeholder="Birthday"
-                                fullWidth
-                                type="text"
-                                onChange={this.handleChange}
-                            />
+                            <DatePicker updateBirthday={this.handleBirthday} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -175,7 +163,7 @@ class Signup extends Component {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            // className={classes.submit}
+                            className={classes.submit}
                         >
                             Sign Up
                         </Button>
@@ -193,4 +181,4 @@ class Signup extends Component {
     }
 }
 
-export default Signup;
+export default withStyles(styles)(Signup);
