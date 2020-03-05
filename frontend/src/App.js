@@ -4,12 +4,12 @@ import PrivateRoute from "./utils/PrivateRoute.component";
 import "./App.css";
 import loginPage from "./pages/login/login.page";
 import signUpPage from "./pages/signup/signup.page";
-import MessageApp from "./components/MessageApp/messageapp.component";
+import mainPage from "./pages/messageApp/messageapp.pages";
 
 function App() {
     return (
         <Switch>
-            <PrivateRoute exact path="/" component={MessageApp} />
+            <PrivateRoute exact path="/" component={mainPage} />
             <Route exact path="/login" component={loginPage} />
             <Route exact path="/signup" component={signUpPage} />
         </Switch>

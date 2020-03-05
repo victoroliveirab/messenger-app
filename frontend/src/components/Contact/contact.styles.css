@@ -1,0 +1,7 @@
+.test {
+    transition: all 0.2s ease-in-out;
+}
+
+.test:hover {
+    background-color: #282d3638;
+}
