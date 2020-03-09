@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class ProfileToProfileDtoConverter {
     public static ProfileDto convert(Profile profile) {
         ProfileDto dto = new ProfileDto();
-        BeanUtils.copyProperties(profile, dto, "password", "contacts", "contactOf", "id");
+        BeanUtils.copyProperties(profile, dto, "password", "contacts", "contactOf");
         dto.setContacts(profile.getContactsUsernames());
         dto.setContactOf(profile.getContactOfUsernames());
         return dto;
@@ -22,7 +22,7 @@ public class ProfileToProfileDtoConverter {
 
     public static ProfileDto convertNew(Profile profile) {
         ProfileDto dto = new ProfileDto();
-        BeanUtils.copyProperties(profile, dto, "password", "contacts", "contactOf", "id");
+        BeanUtils.copyProperties(profile, dto, "password", "contacts", "contactOf");
         return dto;
     }
 

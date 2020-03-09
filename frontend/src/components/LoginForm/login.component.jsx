@@ -8,6 +8,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../../redux/user/user.actions";
+import { setContacts } from "../../redux/contactList/contactList.actions";
 
 const axios = require("axios");
 
@@ -24,19 +27,10 @@ class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
+            username: "",
             password: ""
         };
     }
-
-    // useStyles = makeStyles(theme => ({
-    //     form: {
-    //         width: "100%"
-    //     },
-    //     submit: {
-    //         margin: theme.spacing(1, 0, 2)
-    //     }
-    // }));
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -54,7 +48,9 @@ class LoginForm extends Component {
                     }
                 }
             );
-            sessionStorage.setItem("auth", response.headers.authorization);
+            const auth = response.headers.authorization;
+            sessionStorage.setItem("auth", auth);
+            this.props.login(auth);
             this.props.redirectFn();
         } catch (err) {
             console.error(err);
@@ -67,7 +63,7 @@ class LoginForm extends Component {
     };
 
     render() {
-        const classes = this.props;
+        const { classes } = this.props;
         return (
             <Container maxWidth="xs">
                 <form
@@ -131,4 +127,19 @@ class LoginForm extends Component {
     }
 }
 
-export default withStyles(styles)(LoginForm);
+//TODO - NOT WORKING
+// const mapStateToProps = (state, ownProps) => {
+//     const { user } = state;
+//     console.log(user);
+//     console.log(ownProps);
+//     return {};
+// };
+
+const mapDispatchToProps = dispatch => ({
+    login: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(
+    /* mapStateToProps */ null,
+    mapDispatchToProps
+)(withStyles(styles)(LoginForm));

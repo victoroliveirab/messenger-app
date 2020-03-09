@@ -3,10 +3,8 @@ import List from "@material-ui/core/List";
 import Contact from "../Contact/contact.component";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { setContactList } from "../../redux/contactList/contactList.actions";
-import { connect } from "react-redux";
 
-import "./contactlist.styles.css";
+import "./message.styles.css";
 
 const axios = require("axios");
 
@@ -15,8 +13,11 @@ class ContactList extends Component {
         super(props);
         this.auth = props.auth;
         this.state = {
+            contacts: [],
+            contactsLength: 0,
             loading: true
         };
+        console.log("constructor");
     }
 
     async componentDidMount() {
@@ -31,7 +32,8 @@ class ContactList extends Component {
 
             console.log(response);
             this.setState({ loading: false });
-            this.props.setContactList(response.data);
+            this.setState({ contacts: response.data });
+            this.setState({ contactsLength: response.data.length });
         } catch (err) {
             console.error(err);
         }
@@ -43,7 +45,7 @@ class ContactList extends Component {
         }
         return (
             <List className="contact-list">
-                {this.props.contacts.map((contact, i) => (
+                {this.state.contacts.map((contact, i) => (
                     <Contact key={i} index={i} {...contact} />
                 ))}
                 <ListItem>
@@ -56,12 +58,4 @@ class ContactList extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    contacts: state.contactList.contacts
-});
-
-const mapDispatchToProps = dispatch => ({
-    setContactList: contacts => dispatch(setContactList(contacts))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+export default ContactList;

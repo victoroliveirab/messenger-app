@@ -1,0 +1,10 @@
+.base-grid {
+    height: 100%;
+    align-content: flex-start;
+
+    background-color: #ccc;
+}
+
+left-bar {
+    flex-grow: 1;
+}

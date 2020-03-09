@@ -11,13 +11,11 @@ class LoginPage extends React.Component {
     }
 
     redirect = () => {
-        console.log("called");
         this.setState({ redirect: true });
     };
 
     render() {
         if (this.state.redirect || sessionStorage.getItem("auth")) {
-            console.log("here");
             return <Redirect to="/" />;
         }
         return <LoginForm redirectFn={this.redirect} />;
