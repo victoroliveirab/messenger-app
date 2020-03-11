@@ -1,8 +1,45 @@
-.contact__item {
+.contact {
+    height: 75px;
+    display: grid;
+    grid-template-columns: minmax(50px, 25%) 60% 15%;
+    align-items: center;
+    justify-content: space-around;
     transition: all 0.2s ease-in-out;
+    overflow-wrap: break-word;
+    background-color: #eee;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
 }
 
-.contact__item:hover {
+.contact__photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact__main {
+    font-size: 0.8rem;
+}
+
+.contact__message-wrapper {
+    overflow-wrap: break-word;
+}
+
+.contact__message-preview {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 350px;
+    overflow: hidden;
+}
+
+.contact:hover {
     background-color: #282d3638;
     cursor: pointer;
+}
+
+.contact__other {
+    font-size: 0.6rem;
+}
+
+.others {
+    margin-top: 10px;
 }

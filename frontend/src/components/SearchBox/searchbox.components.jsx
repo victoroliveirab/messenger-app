@@ -4,6 +4,8 @@ import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 
+import "./searchbox.styles.css";
+
 class SearchBox extends React.Component {
     constructor(props) {
         super(props);
@@ -19,16 +21,17 @@ class SearchBox extends React.Component {
 
     render() {
         return (
-            <Container maxWidth="xs">
-                <form noValidate>
+            <div className="searchbox">
+                <form className="searchbox__form" noValidate>
                     <Input
+                        className="searcbox__field"
                         type="text"
                         name="query"
                         label=""
                         placeholder="Search a message"
                         fullWidth
                         onChange={this.handleChange}
-                        variante="outlined"
+                        variant="outlined"
                         endAdornment={
                             <InputAdornment position="end">
                                 <SearchIcon />
@@ -36,7 +39,7 @@ class SearchBox extends React.Component {
                         }
                     />
                 </form>
-            </Container>
+            </div>
         );
     }
 }

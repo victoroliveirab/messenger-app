@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +50,9 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messages = messageRepository.findAllBySourceProfileAndDestinationProfile(requesterProfile, targetProfile);
         List<Message> messages2 = messageRepository.findAllBySourceProfileAndDestinationProfile(targetProfile, requesterProfile);
         messages.addAll(messages2);
+        Collections.sort(messages, (msg1, msg2) -> {
+            return (int) (msg1.getId() - msg2.getId());
+        });
         return messages;
     }
 

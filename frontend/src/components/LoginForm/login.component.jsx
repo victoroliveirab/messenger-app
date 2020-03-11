@@ -50,7 +50,7 @@ class LoginForm extends Component {
             );
             const auth = response.headers.authorization;
             sessionStorage.setItem("auth", auth);
-            this.props.login(auth);
+            this.props.login({ auth, username });
             this.props.redirectFn();
         } catch (err) {
             console.error(err);

@@ -1,0 +1,10 @@
+.sendMessageBar {
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sendMessageBar__field {
+    width: 90%;
+}

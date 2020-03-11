@@ -1,10 +1,23 @@
 .base-grid {
-    height: 100%;
-    align-content: flex-start;
-
-    background-color: #ccc;
+    display: grid;
+    grid-template-rows: 7vh 93vh;
 }
 
-left-bar {
-    flex-grow: 1;
+.top-container {
+    background-color: #888;
+}
+
+.bottom-container {
+    display: grid;
+    grid-template-columns: 33% 67%;
+    max-height: 93vh;
+}
+
+.left-bar-container,
+.right-bar-container {
+    max-height: inherit;
+}
+
+.left-bar-container {
+    border-right: 1px solid #eee;
 }

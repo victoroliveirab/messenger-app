@@ -1,0 +1,24 @@
+.top-bar {
+    display: grid;
+    grid-template-columns: 33% 67%;
+    height: 100%;
+}
+
+.top-bar__main {
+    border-right: 1px solid #eee;
+    padding-left: 20px;
+    padding-right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top-bar__main > div * {
+    cursor: pointer;
+}
+
+.top-bar__other-icons {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 15%;
+}

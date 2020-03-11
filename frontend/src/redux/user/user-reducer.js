@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-    auth: null
+    auth: null,
+    username: null
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -8,12 +9,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
             console.log("setCurrentUser");
             return {
                 ...state,
-                auth: action.payload
+                auth: action.payload.auth,
+                username: action.payload.username
             };
         case "LOG_OUT":
             return {
                 ...state,
-                auth: null
+                auth: null,
+                username: null
             };
         default:
             return state;

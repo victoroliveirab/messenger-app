@@ -1,7 +1,5 @@
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
 import { selectContact } from "../../redux/contactList/contactList.actions";
@@ -13,25 +11,20 @@ const mapDispatchToProps = dispatch => ({
     selectContact: contactName => dispatch(selectContact(contactName))
 });
 
-const putDivider = index => {
-    if (index === 0) return;
-    return <Divider variant="inset" component="li" />;
-};
-
 const findContactName = target => {
-    //TODO there is a bug that sometimes you click on a element but the selected is the first on the list
+    console.log(target);
     const tag = target.tagName.toLowerCase();
+    // for now, to select a contact, click on the title or the preview text
     switch (tag) {
-        case "span":
+        case "h4":
             return target.textContent;
         case "div":
-            return target.parentNode.parentNode.getElementsByTagName("span")[0]
-                .textContent;
-        case "li":
+            return "";
+        case "span":
             return target.children[1].getElementsByTagName("span")[0]
                 .textContent;
         case "p":
-            return target.parentNode.children[0].textContent;
+            return target.parentNode.previousSibling.textContent;
         default:
             console.error("Error while selecting contact");
             return "";
@@ -41,28 +34,32 @@ const findContactName = target => {
 const Contact = props => {
     const { index, ...contact } = props;
     return (
-        <React.Fragment>
-            {putDivider(index)}
-            <ListItem
-                className="contact__item"
-                alignItems="flex-start"
-                onClick={event => {
-                    const contactName = findContactName(event.target);
-                    props.selectContact(contactName);
-                }}
-            >
-                <ListItemAvatar>
-                    <Avatar
-                        alt={contact.name}
-                        src="/static/images/avatar/1.jpg"
-                    />
-                </ListItemAvatar>
-                <ListItemText
-                    primary={contact.name}
-                    secondary={<React.Fragment>{"lorem ipsum"}</React.Fragment>}
-                />
-            </ListItem>
-        </React.Fragment>
+        <div
+            className="contact"
+            onClick={event => {
+                const contactName = findContactName(event.target);
+                props.selectContact(contactName);
+            }}
+        >
+            <div className="contact__photo">
+                <Avatar>VO</Avatar>
+            </div>
+            <div className="contact__main">
+                <h4>{contact.username}</h4>
+                <div className="contact__message-wrapper">
+                    <p className="contact__message-preview">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Veritatis, nisi atque. Aspernatur at, sed rem iusto
+                        debitis rerum necessitatibus impedit! Fugit dolorum
+                        dolor nam. Sint unde nemo quasi autem asperiores.
+                    </p>
+                </div>
+            </div>
+            <div className="contact__other">
+                <span className="contact__other-timestamp">06:25AM</span>
+                <div className="others">\/</div>
+            </div>
+        </div>
     );
 };
 

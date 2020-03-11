@@ -1,37 +1,21 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import { connect } from "react-redux";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 
-const styles = theme => ({
-    root: {
-        flexGrow: 1
-    },
-    menuButton: {
-        marginRight: theme.spacing(2)
-    },
-    title: {
-        flexGrow: 1
-    }
-});
+import "./topbar.styles.css";
 
 class TopBar extends React.Component {
-
     initials() {
         //console.log(props);
     }
 
     render() {
-        const { classes } = this.props;
-        console.log(classes);
         return (
-            <div className={classes.root}>
-                <AppBar position="static">
+            <div className="top-bar">
+                {/* <AppBar position="static">
                     <Toolbar>
                         <IconButton
                             edge="start"
@@ -44,9 +28,25 @@ class TopBar extends React.Component {
                         <Typography variant="h6" className={classes.title}>
                             News
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        <IconButton
+                            aria-label="display more actions"
+                            edge="end"
+                            color="inherit"
+                        >
+                            <MoreIcon />
+                        </IconButton>
                     </Toolbar>
-                </AppBar>
+                </AppBar> */}
+                <div className="top-bar__main">
+                    <div>
+                        <Avatar className="top-bar__avatar">VO</Avatar>
+                    </div>
+                    <div className="top-bar__other-icons">
+                        <PlayCircleFilledIcon />
+                        <ChatBubbleIcon />
+                        <MoreVertIcon />
+                    </div>
+                </div>
             </div>
         );
     }
@@ -54,4 +54,4 @@ class TopBar extends React.Component {
 
 const mapStateToProps = state => ({ currentUser: state.user.currentUser });
 
-export default connect(mapStateToProps)(withStyles(styles)(TopBar));
+export default connect(mapStateToProps)(TopBar);

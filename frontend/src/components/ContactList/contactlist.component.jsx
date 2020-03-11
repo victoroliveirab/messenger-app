@@ -28,8 +28,6 @@ class ContactList extends Component {
                     Authorization: this.auth
                 }
             });
-
-            console.log(response);
             this.setState({ loading: false });
             this.props.setContactList(response.data);
         } catch (err) {
@@ -42,16 +40,14 @@ class ContactList extends Component {
             return "fetching...";
         }
         return (
-            <List className="contact-list">
-                {this.props.contacts.map((contact, i) => (
-                    <Contact key={i} index={i} {...contact} />
-                ))}
-                <ListItem>
-                    <ListItemText className="list-end__text">
-                        No more contacts for you!
-                    </ListItemText>
-                </ListItem>
-            </List>
+            <div className="contact-list-wrapper">
+                <div className="contact-list">
+                    {this.props.contacts.map((contact, i) => (
+                        <Contact key={i} index={i} {...contact} />
+                    ))}
+                    No more contacts for you!
+                </div>
+            </div>
         );
     }
 }

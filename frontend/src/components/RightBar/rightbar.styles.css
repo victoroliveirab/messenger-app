@@ -1,0 +1,5 @@
+.rightbar {
+    display: grid;
+    grid-template-rows: 90% 10%;
+    height: 100%;
+}

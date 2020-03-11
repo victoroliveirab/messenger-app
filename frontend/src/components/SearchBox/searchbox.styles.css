@@ -1,0 +1,14 @@
+.searchbox {
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    max-width: 100% !important;
+}
+
+.searchbox__form {
+    width: 100%;
+}
+
+.searcbox__field {
+    background-color: #888;
+}

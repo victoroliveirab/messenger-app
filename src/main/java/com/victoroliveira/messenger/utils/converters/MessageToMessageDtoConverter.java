@@ -12,6 +12,7 @@ public class MessageToMessageDtoConverter {
         System.out.println(message);
         MessageDto messageDto = new MessageDto();;
         BeanUtils.copyProperties(message, messageDto, "destinationProfile", "sourceProfile");
+        messageDto.setSourceUsername(message.getSourceProfile().getUsername());
         return messageDto;
     }
 
