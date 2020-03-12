@@ -65,6 +65,17 @@ public class MessageServiceImpl implements MessageService {
         return this.getMessages(requesterProfile.getUsername(), targetProfile.getUsername());
     }
 
+    public Message findLastMessageInvolvingProfileAndContact(String profileUsername, String contactUsername) {
+        Profile profile = profileService.findByUsername(profileUsername);
+        Profile contact = profileService.findByUsername(contactUsername);
+        Message message1 = messageRepository.findTopByDestinationProfileAndSourceProfileOrderBySendTimeDesc(contact, profile);
+        Message message2 = messageRepository.findTopByDestinationProfileAndSourceProfileOrderBySendTimeDesc(profile, contact);
+        if (message1 == null || message2 == null) {
+            return message2 == null ? message1 : message2;
+        }
+        return message1.getId() > message2.getId() ? message1 : message2;
+    }
+
     @Transactional
     @Override
     public void deleteChat(String requester, String target) {

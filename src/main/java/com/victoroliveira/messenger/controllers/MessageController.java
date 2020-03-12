@@ -29,6 +29,19 @@ public class MessageController {
         return new ResponseEntity<>(messagesDtos, HttpStatus.OK);
     }
 
+    @GetMapping(value="/msg/{target}/last")
+    public ResponseEntity<MessageDto> getLastMessageToAContact(@RequestHeader(name = "Authorization") String token,
+                                                                  @PathVariable String target) {
+        String requester = TokenToUsernameConverter.convert(token);
+        System.out.println(requester + " requested last message with " + target);
+        Message message = messageService.findLastMessageInvolvingProfileAndContact(target, requester);
+        if (message == null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        MessageDto messagesDto = MessageToMessageDtoConverter.convert(message);
+        return new ResponseEntity<>(messagesDto, HttpStatus.OK);
+    }
+
     @PostMapping(value="/msg/{receiver}")
     public ResponseEntity<List<MessageDto>> sendMessage(@RequestHeader(name = "Authorization") String token,
                                                         @PathVariable String receiver,

@@ -1,7 +1,6 @@
 package com.victoroliveira.messenger.service;
 
 import com.victoroliveira.messenger.models.Message;
-import com.victoroliveira.messenger.models.Profile;
 
 import java.util.List;
 
@@ -11,4 +10,5 @@ public interface MessageService {
     List<Message> deleteMessage(String requester, Long id);
     void deleteChat(String requester, String target);
     void deleteAllMessages(String requester);
+    Message findLastMessageInvolvingProfileAndContact(String profile, String contact);
 }

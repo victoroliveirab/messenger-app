@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     contactSelected: null,
-    contacts: []
+    contacts: [],
+    loading: true
 };
 
 const contactList = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,12 @@ const contactList = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 contacts: action.payload
+            };
+        case "UNSET_LOGIN":
+            console.log("unset login");
+            return {
+                ...state,
+                loading: false
             };
         default:
             return state;

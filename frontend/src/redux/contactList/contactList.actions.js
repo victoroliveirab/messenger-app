@@ -11,3 +11,7 @@ export const setContactList = contacts => ({
     type: "SET_CONTACT_LIST",
     payload: contacts
 });
+
+export const unsetLoading = () => ({
+    type: "UNSET_LOADING"
+});
