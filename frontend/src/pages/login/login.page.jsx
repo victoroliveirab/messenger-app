@@ -1,25 +1,27 @@
 import React from "react";
 import LoginForm from "../../components/LoginForm/login.component";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../../redux/user/user.actions";
 
-class LoginPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: false
-        };
-    }
-
-    redirect = () => {
-        this.setState({ redirect: true });
-    };
-
-    render() {
-        if (this.state.redirect || sessionStorage.getItem("auth")) {
-            return <Redirect to="/" />;
+const LoginPage = ({ loggedIn, login }) => {
+    if (loggedIn || sessionStorage.getItem("pitangAuth")) {
+        if (!loggedIn) {
+            const auth = sessionStorage.getItem("pitangAuth");
+            const username = sessionStorage.getItem("pitangUsername");
+            login({ auth, username });
         }
-        return <LoginForm redirectFn={this.redirect} />;
+        return <Redirect to="/" />;
     }
-}
+    return <LoginForm />;
+};
 
-export default LoginPage;
+const mapStateToProps = state => ({
+    loggedIn: state.user.auth
+});
+
+const mapDispatchToProps = dispatch => ({
+    login: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

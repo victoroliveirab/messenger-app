@@ -9,7 +9,7 @@ const leftBar = () => {
             <SearchBox className="searchbox-container" />
             <ContactList
                 className="contact-list-container"
-                auth={sessionStorage.getItem("auth")}
+                auth={sessionStorage.getItem("pitangAuth")}
             />
         </div>
     );

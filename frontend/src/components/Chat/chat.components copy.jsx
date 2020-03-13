@@ -22,7 +22,7 @@ class Chat extends Component {
 
     componentDidUpdate = async (prevProps, prevState) => {
         if (!this.auth) {
-            this.auth = sessionStorage.getItem("auth");
+            this.auth = sessionStorage.getItem("pitangAuth");
         }
         if (this.props.currentContact !== prevProps.currentContact) {
             this.setState({ loading: true });

@@ -1,12 +1,17 @@
 import React from "react";
 import SignUpForm from "../../components/SignUpForm/signupform.component";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-const signUpPage = () => {
-    if (sessionStorage.getItem("auth")) {
+const signUpPage = ({ loggedIn }) => {
+    if (loggedIn || sessionStorage.getItem("pitangAuth")) {
         return <Redirect to="/" />;
     }
     return <SignUpForm />;
 };
 
-export default signUpPage;
+const mapStateToProps = state => ({
+    loggedIn: state.user.auth
+});
+
+export default connect(mapStateToProps)(signUpPage);

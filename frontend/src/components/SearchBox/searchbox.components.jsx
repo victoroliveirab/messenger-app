@@ -27,9 +27,7 @@ class SearchBox extends React.Component {
                         className="searchbox__field"
                         type="text"
                         name="query"
-                        label=""
                         placeholder="Search a message"
-                        fullWidth
                         onChange={this.handleChange}
                     />
                 </form>

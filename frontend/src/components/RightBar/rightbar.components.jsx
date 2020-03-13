@@ -8,7 +8,7 @@ const rightBar = () => {
     return (
         <div className="rightbar">
             <Chat className="chat-container" />
-            {/* <SendMessageBar /> */}
+            <SendMessageBar />
         </div>
     );
 };

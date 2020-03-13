@@ -22,7 +22,7 @@ class Chat extends Component {
 
     componentDidUpdate = async (prevProps, prevState) => {
         if (!this.auth) {
-            this.auth = sessionStorage.getItem("auth");
+            this.auth = sessionStorage.getItem("pitangAuth");
         }
         if (this.props.currentContact !== prevProps.currentContact) {
             this.setState({ loading: true });
@@ -68,6 +68,9 @@ class Chat extends Component {
             return <p>Select a friend you'd like to chat with!!</p>;
         } else if (this.state.loading) {
             return `Fetching conversation with ${this.props.currentContact}`;
+        } else if (this.messages.props.children.length === 0) {
+            console.log(this.messages);
+            return "None yet. sendone!";
         }
         return this.messages;
     }

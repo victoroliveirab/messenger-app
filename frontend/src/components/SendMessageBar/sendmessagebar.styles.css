@@ -1,5 +1,5 @@
 .sendMessageBar {
-    background-color: #ccc;
+    background-color: #e5e5e5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,4 +7,13 @@
 
 .sendMessageBar__field {
     width: 90%;
+    height: 50%;
+    border: 0;
+    border-radius: 150px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.sendMessageBar__field:focus {
+    outline: 0;
 }

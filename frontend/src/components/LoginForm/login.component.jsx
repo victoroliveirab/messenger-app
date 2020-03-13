@@ -49,9 +49,10 @@ class LoginForm extends Component {
                 }
             );
             const auth = response.headers.authorization;
-            sessionStorage.setItem("auth", auth);
+            sessionStorage.setItem("pitangUsername", username);
+            sessionStorage.setItem("pitangAuth", auth);
             this.props.login({ auth, username });
-            this.props.redirectFn();
+            //this.props.redirectFn();
         } catch (err) {
             console.error(err);
         }
