@@ -1,7 +1,5 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import Divider from "@material-ui/core/Divider";
+import Avatar from "../Avatar/avatar.component";
 import { selectContact } from "../../redux/contactList/contactList.actions";
 import { connect } from "react-redux";
 
@@ -33,6 +31,7 @@ const findContactName = target => {
 
 const Contact = props => {
     const { index, ...contact } = props;
+    console.log("...");
     return (
         <div
             className="contact"
@@ -42,7 +41,7 @@ const Contact = props => {
             }}
         >
             <div className="contact__photo">
-                <Avatar>VO</Avatar>
+                <Avatar />
             </div>
             <div className="contact__main">
                 <h4>{contact.username}</h4>

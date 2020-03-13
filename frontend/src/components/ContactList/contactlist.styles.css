@@ -1,6 +1,7 @@
 .contact-list-wrapper {
     overflow-y: auto;
     height: 100%;
+    width: inherit;
 }
 
 /* Not working */

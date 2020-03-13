@@ -1,19 +1,17 @@
 .contact {
-    height: 75px;
+    height: 100px;
     display: grid;
-    grid-template-columns: minmax(50px, 25%) 60% 15%;
+    grid-template-columns: 15% 70% 15%;
     align-items: center;
     justify-content: space-around;
     transition: all 0.2s ease-in-out;
     overflow-wrap: break-word;
-    background-color: #eee;
+    background-color: #f8f8f8;
     border-bottom: 1px solid rgba(0, 0, 0, 0.144);
 }
 
 .contact__photo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding-left: 20px;
 }
 
 .contact__main {
@@ -27,12 +25,12 @@
 .contact__message-preview {
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 350px;
+    width: 100%;
     overflow: hidden;
 }
 
 .contact:hover {
-    background-color: #282d3638;
+    background-color: #e5e5e5;
     cursor: pointer;
 }
 

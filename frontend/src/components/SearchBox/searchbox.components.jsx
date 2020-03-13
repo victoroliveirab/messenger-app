@@ -23,20 +23,14 @@ class SearchBox extends React.Component {
         return (
             <div className="searchbox">
                 <form className="searchbox__form" noValidate>
-                    <Input
-                        className="searcbox__field"
+                    <input
+                        className="searchbox__field"
                         type="text"
                         name="query"
                         label=""
                         placeholder="Search a message"
                         fullWidth
                         onChange={this.handleChange}
-                        variant="outlined"
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <SearchIcon />
-                            </InputAdornment>
-                        }
                     />
                 </form>
             </div>

@@ -16,8 +16,8 @@ const contactList = (state = INITIAL_STATE, action) => {
                 ...state,
                 contacts: action.payload
             };
-        case "UNSET_LOGIN":
-            console.log("unset login");
+        case "UNSET_LOADING":
+            console.log("unset loading");
             return {
                 ...state,
                 loading: false

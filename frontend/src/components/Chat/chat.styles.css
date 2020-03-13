@@ -1,6 +1,30 @@
 .chat {
-    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    align-items: end;
 }
-.chat > div {
-    margin-top: 20px;
+
+.message-container {
+    padding: 10px;
+    max-width: 75%;
+    margin-top: 10px;
+}
+
+.message-owner {
+    background-color: #ea8779;
+    text-align: right;
+    /* float: right;
+    clear: both; */
+    justify-self: end;
+}
+
+.message-other {
+    background-color: #f4c2bb;
+    text-align: left;
+    /* float: left;
+    clear: both; */
+    justify-self: start;
 }

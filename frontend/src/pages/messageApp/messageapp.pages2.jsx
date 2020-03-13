@@ -15,15 +15,15 @@ class MainPage extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
-                <div className="row no-gutters top-bar-container">
+            <div className="base-grid">
+                <div className="top-container">
                     <TopBar />
                 </div>
-                <div className="row no-gutters bottom-bar">
-                    <div className="col-3 full-height">
+                <div className="bottom-container">
+                    <div className="left-bar-container">
                         <LeftBar />
                     </div>
-                    <div className="col-9 full-height">
+                    <div className="right-bar-container">
                         <RightBar />
                     </div>
                 </div>

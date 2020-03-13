@@ -48,28 +48,38 @@ class Chat extends Component {
     };
 
     showMessages = messages => (
-        <div className="chat">
+        <Grid className="chat" container spacing={2}>
             {messages.map(message =>
                 message.sourceUsername === this.props.username ? (
-                    <div className="message-container message-owner">
-                        <Message key={message.id} {...message} />
-                    </div>
+                    <Grid container xs={12}>
+                        <Grid item xs={3} />
+                        <Grid item xs={9}>
+                            <Message key={message.id} {...message} />
+                        </Grid>
+                    </Grid>
                 ) : (
-                    <div className="message-container message-other">
-                        <Message key={message.id} {...message} />
-                    </div>
+                    <Grid container xs={12}>
+                        <Grid item xs={9}>
+                            <Message key={message.id} {...message} />
+                        </Grid>
+                        <Grid item xs={3} />
+                    </Grid>
                 )
             )}
-        </div>
+        </Grid>
     );
 
     render() {
         if (this.props.currentContact === null) {
-            return <p>Select a friend you'd like to chat with!!</p>;
+            return (
+                <Container>
+                    <Paper>Select a friend you'd like to chat with!!</Paper>
+                </Container>
+            );
         } else if (this.state.loading) {
             return `Fetching conversation with ${this.props.currentContact}`;
         }
-        return this.messages;
+        return <Container>{this.messages}</Container>;
     }
 }
 

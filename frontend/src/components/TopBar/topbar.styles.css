@@ -2,10 +2,11 @@
     display: grid;
     grid-template-columns: 33% 67%;
     height: 100%;
+    width: 100%;
 }
 
 .top-bar__main {
-    border-right: 1px solid #eee;
+    border-right: 1px solid #a5a4a5;
     padding-left: 20px;
     padding-right: 10px;
     display: inline-flex;
@@ -21,4 +22,10 @@
     display: inline-flex;
     justify-content: space-between;
     width: 15%;
+}
+
+.top-bar__others {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
 }

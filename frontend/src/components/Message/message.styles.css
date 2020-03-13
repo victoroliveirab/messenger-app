@@ -1,20 +1,3 @@
 .message {
-    margin: 0 40px;
-    padding: 10px 20px;
-}
-
-.message-align-to-user {
-    text-align: right;
-}
-
-.message-body {
-    padding: 10px 20px;
-}
-
-.message-user {
-    background-color: #0f0;
-}
-
-.message-contact {
-    background-color: #ff0;
+    margin: 0;
 }

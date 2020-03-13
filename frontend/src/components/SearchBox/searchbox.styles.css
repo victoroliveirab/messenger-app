@@ -1,14 +1,22 @@
 .searchbox {
-    background-color: #ccc;
-    display: flex;
-    align-items: center;
-    max-width: 100% !important;
+    background-color: #e5e5e5;
+    width: inherit;
 }
 
 .searchbox__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 100%;
 }
 
-.searcbox__field {
-    background-color: #888;
+.searchbox__field {
+    background-color: #d2d2d2;
+    width: 90%;
+    height: 75%;
+    border-radius: 50px;
+    border: 0;
+    padding-left: 10px;
+    padding-right: 10px;
 }

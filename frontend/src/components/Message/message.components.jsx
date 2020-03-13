@@ -11,11 +11,7 @@ const axios = require("axios");
 
 const Message = ({ ...props }) => {
     const owner = props.user === props.sourceUsername ? "user" : "contact";
-    return (
-        <div className={`message-align-to-${owner}`}>
-            <p className={`message-body message-${owner}`}>{props.message}</p>
-        </div>
-    );
+    return <p className="message">{props.message}</p>;
 };
 
 const mapStateToProps = state => ({

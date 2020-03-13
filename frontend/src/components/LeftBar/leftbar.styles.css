@@ -1,5 +1,6 @@
 .left-bar {
     display: grid;
-    grid-template-rows: 6% 94%;
-    max-height: inherit;
+    grid-template-rows: 8% 92%;
+    height: 100%;
+    width: 100%;
 }
