@@ -30,8 +30,9 @@ const findContactName = target => {
 };
 
 const Contact = props => {
-    const { index, ...contact } = props;
-    console.log("...");
+    const { index, contact, lastMessage } = props;
+    // console.log(contact);
+    console.log(lastMessage);
     return (
         <div
             className="contact"
@@ -47,10 +48,7 @@ const Contact = props => {
                 <h4>{contact.username}</h4>
                 <div className="contact__message-wrapper">
                     <p className="contact__message-preview">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Veritatis, nisi atque. Aspernatur at, sed rem iusto
-                        debitis rerum necessitatibus impedit! Fugit dolorum
-                        dolor nam. Sint unde nemo quasi autem asperiores.
+                        {lastMessage.message}
                     </p>
                 </div>
             </div>

@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import List from "@material-ui/core/List";
 import Contact from "../Contact/contact.component";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import {
     setContactList,
     unsetLoading
@@ -54,14 +51,13 @@ class ContactList extends Component {
                 };
             })
         );
-        console.log("xxxx");
         this.props.setContactList(contactList);
         console.log(this.props.contacts);
     }
 
     async componentDidMount() {
         await this.fetchContactList();
-        const lastMessages = [];
+        const contactList = [];
         for (let contact of this.props.contacts) {
             const response = await axios.get(`/msg/${contact.username}/last`, {
                 headers: {
@@ -69,10 +65,10 @@ class ContactList extends Component {
                     Authorization: this.auth
                 }
             });
-            lastMessages.push(response);
+            const lastMessage = response.data;
+            contactList.push({ contact, lastMessage });
         }
-        console.log(this.props.contacts.length);
-        console.log(lastMessages.length);
+        this.props.setContactList(contactList);
         this.props.unsetLoading();
     }
 
@@ -83,10 +79,17 @@ class ContactList extends Component {
         return (
             <div className="contact-list-wrapper">
                 <div className="contact-list">
-                    {this.props.contacts.map((contact, i) => (
-                        <Contact key={i} index={i} {...contact} />
-                    ))}
-                    No more contacts for you!
+                    {this.props.contacts.map((contact, i) => {
+                        if (contact.lastMessage)
+                            return (
+                                <Contact
+                                    key={i}
+                                    index={i}
+                                    contact={contact.contact}
+                                    lastMessage={contact.lastMessage}
+                                />
+                            );
+                    })}
                 </div>
             </div>
         );

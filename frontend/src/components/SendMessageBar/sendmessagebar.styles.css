@@ -2,11 +2,12 @@
     background-color: #e5e5e5;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    height: 100%;
 }
 
 .sendMessageBar__field {
-    width: 90%;
+    width: 85%;
     height: 50%;
     border: 0;
     border-radius: 150px;
@@ -17,3 +18,23 @@
 .sendMessageBar__field:focus {
     outline: 0;
 }
+
+/* .outer-circle {
+    width: 50px;
+    height: 75%;
+    border-radius: 200px;
+    background-color: #fff;
+    position: relative;
+}
+
+.sendMessageBar__button {
+    background-color: #e5e5e5;
+    color: #fff;
+    border: 0;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    bottom: 0;
+} */

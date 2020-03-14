@@ -3,4 +3,5 @@
     grid-template-rows: 8% 92%;
     height: 100%;
     width: 100%;
+    border-right: 1px solid #f8f8f8;
 }

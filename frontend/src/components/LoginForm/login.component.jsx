@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-//import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -10,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
-import { setContacts } from "../../redux/contactList/contactList.actions";
 
 const axios = require("axios");
 

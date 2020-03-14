@@ -37,6 +37,11 @@ class Chat extends Component {
                     }
                 );
                 this.messages = this.showMessages(response.data);
+                // const chatDiv = document.querySelector(".chat");
+                // setTimeout(
+                //     () => (chatDiv.scrollTop = chatDiv.scrollHeight),
+                //     1000
+                // );
                 this.setState({ loading: false });
             } catch (err) {
                 console.log(
