@@ -30,9 +30,7 @@ const findContactName = target => {
 };
 
 const Contact = props => {
-    const { index, contact, lastMessage } = props;
-    // console.log(contact);
-    console.log(lastMessage);
+    const { contact, lastMessage } = props;
     return (
         <div
             className="contact"

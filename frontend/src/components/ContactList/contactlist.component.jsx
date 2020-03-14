@@ -52,7 +52,6 @@ class ContactList extends Component {
             })
         );
         this.props.setContactList(contactList);
-        console.log(this.props.contacts);
     }
 
     async componentDidMount() {

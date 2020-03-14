@@ -35,8 +35,6 @@ class Signup extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        console.log(this.state);
-        console.log("--------------------");
         const {
             name,
             username,
@@ -44,7 +42,6 @@ class Signup extends Component {
             password,
             password_confirmation
         } = this.state;
-        console.log(this.state);
         if (password !== password_confirmation) {
             alert("Passwords dont match");
             return;

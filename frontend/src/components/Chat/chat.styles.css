@@ -29,16 +29,11 @@
 .message-owner {
     background-color: #ea8779;
     text-align: right;
-    /* float: right;
-    clear: both; */
-    /* justify-self: end; */
     align-self: flex-end;
 }
 
 .message-other {
     background-color: #f4c2bb;
     text-align: left;
-    /* float: left;
-    clear: both; */
     justify-self: start;
 }

@@ -23,7 +23,6 @@ class SendMessageBar extends React.Component {
         event.preventDefault();
         const { destination } = this.props;
         const message = this.state.message;
-        console.log(destination, message);
         try {
             const response = await axios.post(
                 `/msg/${destination}`,
@@ -37,7 +36,6 @@ class SendMessageBar extends React.Component {
                     }
                 }
             );
-            console.log(response);
         } catch (err) {
             console.error(err);
         }

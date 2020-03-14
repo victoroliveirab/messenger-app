@@ -8,10 +8,6 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import "./topbar.styles.css";
 
 class TopBar extends React.Component {
-    initials() {
-        //console.log(props);
-    }
-
     //TODO divide topbar between topbar left and topbar right
 
     render() {

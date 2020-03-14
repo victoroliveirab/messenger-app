@@ -50,7 +50,6 @@ class LoginForm extends Component {
             sessionStorage.setItem("pitangUsername", username);
             sessionStorage.setItem("pitangAuth", auth);
             this.props.login({ auth, username });
-            //this.props.redirectFn();
         } catch (err) {
             console.error(err);
         }
@@ -126,19 +125,8 @@ class LoginForm extends Component {
     }
 }
 
-//TODO - NOT WORKING
-// const mapStateToProps = (state, ownProps) => {
-//     const { user } = state;
-//     console.log(user);
-//     console.log(ownProps);
-//     return {};
-// };
-
 const mapDispatchToProps = dispatch => ({
     login: user => dispatch(setCurrentUser(user))
 });
 
-export default connect(
-    /* mapStateToProps */ null,
-    mapDispatchToProps
-)(withStyles(styles)(LoginForm));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginForm));

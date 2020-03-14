@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
 import Message from "../Message/message.components";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 
 import "./chat.styles.css";
@@ -17,7 +14,6 @@ class Chat extends Component {
         };
         this.messages = null;
         this.auth = this.props.auth;
-        console.log("constructor");
     }
 
     componentDidUpdate = async (prevProps, prevState) => {
@@ -37,11 +33,6 @@ class Chat extends Component {
                     }
                 );
                 this.messages = this.showMessages(response.data);
-                // const chatDiv = document.querySelector(".chat");
-                // setTimeout(
-                //     () => (chatDiv.scrollTop = chatDiv.scrollHeight),
-                //     1000
-                // );
                 this.setState({ loading: false });
             } catch (err) {
                 console.log(
@@ -74,7 +65,6 @@ class Chat extends Component {
         } else if (this.state.loading) {
             return `Fetching conversation with ${this.props.currentContact}`;
         } else if (this.messages.props.children.length === 0) {
-            console.log(this.messages);
             return "None yet. sendone!";
         }
         return this.messages;
