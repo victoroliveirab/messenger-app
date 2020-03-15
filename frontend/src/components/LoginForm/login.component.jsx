@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
+import { addFlash } from "../../redux/flashList/flashList.actions";
 
 const axios = require("axios");
 
@@ -51,6 +52,10 @@ class LoginForm extends Component {
             sessionStorage.setItem("pitangAuth", auth);
             this.props.login({ auth, username });
         } catch (err) {
+            this.props.addFlash({
+                type: "danger",
+                message: "wrong username or password"
+            });
             console.error(err);
         }
     };
@@ -126,7 +131,8 @@ class LoginForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    login: user => dispatch(setCurrentUser(user))
+    login: user => dispatch(setCurrentUser(user)),
+    addFlash: flash => dispatch(addFlash(flash))
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginForm));
