@@ -1,12 +1,16 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
 import { selectContact } from "../../redux/contactList/contactList.actions";
+import { setMessages } from "../../redux/chat/chat.actions";
 import { connect } from "react-redux";
 
 import "./contact.styles.css";
 
+const axios = require("axios");
+
 const mapDispatchToProps = dispatch => ({
-    selectContact: contactName => dispatch(selectContact(contactName))
+    selectContact: contactName => dispatch(selectContact(contactName)),
+    setMessages: messages => dispatch(setMessages(messages))
 });
 
 const findContactName = target => {
@@ -29,13 +33,37 @@ const findContactName = target => {
     }
 };
 
+const fetchMessagesToContact = async (auth, contactName) => {
+    let messages;
+    try {
+        const response = await axios.get(`/msg/${contactName}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: auth
+            }
+        });
+        messages = response.data;
+    } catch (err) {
+        console.log(`Error while fetching chat with ${contactName}`);
+        console.error(err);
+    }
+    console.log("messages here");
+    console.log(messages);
+    return messages;
+};
+
 const Contact = props => {
     const { contact, lastMessage } = props;
     return (
         <div
             className="contact"
-            onClick={event => {
+            onClick={async event => {
                 const contactName = findContactName(event.target);
+                const messages = await fetchMessagesToContact(
+                    props.auth,
+                    contactName
+                );
+                props.setMessages(messages);
                 props.selectContact(contactName);
             }}
         >
@@ -58,4 +86,11 @@ const Contact = props => {
     );
 };
 
-export default connect(null, mapDispatchToProps)(Contact);
+const mapStateToProps = state => ({
+    auth: state.user.auth,
+    username: state.user.username,
+    currentContact: state.contactList.contactSelected,
+    messages: state.chat.messages
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

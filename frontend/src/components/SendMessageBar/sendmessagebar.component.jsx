@@ -1,6 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
+
+import { appendMessage } from "../../redux/chat/chat.actions";
 import { connect } from "react-redux";
 
 import "./sendmessagebar.styles.css";
@@ -36,6 +38,8 @@ class SendMessageBar extends React.Component {
                     }
                 }
             );
+            this.props.appendMessage(response.data.pop());
+            this.setState({ message: "" });
         } catch (err) {
             console.error(err);
         }
@@ -55,6 +59,7 @@ class SendMessageBar extends React.Component {
                         placeholder="Send a message"
                         className="sendMessageBar__field"
                         onChange={this.handleChange}
+                        value={this.state.message}
                     />
                     <div className="outer-circle">
                         <button
@@ -75,4 +80,8 @@ const mapStateToProps = state => ({
     destination: state.contactList.contactSelected
 });
 
-export default connect(mapStateToProps)(SendMessageBar);
+const mapDispatchToProps = dispatch => ({
+    appendMessage: message => dispatch(appendMessage(message))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SendMessageBar);
