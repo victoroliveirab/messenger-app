@@ -3,8 +3,8 @@
     height: 100%;
     width: 100%;
     padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -16,6 +16,7 @@
 }
 
 .message-container {
+    position: relative;
     padding: 10px;
     max-width: 75%;
     margin-top: 10px;
@@ -36,4 +37,32 @@
     background-color: #f4c2bb;
     text-align: left;
     justify-self: start;
+}
+
+.message-owner:after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -20px;
+    top: 0px;
+    bottom: auto;
+    border: 22px solid;
+    border-color: #ea8779 transparent transparent transparent;
+    z-index: -999;
+}
+
+.message-other:after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -20px;
+    right: auto;
+    top: 0px;
+    bottom: auto;
+    border: 22px solid;
+    border-color: #f4c2bb transparent transparent transparent;
+    z-index: -999;
 }

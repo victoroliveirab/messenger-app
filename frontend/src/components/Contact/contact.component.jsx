@@ -1,7 +1,10 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { selectContact } from "../../redux/contactList/contactList.actions";
 import { setMessages } from "../../redux/chat/chat.actions";
+import { formatSendDateAndTime } from "../../utils/formatSendDate";
 import { connect } from "react-redux";
 
 import "./contact.styles.css";
@@ -15,18 +18,25 @@ const mapDispatchToProps = dispatch => ({
 
 const findContactName = target => {
     console.log(target);
+    console.log(target.className);
     const tag = target.tagName.toLowerCase();
     // for now, to select a contact, click on the title or the preview text
     switch (tag) {
         case "h4":
             return target.textContent;
         case "div":
-            return "";
-        case "span":
-            return target.children[1].getElementsByTagName("span")[0]
+            if (target.className === "contact__other") {
+                return target.previousSibling.children[0].textContent;
+            }
+            return target.parentNode.querySelector(".contact__main").children[0]
                 .textContent;
+        case "span":
+            return target.parentNode.previousSibling.children[0].textContent;
         case "p":
             return target.parentNode.previousSibling.textContent;
+        case "path":
+        case "svg":
+            return;
         default:
             console.error("Error while selecting contact");
             return "";
@@ -47,24 +57,27 @@ const fetchMessagesToContact = async (auth, contactName) => {
         console.log(`Error while fetching chat with ${contactName}`);
         console.error(err);
     }
-    console.log("messages here");
-    console.log(messages);
     return messages;
 };
 
 const Contact = props => {
     const { contact, lastMessage } = props;
+    console.log(
+        "last message here date: " + formatSendDateAndTime(lastMessage.sendTime)
+    );
     return (
         <div
             className="contact"
             onClick={async event => {
                 const contactName = findContactName(event.target);
-                const messages = await fetchMessagesToContact(
-                    props.auth,
-                    contactName
-                );
-                props.setMessages(messages);
-                props.selectContact(contactName);
+                if (contactName) {
+                    const messages = await fetchMessagesToContact(
+                        props.auth,
+                        contactName
+                    );
+                    props.setMessages(messages);
+                    props.selectContact(contactName);
+                }
             }}
         >
             <div className="contact__photo">
@@ -79,8 +92,12 @@ const Contact = props => {
                 </div>
             </div>
             <div className="contact__other">
-                <span className="contact__other-timestamp">06:25AM</span>
-                <div className="others">\/</div>
+                <span className="contact__other-timestamp">
+                    {formatSendDateAndTime(lastMessage.sendTime)}
+                </span>
+                <div className="others">
+                    <FontAwesomeIcon icon={faCaretDown} size="2x" />
+                </div>
             </div>
         </div>
     );

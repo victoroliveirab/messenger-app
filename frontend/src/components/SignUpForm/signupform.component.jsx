@@ -59,10 +59,8 @@ class Signup extends Component {
                 },
                 { headers: { "Content-Type": "application/json" } }
             );
-            console.log(response);
         } catch (err) {
-            console.log(this.state);
-            console.error(err);
+            console.log(err.response.data);
         }
     };
 
@@ -71,7 +69,6 @@ class Signup extends Component {
         // entry already in use!
         const { name, value } = event.target;
         this.setState({ [name]: value });
-        console.log(this.state);
     };
 
     handleBirthday = date => this.setState({ birthday: date });

@@ -2,7 +2,7 @@ package com.victoroliveira.messenger.controllers;
 
 
 import com.victoroliveira.messenger.dto.ProfileDto;
-import com.victoroliveira.messenger.exceptions.InvalidConfirmationToken;
+import com.victoroliveira.messenger.exceptions.InvalidConfirmationTokenException;
 import com.victoroliveira.messenger.models.ConfirmationToken;
 import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.service.ConfirmationTokenService;
@@ -30,7 +30,7 @@ public class ConfirmationTokenController {
     public ResponseEntity<ProfileDto> confirmAccount(@RequestParam("token") String token) {
         ConfirmationToken trueToken = confirmationTokenService.findByConfirmationToken(token);
         if (trueToken == null) {
-            throw new InvalidConfirmationToken();
+            throw new InvalidConfirmationTokenException();
         }
         Profile profile = profileService.findByUsername(trueToken.getProfile().getUsername());
         profile.setConfirmed(true);

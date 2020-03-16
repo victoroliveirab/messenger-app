@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class MessageNotFoundException extends RuntimeException {
     public MessageNotFoundException() {
-        super("The message you're trying to delete does not exist.");
+        super("MessageNotFoundException: The message you're trying to delete does not exist.");
     }
 }

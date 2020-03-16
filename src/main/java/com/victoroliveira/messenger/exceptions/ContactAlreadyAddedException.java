@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class ContactAlreadyAddedException extends RuntimeException {
     public ContactAlreadyAddedException(String username) {
-        super("Error: you already have " + username + " in your friends list");
+        super("ContactAlreadyAddedException: you already have " + username + " in your friends list");
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class SameOriginDestinationException extends RuntimeException {
     public SameOriginDestinationException() {
-        super("Cannot have a message from/to yourself");
+        super("SameOriginDestinationException: Cannot have a message from/to yourself");
     }
 }

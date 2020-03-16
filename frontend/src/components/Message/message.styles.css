@@ -1,3 +1,10 @@
-.message {
+.message__text {
     margin: 0;
+}
+
+.message__timestamp {
+    margin: 0;
+    text-align: right;
+    font-size: 0.75rem;
+    color: #3e3e3e;
 }

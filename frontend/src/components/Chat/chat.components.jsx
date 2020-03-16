@@ -16,35 +16,8 @@ class Chat extends Component {
         console.log(this.messages);
     }
 
-    // componentDidUpdate = async (prevProps, prevState) => {
-    //     if (!this.auth) {
-    //         this.auth = sessionStorage.getItem("pitangAuth");
-    //     }
-    //     if (this.props.currentContact !== prevProps.currentContact) {
-    //         this.setState({ loading: true });
-    //         try {
-    //             const response = await axios.get(
-    //                 `/msg/${this.props.currentContact}`,
-    //                 {
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         Authorization: this.auth
-    //                     }
-    //                 }
-    //             );
-    //             this.messages = this.showMessages(response.data);
-    //             this.setState({ loading: false });
-    //         } catch (err) {
-    //             console.log(
-    //                 `Error while fetching chat with ${this.props.currentContact}`
-    //             );
-    //             console.error(err);
-    //         }
-    //     }
-    // };
-
     showMessages = () => {
-        console.log("this.props::");
+        console.log("this.props");
         console.log(this.props);
         return (
             <div className="chat">

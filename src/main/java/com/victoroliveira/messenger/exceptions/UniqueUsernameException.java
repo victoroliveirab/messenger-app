@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UniqueUsernameException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     public UniqueUsernameException(String username) {
-        super("The name " + username + " is already taken. Try another");
+        super("UniqueUsernameException: The name " + username + " is already taken. Try another");
     }
 }

@@ -54,7 +54,7 @@ class LoginForm extends Component {
         } catch (err) {
             this.props.addFlash({
                 type: "danger",
-                message: "wrong username or password"
+                message: "Wrong Username and/or Password"
             });
             console.error(err);
         }

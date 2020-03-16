@@ -1,9 +1,12 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
 import { connect } from "react-redux";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faEllipsisV,
+    faCommentAlt,
+    faCircleNotch
+} from "@fortawesome/free-solid-svg-icons";
 
 import "./topbar.styles.css";
 
@@ -18,13 +21,13 @@ class TopBar extends React.Component {
                         <Avatar className="top-bar__avatar" rounded={true} />
                     </div>
                     <div className="top-bar__other-icons">
-                        <PlayCircleFilledIcon />
-                        <ChatBubbleIcon />
-                        <MoreVertIcon />
+                        <FontAwesomeIcon icon={faCircleNotch} />
+                        <FontAwesomeIcon icon={faCommentAlt} />
+                        <FontAwesomeIcon icon={faEllipsisV} />
                     </div>
                 </div>
                 <div className="top-bar__others">
-                    <MoreVertIcon />
+                    <FontAwesomeIcon icon={faEllipsisV} />
                 </div>
             </div>
         );

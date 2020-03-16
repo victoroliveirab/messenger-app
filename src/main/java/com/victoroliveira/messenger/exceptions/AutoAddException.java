@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class AutoAddException extends RuntimeException {
     public AutoAddException() {
-        super("Error. Cannot add yourself");
+        super("AutoAddException: Error. Cannot add yourself");
     }
 }
