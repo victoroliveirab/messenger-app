@@ -6,9 +6,9 @@
 }
 
 .top-bar__main {
-    border-right: 1px solid #f8f8f83b;
-    padding-left: 20px;
+    margin-left: 20px;
     padding-right: 20px;
+    border-right: 1px solid #f8f8f83b;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -18,14 +18,21 @@
     cursor: pointer;
 }
 
+.top-bar__button {
+    background-color: #fff0;
+    border: 0;
+    color: #eee;
+}
+
 .top-bar__other-icons {
     display: inline-flex;
     justify-content: space-between;
-    width: 15%;
+    width: 25%;
 }
 
 .top-bar__others {
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
+    padding-right: 20px;
 }
