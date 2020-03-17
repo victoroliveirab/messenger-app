@@ -8,7 +8,7 @@ import {
     faCircleNotch
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./topbar.styles.css";
+import "./topbar.style.css";
 
 class TopBar extends React.Component {
     //TODO divide topbar between topbar left and topbar right

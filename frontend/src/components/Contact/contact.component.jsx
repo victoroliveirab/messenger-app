@@ -7,7 +7,7 @@ import { setMessages } from "../../redux/chat/chat.actions";
 import { formatSendDateAndTime } from "../../utils/formatSendDate";
 import { connect } from "react-redux";
 
-import "./contact.styles.css";
+import "./contact.style.css";
 
 const axios = require("axios");
 
@@ -17,8 +17,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const findContactName = target => {
-    console.log(target);
-    console.log(target.className);
     const tag = target.tagName.toLowerCase();
     // for now, to select a contact, click on the title or the preview text
     switch (tag) {
@@ -62,9 +60,6 @@ const fetchMessagesToContact = async (auth, contactName) => {
 
 const Contact = props => {
     const { contact, lastMessage } = props;
-    console.log(
-        "last message here date: " + formatSendDateAndTime(lastMessage.sendTime)
-    );
     return (
         <div
             className="contact"

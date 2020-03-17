@@ -9,7 +9,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
-import "./signupform.styles.css";
+import "./signupform.style.css";
 const axios = require("axios");
 
 const styles = theme => ({

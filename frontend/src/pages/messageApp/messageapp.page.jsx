@@ -1,9 +1,9 @@
 import React from "react";
-import TopBar from "../../components/TopBar/topbar.components";
-import LeftBar from "../../components/LeftBar/leftbar.components";
-import RightBar from "../../components/RightBar/rightbar.components";
+import TopBar from "../../components/TopBar/topbar.component";
+import LeftBar from "../../components/LeftBar/leftbar.component";
+import RightBar from "../../components/RightBar/rightbar.component";
 
-import "./messageapp.styles.css";
+import "./messageapp.style.css";
 
 class MainPage extends React.Component {
     constructor(props) {

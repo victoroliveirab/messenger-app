@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
-    auth: null,
-    username: null
+    auth: sessionStorage.getItem("pitangAuth"),
+    username: sessionStorage.getItem("pitangUsername")
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

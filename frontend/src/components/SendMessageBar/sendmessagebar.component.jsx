@@ -5,7 +5,7 @@ import { faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 import { appendMessage } from "../../redux/chat/chat.actions";
 import { connect } from "react-redux";
 
-import "./sendmessagebar.styles.css";
+import "./sendmessagebar.style.css";
 
 const axios = require("axios");
 

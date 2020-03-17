@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import Message from "../Message/message.components";
+import Message from "../Message/message.component";
 import { connect } from "react-redux";
 
-import "./chat.styles.css";
-
-const axios = require("axios");
+import "./chat.style.css";
 
 class Chat extends Component {
     constructor(props) {
@@ -12,13 +10,9 @@ class Chat extends Component {
         this.state = {
             loading: true
         };
-        this.messages = props.messages;
-        console.log(this.messages);
     }
 
     showMessages = () => {
-        console.log("this.props");
-        console.log(this.props);
         return (
             <div className="chat">
                 {this.props.messages.map(message =>

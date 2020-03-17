@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { formatSendTime } from "../../utils/formatSendDate";
 
-import "./message.styles.css";
+import "./message.style.css";
 
 const Message = ({ ...props }) => {
     return (

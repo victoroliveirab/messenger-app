@@ -4,7 +4,7 @@ import PrivateRoute from "./utils/PrivateRoute.component";
 import "./App.css";
 import loginPage from "./pages/login/login.page";
 import signUpPage from "./pages/signup/signup.page";
-import mainPage from "./pages/messageApp/messageapp.pages";
+import mainPage from "./pages/messageApp/messageapp.page";
 
 function App() {
     return (

@@ -1,8 +1,8 @@
 import React from "react";
-import Chat from "../Chat/chat.components";
+import Chat from "../Chat/chat.component";
 import SendMessageBar from "../SendMessageBar/sendmessagebar.component";
 
-import "./rightbar.styles.css";
+import "./rightbar.style.css";
 
 const rightBar = () => {
     return (

@@ -6,14 +6,13 @@ import {
 } from "../../redux/contactList/contactList.actions";
 import { connect } from "react-redux";
 
-import "./contactlist.styles.css";
+import "./contactlist.style.css";
 
 const axios = require("axios");
 
 class ContactList extends Component {
     constructor(props) {
         super(props);
-        this.auth = props.auth;
         this.state = {
             loading: true
         };
@@ -24,7 +23,7 @@ class ContactList extends Component {
             const response = await axios.get("/users/contacts", {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: this.auth
+                    Authorization: this.props.auth
                 }
             });
             this.props.setContactList(response.data);
@@ -41,7 +40,7 @@ class ContactList extends Component {
                     {
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: this.auth
+                            Authorization: this.props.auth
                         }
                     }
                 );
@@ -61,7 +60,7 @@ class ContactList extends Component {
             const response = await axios.get(`/msg/${contact.username}/last`, {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: this.auth
+                    Authorization: this.props.auth
                 }
             });
             const lastMessage = response.data;
@@ -96,6 +95,7 @@ class ContactList extends Component {
 }
 
 const mapStateToProps = state => ({
+    auth: state.user.auth,
     contacts: state.contactList.contacts,
     loading: state.contactList.loading
 });

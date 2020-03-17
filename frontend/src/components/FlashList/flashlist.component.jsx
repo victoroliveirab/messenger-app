@@ -1,5 +1,5 @@
 import React from "react";
-import Flash from "../Flash/flash.components";
+import Flash from "../Flash/flash.component";
 import { connect } from "react-redux";
 
 const FlashList = props => {
