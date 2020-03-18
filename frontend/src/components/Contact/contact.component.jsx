@@ -76,7 +76,7 @@ const Contact = props => {
             }}
         >
             <div className="contact__photo">
-                <Avatar />
+                <Avatar username={props.username} auth={props.auth} />
             </div>
             <div className="contact__main">
                 <h4>{contact.username}</h4>

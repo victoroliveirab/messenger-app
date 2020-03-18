@@ -7,6 +7,7 @@ import com.victoroliveira.messenger.service.ConfirmationTokenService;
 import com.victoroliveira.messenger.service.ProfileService;
 import com.victoroliveira.messenger.utils.CustomPasswordEncoder;
 import com.victoroliveira.messenger.utils.DateUtils;
+import com.victoroliveira.messenger.utils.ImageToByteArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +69,8 @@ public class ProfileServiceImpl implements ProfileService {
         checkBirthday(profile);
         profile.setOnline(false);
         profile.setPassword(bCryptPasswordEncoder.encode(profile.getPassword()));
+        byte[] img = ImageToByteArray.convert();
+        System.out.println(img);
         confirmationTokenService.sendEmail(profile);
         return profileRepository.save(profile);
     }
