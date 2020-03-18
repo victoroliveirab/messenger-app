@@ -6,7 +6,7 @@
     justify-content: space-around;
     transition: all 0.2s ease-in-out;
     overflow-wrap: break-word;
-    background-color: #f8f8f8;
+    background-color: var(--main-light-gray);
     border-bottom: 1px solid rgba(0, 0, 0, 0.144);
 }
 
@@ -30,7 +30,7 @@
 }
 
 .contact:hover {
-    background-color: #e5e5e5;
+    background-color: var(--main-regular-gray);
     cursor: pointer;
 }
 

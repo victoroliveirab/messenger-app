@@ -8,7 +8,7 @@
 .top-bar__main {
     margin-left: 20px;
     padding-right: 20px;
-    border-right: 1px solid #f8f8f83b;
+    border-right: 1px solid var(--main-light-gray-shade);
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -19,9 +19,9 @@
 }
 
 .top-bar__button {
-    background-color: #fff0;
+    background-color: var(--main-transparent);
     border: 0;
-    color: #eee;
+    color: var(--main-dark-white);
 }
 
 .top-bar__other-icons {

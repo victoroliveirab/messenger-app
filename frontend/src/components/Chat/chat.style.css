@@ -28,13 +28,13 @@
 }
 
 .message-owner {
-    background-color: #ea8779;
+    background-color: var(--main-dark-red);
     text-align: right;
     align-self: flex-end;
 }
 
 .message-other {
-    background-color: #f4c2bb;
+    background-color: var(--main-light-red);
     text-align: left;
     justify-self: start;
 }
@@ -49,7 +49,7 @@
     top: 0px;
     bottom: auto;
     border: 22px solid;
-    border-color: #ea8779 transparent transparent transparent;
+    border-color: var(--main-dark-red) transparent transparent transparent;
     z-index: -999;
 }
 
@@ -63,6 +63,6 @@
     top: 0px;
     bottom: auto;
     border: 22px solid;
-    border-color: #f4c2bb transparent transparent transparent;
+    border-color: var(--main-light-red) transparent transparent transparent;
     z-index: -999;
 }

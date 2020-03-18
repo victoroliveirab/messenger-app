@@ -1,0 +1,29 @@
+.set-profile-pic {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: var(--main-light-gray);
+}
+
+.set-profile-pic__outer-circle {
+    background-color: var(--main-dark-red);
+    color: var(--main-white);
+    border-radius: 500px;
+    padding: 50px;
+    margin-bottom: 25px;
+}
+
+.set-profile-pic__picture {
+}
+
+.set-profile-pic__button {
+    width: 60%;
+    padding: 10px;
+    border: 0;
+    background-color: var(--main-white);
+    color: #888;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}

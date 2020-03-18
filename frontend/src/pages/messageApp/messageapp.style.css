@@ -3,6 +3,12 @@
     height: 7vh;
 }
 
+.top-bar-return {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
 .bottom-bar {
     height: 93vh;
 }

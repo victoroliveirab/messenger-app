@@ -2,5 +2,5 @@
     overflow-y: auto;
     height: 100%;
     width: inherit;
-    background: #e5e5e5;
+    background: var(--main-regular-gray);
 }

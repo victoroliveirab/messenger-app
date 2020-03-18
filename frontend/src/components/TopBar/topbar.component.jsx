@@ -18,7 +18,12 @@ class TopBar extends React.Component {
             <div className="top-bar">
                 <div className="top-bar__main">
                     <div>
-                        <Avatar className="top-bar__avatar" rounded={true} />
+                        <a href="/profile">
+                            <Avatar
+                                className="top-bar__avatar"
+                                rounded={true}
+                            />
+                        </a>
                     </div>
                     <div className="top-bar__other-icons">
                         <button type="button" className="top-bar__button">
@@ -39,7 +44,7 @@ class TopBar extends React.Component {
                                 <FontAwesomeIcon icon={faEllipsisV} size="2x" />
                             </button>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="#">
+                                <a className="dropdown-item" href="/profile">
                                     Profile
                                 </a>
                                 <a className="dropdown-item" href="#">

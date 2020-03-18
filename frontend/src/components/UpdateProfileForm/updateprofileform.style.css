@@ -1,0 +1,11 @@
+.update-profile-form {
+    height: 100%;
+    margin-left: 20px;
+    padding-top: 20px;
+    display: grid;
+    grid-template-rows: 25% 50% 25%;
+}
+
+.profile-form__title {
+    font-size: 4.8rem;
+}

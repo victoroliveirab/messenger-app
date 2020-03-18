@@ -4,7 +4,9 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store, { history } from "./redux/store";
+
+import { ConnectedRouter } from "connected-react-router";
 
 import FlashList from "./components/FlashList/flashlist.component";
 
@@ -12,10 +14,12 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <FlashList flashes={[]} />
-            <App className="base" />
-        </BrowserRouter>
+        <ConnectedRouter history={history}>
+            <>
+                <FlashList flashes={[]} />
+                <App className="base" />
+            </>
+        </ConnectedRouter>
     </Provider>,
     document.getElementById("root")
 );
