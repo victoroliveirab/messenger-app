@@ -32,7 +32,12 @@ class Chat extends Component {
 
     render() {
         if (this.props.currentContact === null) {
-            return <p>Select a friend you'd like to chat with!!</p>;
+            return (
+                <div className="chat-no-contact-selected">
+                    <h2>Hello, {this.props.username}!</h2>
+                    <p>Select a friend you'd like to chat with!</p>
+                </div>
+            );
         } else if (this.props.currentContact && !this.props.messages) {
             return `Fetching conversation with ${this.props.currentContact}`;
         } else if (/* this.props.messages.children.length === 0 */ false) {
