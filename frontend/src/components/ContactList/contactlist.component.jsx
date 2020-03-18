@@ -20,7 +20,7 @@ class ContactList extends Component {
 
     async fetchContactList() {
         try {
-            const response = await axios.get("/users/contacts", {
+            const response = await axios.get("/contacts", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: this.props.auth

@@ -22,16 +22,15 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
-    @GetMapping("/users/contacts")
-    public ResponseEntity<List<ProfileDto>> contactsList(@RequestHeader(name = "Authorization") String token) { //TODO
-        System.out.println("here");
+    @GetMapping("/contacts")
+    public ResponseEntity<List<ProfileDto>> contactsList(@RequestHeader(name = "Authorization") String token) {
         String username = TokenToUsernameConverter.convert(token);
         List<Profile> contacts = profileService.findByUsername(username).getContacts();
         List<ProfileDto> contactsDtos = ProfileToProfileDtoConverter.convertAll(contacts);
         return new ResponseEntity<>(contactsDtos, HttpStatus.OK);
     }
 
-    @PostMapping("/users/add/{contact}")
+    @PostMapping("/contacts/add/{contact}")
     @ResponseBody
     public ResponseEntity<ProfileDto> addContact(@RequestHeader(name = "Authorization") String token, @PathVariable String contact) {
         Profile contactProfile = profileService.findByUsername(contact);
@@ -45,7 +44,7 @@ public class ContactController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/delete/{contact}") //delete contact
+    @DeleteMapping("/contacts/delete/{contact}") //delete contact
     @ResponseBody
     public ResponseEntity<ProfileDto> deleteContact(@RequestHeader(name = "Authorization") String token, @PathVariable String contact) {
         Profile deletedContact = profileService.findByUsername(contact);
