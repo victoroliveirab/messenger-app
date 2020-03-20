@@ -1,4 +1,4 @@
-.left-bar {
+.leftbar-default {
     display: grid;
     grid-template-rows: 8% 92%;
     height: 100%;
