@@ -4,9 +4,6 @@ import LeftBar from "../../components/LeftBar/leftbar.component";
 import RightBar from "../../components/RightBar/rightbar.component";
 import { connect } from "react-redux";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
 import "./messageapp.style.css";
 
 const MainPage = () => (

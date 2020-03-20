@@ -1,5 +1,5 @@
 import React from "react";
-import eric from "../../utils/eric.jpg";
+//import eric from "../../utils/eric.jpg";
 import { connect } from "react-redux";
 
 import "./avatar.style.css";

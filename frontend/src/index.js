@@ -10,8 +10,6 @@ import { ConnectedRouter } from "connected-react-router";
 
 import FlashList from "./components/FlashList/flashlist.component";
 
-import { BrowserRouter } from "react-router-dom";
-
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>

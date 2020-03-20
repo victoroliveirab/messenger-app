@@ -87,6 +87,7 @@ class ContactList extends Component {
                                     lastMessage={contact.lastMessage}
                                 />
                             );
+                        return "";
                     })}
                 </div>
             </div>
