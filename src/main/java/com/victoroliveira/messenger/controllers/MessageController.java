@@ -33,7 +33,6 @@ public class MessageController {
     public ResponseEntity<MessageDto> getLastMessageToAContact(@RequestHeader(name = "Authorization") String token,
                                                                   @PathVariable String target) {
         String requester = TokenToUsernameConverter.convert(token);
-        System.out.println(requester + " requested last message with " + target);
         Message message = messageService.findLastMessageInvolvingProfileAndContact(target, requester);
         if (message == null) {
             return new ResponseEntity<>(HttpStatus.OK);

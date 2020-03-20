@@ -22,6 +22,7 @@ class TopBar extends React.Component {
                             <Avatar
                                 className="top-bar__avatar"
                                 rounded={true}
+                                username={this.props.username}
                             />
                         </a>
                     </div>
@@ -86,6 +87,6 @@ class TopBar extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({ currentUser: state.user.currentUser });
+const mapStateToProps = state => ({ username: state.user.username });
 
 export default connect(mapStateToProps)(TopBar);

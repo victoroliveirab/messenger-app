@@ -17,37 +17,36 @@ class Avatar extends React.Component {
     }
 
     fetchAvatar = async (username, auth) => {
-        let avatar = null;
         try {
             const response = await axios.get(`/avatar/${username}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: auth
-                }
+                },
+                timeout: 8000
             });
             console.log(response);
-            this.img = response.data;
+            this.img = response.data.image;
             this.setState({ loading: false });
         } catch (err) {
+            console.log("timeout?");
             console.error(err);
         }
     };
 
-    componentDidMount() {
+    componentDidMount = async () =>
         this.fetchAvatar(this.props.username, this.props.auth);
-    }
 
     render() {
         if (this.state.loading) {
             return "";
         }
-        console.log(this.img);
         return (
             <div className="img-wrapper">
                 <img
                     src={`data:image/png;base64,${this.img}`}
                     alt=""
-                    className={`img ${true ? "img-rounded" : ""}`}
+                    className={`img ${this.props.rounded ? "img-rounded" : ""}`}
                 />
             </div>
         );
