@@ -1,5 +1,6 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,9 +18,11 @@ const TopBar = props => {
         case "/profile":
             return (
                 <div className="top-bar-return">
-                    <a role="button" className="btn" href="/">
-                        <FontAwesomeIcon icon={faArrowLeft} size="2x" />
-                    </a>
+                    <Link to="/">
+                        <button type="button" className="btn" href="/">
+                            <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+                        </button>
+                    </Link>
                 </div>
             );
         default:
@@ -27,27 +30,37 @@ const TopBar = props => {
                 <div className="top-bar">
                     <div className="top-bar__main">
                         <div>
-                            <a href="/profile">
+                            <Link to="/profile">
                                 <Avatar
                                     className="top-bar__avatar"
                                     rounded={true}
                                     username={props.username}
                                 />
-                            </a>
+                            </Link>
                         </div>
                         <div className="top-bar__other-icons">
-                            <button type="button" className="top-bar__button">
-                                <FontAwesomeIcon
-                                    icon={faCircleNotch}
-                                    size="2x"
-                                />
-                            </button>
-                            <button type="button" className="top-bar__button">
-                                <FontAwesomeIcon
-                                    icon={faCommentAlt}
-                                    size="2x"
-                                />
-                            </button>
+                            <Link to="/stories">
+                                <button
+                                    type="button"
+                                    className="top-bar__button"
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faCircleNotch}
+                                        size="2x"
+                                    />
+                                </button>
+                            </Link>
+                            <Link to="/message">
+                                <button
+                                    type="button"
+                                    className="top-bar__button"
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faCommentAlt}
+                                        size="2x"
+                                    />
+                                </button>
+                            </Link>
 
                             <div className="dropdown">
                                 <button
@@ -63,18 +76,21 @@ const TopBar = props => {
                                     />
                                 </button>
                                 <div className="dropdown-menu">
-                                    <a
-                                        className="dropdown-item"
-                                        href="/profile"
-                                    >
-                                        Profile
-                                    </a>
-                                    <a className="dropdown-item" href="#">
-                                        Help
-                                    </a>
-                                    <a className="dropdown-item" href="#">
-                                        Sign Out
-                                    </a>
+                                    <Link to="/profile">
+                                        <button className="dropdown-item">
+                                            Profile
+                                        </button>
+                                    </Link>
+                                    <Link to="/help">
+                                        <button className="dropdown-item">
+                                            Help
+                                        </button>
+                                    </Link>
+                                    <Link to="/logout">
+                                        <button className="dropdown-item">
+                                            Sign Out
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -91,15 +107,21 @@ const TopBar = props => {
                                 <FontAwesomeIcon icon={faEllipsisV} size="2x" />
                             </button>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="#">
-                                    Profile
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                    Help
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                    Sign Out
-                                </a>
+                                <Link to="/profile">
+                                    <button className="dropdown-item">
+                                        Profile
+                                    </button>
+                                </Link>
+                                <Link to="/help">
+                                    <button className="dropdown-item">
+                                        Help
+                                    </button>
+                                </Link>
+                                <Link to="/logout">
+                                    <button className="dropdown-item">
+                                        Sign Out
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
