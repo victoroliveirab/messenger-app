@@ -50,7 +50,11 @@ const TopBar = props => {
                                     />
                                 </button>
                             </Link>
-                            <Link to="/message">
+                            <Link
+                                to={
+                                    props.path === "/message" ? "/" : "/message"
+                                }
+                            >
                                 <button
                                     type="button"
                                     className="top-bar__button"

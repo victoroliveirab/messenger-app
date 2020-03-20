@@ -59,7 +59,7 @@ const fetchMessagesToContact = async (auth, contactName) => {
 };
 
 const Contact = props => {
-    const { contact, lastMessage } = props;
+    const { contact, lastMessage, simplified } = props;
     return (
         <div
             className="contact"
@@ -81,19 +81,23 @@ const Contact = props => {
             <div className="contact__main">
                 <h4>{contact.username}</h4>
                 <div className="contact__message-wrapper">
-                    <p className="contact__message-preview">
-                        {lastMessage.message}
-                    </p>
+                    {!simplified && (
+                        <p className="contact__message-preview">
+                            {lastMessage.message}
+                        </p>
+                    )}
                 </div>
             </div>
-            <div className="contact__other">
-                <span className="contact__other-timestamp">
-                    {formatSendDateAndTime(lastMessage.sendTime)}
-                </span>
-                <div className="others">
-                    <FontAwesomeIcon icon={faCaretDown} size="2x" />
+            {!simplified && (
+                <div className="contact__other">
+                    <span className="contact__other-timestamp">
+                        {formatSendDateAndTime(lastMessage.sendTime)}
+                    </span>
+                    <div className="others">
+                        <FontAwesomeIcon icon={faCaretDown} size="2x" />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

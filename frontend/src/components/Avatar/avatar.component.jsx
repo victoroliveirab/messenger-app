@@ -8,7 +8,6 @@ const axios = require("axios");
 
 class Avatar extends React.Component {
     constructor(props) {
-        console.log("avatar");
         super(props);
         this.state = {
             loading: true
@@ -25,11 +24,10 @@ class Avatar extends React.Component {
                 },
                 timeout: 8000
             });
-            console.log(response);
             this.img = response.data.image;
             this.setState({ loading: false });
         } catch (err) {
-            console.log("timeout?");
+            //todo Add flash message to page when error occured (with relevant message)
             console.error(err);
         }
     };
@@ -45,7 +43,7 @@ class Avatar extends React.Component {
             <div className="img-wrapper">
                 <img
                     src={`data:image/png;base64,${this.img}`}
-                    alt=""
+                    alt={`${this.props.username}`}
                     className={`img ${this.props.rounded ? "img-rounded" : ""}`}
                 />
             </div>

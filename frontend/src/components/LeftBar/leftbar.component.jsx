@@ -9,6 +9,8 @@ const leftBar = props => {
     switch (props.path) {
         case "/profile":
             return <SetProfilePic />;
+        case "/message":
+            return <ContactList />;
         default:
             return (
                 <div className="leftbar-default">

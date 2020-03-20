@@ -3,8 +3,6 @@ import Flash from "../Flash/flash.component";
 import { connect } from "react-redux";
 
 const FlashList = props => {
-    console.log("props of flashList");
-    console.log(props);
     return (
         <div>
             {props.flashes.map((flash, i) => (

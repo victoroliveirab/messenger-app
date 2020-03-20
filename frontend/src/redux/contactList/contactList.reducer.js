@@ -17,7 +17,6 @@ const contactList = (state = INITIAL_STATE, action) => {
                 contacts: action.payload
             };
         case "UNSET_LOADING":
-            console.log("unset loading");
             return {
                 ...state,
                 loading: false
