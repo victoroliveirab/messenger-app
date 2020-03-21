@@ -3,6 +3,11 @@ export const selectContact = contactName => ({
     payload: contactName
 });
 
+export const setContactObj = contact => ({
+    type: "SET_CONTACT_OBJ",
+    payload: contact
+});
+
 export const getContactList = () => ({
     type: "GET_CONTACT_LIST"
 });
@@ -14,4 +19,8 @@ export const setContactList = contacts => ({
 
 export const unsetLoading = () => ({
     type: "UNSET_LOADING"
+});
+
+export const changeOrder = () => ({
+    type: "CHANGE_ORDER"
 });

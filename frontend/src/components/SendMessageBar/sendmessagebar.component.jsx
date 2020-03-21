@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 
 import { appendMessage } from "../../redux/chat/chat.actions";
+import { changeOrder } from "../../redux/contactList/contactList.actions";
 import { connect } from "react-redux";
 
 import "./sendmessagebar.style.css";
@@ -27,7 +28,7 @@ class SendMessageBar extends React.Component {
         const message = this.state.message;
         try {
             const response = await axios.post(
-                `/msg/${destination}`,
+                `/msg/${destination.username}`,
                 {
                     message
                 },
@@ -40,6 +41,7 @@ class SendMessageBar extends React.Component {
             );
             this.props.appendMessage(response.data.pop());
             this.setState({ message: "" });
+            this.props.changeOrder();
         } catch (err) {
             console.error(err);
         }
@@ -81,7 +83,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    appendMessage: message => dispatch(appendMessage(message))
+    appendMessage: message => dispatch(appendMessage(message)),
+    changeOrder: () => dispatch(changeOrder())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendMessageBar);

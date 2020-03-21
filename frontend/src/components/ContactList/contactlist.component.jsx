@@ -86,19 +86,14 @@ class ContactList extends Component {
                     </div>
                 );
             default:
+                console.log("re-render");
                 return (
                     <div className="contact-list-wrapper">
                         <div className="contact-list">
-                            {sortObjectsByTimeValue(
-                                this.props.contactList.filter(
-                                    entry => entry.lastMessage
-                                ),
-                                "sendTime"
-                            ).map((entry, i) => {
+                            {this.props.contactList.map((entry, i) => {
                                 return (
                                     <Contact
-                                        key={i}
-                                        index={i}
+                                        key={entry.contact.id}
                                         contact={entry.contact}
                                         lastMessage={entry.lastMessage}
                                     />

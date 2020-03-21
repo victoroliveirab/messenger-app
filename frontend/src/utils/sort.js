@@ -1,7 +1,5 @@
 export const sortObjectsByTimeValue = (arr, key) => {
     const copy = [...arr];
-    console.log(copy[0]);
-    console.log(copy[0].lastMessage[key]);
     copy.sort(
         (a, b) =>
             new Date(b.lastMessage[key]).getTime() -
