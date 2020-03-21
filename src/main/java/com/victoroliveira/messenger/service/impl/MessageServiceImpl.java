@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -31,7 +28,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void sendMessage(Message message, String senderUsername, String receiverUsername) {
+    public Message sendMessage(Message message, String senderUsername, String receiverUsername) {
         Profile sender = profileService.findByUsername(senderUsername);
         Profile receiver = profileService.findByUsername(receiverUsername);
         checkProfilesInvolved(senderUsername, receiverUsername);
@@ -39,7 +36,7 @@ public class MessageServiceImpl implements MessageService {
         message.setSourceProfile(sender);
         message.setDestinationProfile(receiver);
         message.setSendTime(now);
-        messageRepository.save(message);
+        return messageRepository.save(message);
     }
 
     @Override
@@ -74,6 +71,16 @@ public class MessageServiceImpl implements MessageService {
             return message2 == null ? message1 : message2;
         }
         return message1.getId() > message2.getId() ? message1 : message2;
+    }
+
+    @Override
+    public List<Message> findAllLastMessages(String profileUsername) {
+        Profile profile = profileService.findByUsername(profileUsername);
+        List<Message> lastMessages = new ArrayList<>();
+        for (Profile contact : profile.getContacts()) {
+            lastMessages.add(this.findLastMessageInvolvingProfileAndContact(profileUsername, contact.getUsername())); //TODO optimize
+        }
+        return lastMessages;
     }
 
     @Transactional

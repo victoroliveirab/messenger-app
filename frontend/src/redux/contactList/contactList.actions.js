@@ -8,13 +8,24 @@ export const setContactObj = contact => ({
     payload: contact
 });
 
-export const getContactList = () => ({
-    type: "GET_CONTACT_LIST"
-});
-
 export const setContactList = contacts => ({
     type: "SET_CONTACT_LIST",
     payload: contacts
+});
+
+export const appendToContactList = contact => ({
+    type: "APPEND_TO_CONTACT_LIST",
+    payload: contact
+});
+
+export const setChatList = contacts => ({
+    type: "SET_CHAT_LIST",
+    payload: contacts
+});
+
+export const appendToChatList = contact => ({
+    type: "APPEND_TO_CHAT_LIST",
+    payload: contact
 });
 
 export const unsetLoading = () => ({
@@ -23,4 +34,8 @@ export const unsetLoading = () => ({
 
 export const changeOrder = () => ({
     type: "CHANGE_ORDER"
+});
+
+export const reorderCurrentToFirst = () => ({
+    type: "REORDER_CURRENT_TO_FIRST"
 });

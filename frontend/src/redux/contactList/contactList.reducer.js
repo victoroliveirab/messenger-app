@@ -2,6 +2,7 @@ const INITIAL_STATE = {
     contactSelected: null,
     contactSelectedObj: null,
     contacts: [],
+    chats: [],
     loading: true
 };
 
@@ -13,8 +14,6 @@ const contactList = (state = INITIAL_STATE, action) => {
                 contactSelected: action.payload
             };
         case "SET_CONTACT_OBJ":
-            console.log("payload to set contact obj");
-            console.log(action.payload);
             return {
                 ...state,
                 contactSelectedObj: action.payload
@@ -23,6 +22,23 @@ const contactList = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 contacts: action.payload
+            };
+        case "APPEND_TO_CONTACT_LIST":
+            const newContactList = state.contacts.concat([action.payload]);
+            return {
+                ...state,
+                contacts: newContactList
+            };
+        case "SET_CHAT_LIST":
+            return {
+                ...state,
+                chats: action.payload
+            };
+        case "APPEND_TO_CHAT_LIST":
+            const newChatList = [action.payload].concat(state.contacts);
+            return {
+                ...state,
+                chats: newChatList
             };
         case "UNSET_LOADING":
             return {
@@ -48,6 +64,19 @@ const contactList = (state = INITIAL_STATE, action) => {
                 ...state,
                 contacts: newList
             };
+        case "REORDER_CURRENT_TO_FIRST":
+            if (
+                !state.chats.find(
+                    e => e.contact.username === state.contactSelected.username
+                )
+            ) {
+                console.log(
+                    state.contactSelected.username +
+                        " is not in the chat list... yet!"
+                );
+                return state;
+            }
+            return state;
         default:
             return state;
     }

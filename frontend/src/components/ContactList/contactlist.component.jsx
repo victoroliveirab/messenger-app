@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Contact from "../Contact/contact.component";
 import {
     setContactList,
+    setChatList,
     unsetLoading
 } from "../../redux/contactList/contactList.actions";
 import { connect } from "react-redux";
@@ -40,7 +41,7 @@ class ContactList extends Component {
     async componentDidMount() {
         if (this.props.path === "/" || this.props.contactList.length === 0) {
             await this.fetchContactList();
-            const contactList = [];
+            const chatList = [];
             for (let contact of this.props.contactList) {
                 const response = await axios.get(
                     `/msg/${contact.username}/last`,
@@ -52,9 +53,10 @@ class ContactList extends Component {
                     }
                 );
                 const lastMessage = response.data;
-                contactList.push({ contact, lastMessage });
+                if (lastMessage) chatList.push({ contact, lastMessage });
             }
-            this.props.setContactList(contactList);
+
+            this.props.setChatList(chatList);
         }
         this.props.unsetLoading();
     }
@@ -65,15 +67,14 @@ class ContactList extends Component {
         }
         switch (this.props.path) {
             case "/message":
+                console.log(this.props.contactList);
                 return (
                     <div className="contact-list-wrapper">
                         <div className="contact-list">
                             {sortObjectsByStringValue(
-                                this.props.contactList.map(
-                                    entry => entry.contact
-                                ),
+                                this.props.contactList,
                                 "username"
-                            ).map(({ ...contact }) => {
+                            ).map(contact => {
                                 return (
                                     <Contact
                                         key={contact.id}
@@ -86,11 +87,13 @@ class ContactList extends Component {
                     </div>
                 );
             default:
-                console.log("re-render");
                 return (
                     <div className="contact-list-wrapper">
                         <div className="contact-list">
-                            {this.props.contactList.map((entry, i) => {
+                            {sortObjectsByTimeValue(
+                                this.props.chatList,
+                                "sendTime"
+                            ).map((entry, i) => {
                                 return (
                                     <Contact
                                         key={entry.contact.id}
@@ -109,12 +112,14 @@ class ContactList extends Component {
 const mapStateToProps = state => ({
     auth: state.user.auth,
     contactList: state.contactList.contacts,
+    chatList: state.contactList.chats,
     loading: state.contactList.loading,
     path: state.router.location.pathname
 });
 
 const mapDispatchToProps = dispatch => ({
     setContactList: contacts => dispatch(setContactList(contacts)),
+    setChatList: chats => dispatch(setChatList(chats)),
     unsetLoading: () => dispatch(unsetLoading())
 });
 

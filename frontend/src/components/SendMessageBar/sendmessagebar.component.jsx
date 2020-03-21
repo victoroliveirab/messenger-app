@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 
 import { appendMessage } from "../../redux/chat/chat.actions";
-import { changeOrder } from "../../redux/contactList/contactList.actions";
+import { reorderCurrentToFirst } from "../../redux/contactList/contactList.actions";
 import { connect } from "react-redux";
 
 import "./sendmessagebar.style.css";
@@ -39,7 +39,7 @@ class SendMessageBar extends React.Component {
                     }
                 }
             );
-            this.props.appendMessage(response.data.pop());
+            this.props.appendMessage(response.data);
             this.setState({ message: "" });
             this.props.changeOrder();
         } catch (err) {
@@ -84,7 +84,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     appendMessage: message => dispatch(appendMessage(message)),
-    changeOrder: () => dispatch(changeOrder())
+    changeOrder: () => dispatch(reorderCurrentToFirst())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendMessageBar);

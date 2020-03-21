@@ -41,16 +41,22 @@ public class MessageController {
         return new ResponseEntity<>(messagesDto, HttpStatus.OK);
     }
 
+    @GetMapping(value="/msg/all/last")
+    public ResponseEntity<List<MessageDto>> getLastMessageOfAllContacts(@RequestHeader(name = "Authorization") String token) {
+        String requester = TokenToUsernameConverter.convert(token);
+        List<Message> lastMessages = messageService.findAllLastMessages(requester);
+        List<MessageDto> lastMessagesDto = MessageToMessageDtoConverter.convertAll(lastMessages);
+        return new ResponseEntity<>(lastMessagesDto, HttpStatus.OK);
+    }
+
     @PostMapping(value="/msg/{receiver}")
-    public ResponseEntity<List<MessageDto>> sendMessage(@RequestHeader(name = "Authorization") String token,
+    public ResponseEntity<MessageDto> sendMessage(@RequestHeader(name = "Authorization") String token,
                                                         @PathVariable String receiver,
                                                         @RequestBody MessageDto messageDto) {
         String sender = TokenToUsernameConverter.convert(token);
-        Message newMsg = MessageDtoToMessageConverter.convert(messageDto);
-        messageService.sendMessage(newMsg, sender, receiver);
-        List<Message> messages = messageService.getMessages(sender, receiver);
-        List<MessageDto> messagesDtos = MessageToMessageDtoConverter.convertAll(messages);
-        return new ResponseEntity<>(messagesDtos, HttpStatus.OK);
+        Message savedMsg = messageService.sendMessage(MessageDtoToMessageConverter.convert(messageDto), sender, receiver);
+        MessageDto savedMsgDto = MessageToMessageDtoConverter.convert(savedMsg);
+        return new ResponseEntity<>(savedMsgDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value="/msg/delete/msg/{id}")
