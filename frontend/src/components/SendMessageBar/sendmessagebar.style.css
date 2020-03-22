@@ -18,3 +18,23 @@
 .sendMessageBar__field:focus {
     outline: 0;
 }
+
+.outer-circle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--main-dark-gray);
+    height: 75%;
+    padding: 0 20px;
+    border-radius: 500px;
+}
+
+.sendMessageBar__button {
+    border: 0;
+    background-color: var(--main-transparent);
+    color: var(--main-white);
+}
+
+.sendMessageBar__button:focus {
+    outline: 0;
+}

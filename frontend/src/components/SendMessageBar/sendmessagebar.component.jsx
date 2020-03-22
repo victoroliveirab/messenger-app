@@ -26,6 +26,7 @@ class SendMessageBar extends React.Component {
         event.preventDefault();
         const { destination } = this.props;
         const message = this.state.message;
+        if (!message || !destination) return;
         try {
             const response = await axios.post(
                 `/msg/${destination.username}`,

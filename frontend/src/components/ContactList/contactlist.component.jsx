@@ -32,7 +32,11 @@ class ContactList extends Component {
                     Authorization: this.props.auth
                 }
             });
-            this.props.setContactList(response.data);
+            const contactList = sortObjectsByStringValue(
+                response.data,
+                "username"
+            );
+            this.props.setContactList(contactList);
         } catch (err) {
             console.error(err);
         }
@@ -55,8 +59,11 @@ class ContactList extends Component {
                 const lastMessage = response.data;
                 if (lastMessage) chatList.push({ contact, lastMessage });
             }
-
-            this.props.setChatList(chatList);
+            const chatListSortedByLastMessage = sortObjectsByTimeValue(
+                chatList,
+                "sendTime"
+            );
+            this.props.setChatList(chatListSortedByLastMessage);
         }
         this.props.unsetLoading();
     }
@@ -71,10 +78,7 @@ class ContactList extends Component {
                 return (
                     <div className="contact-list-wrapper">
                         <div className="contact-list">
-                            {sortObjectsByStringValue(
-                                this.props.contactList,
-                                "username"
-                            ).map(contact => {
+                            {this.props.contactList.map(contact => {
                                 return (
                                     <Contact
                                         key={contact.id}
@@ -90,10 +94,7 @@ class ContactList extends Component {
                 return (
                     <div className="contact-list-wrapper">
                         <div className="contact-list">
-                            {sortObjectsByTimeValue(
-                                this.props.chatList,
-                                "sendTime"
-                            ).map((entry, i) => {
+                            {this.props.chatList.map((entry, i) => {
                                 return (
                                     <Contact
                                         key={entry.contact.id}
