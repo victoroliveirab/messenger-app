@@ -1,6 +1,6 @@
 .top-bar {
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 33.33% 66.67%;
     height: 100%;
     width: 100%;
 }

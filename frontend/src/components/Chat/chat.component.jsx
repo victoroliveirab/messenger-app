@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Message from "../Message/message.component";
 import { connect } from "react-redux";
+import logo from "./logo.png";
 
 import "./chat.style.css";
 
@@ -14,7 +15,7 @@ class Chat extends Component {
 
     showMessages = () => {
         return (
-            <div className="chat">
+            <div className="chat custom-scrollbar">
                 {this.props.messages.map(message =>
                     message.sourceUsername === this.props.username ? (
                         <div className="message-container message-owner">
@@ -26,6 +27,9 @@ class Chat extends Component {
                         </div>
                     )
                 )}
+                <div className="chat-logo-wrapper">
+                    <img src={logo} alt="" className="chat-logo" />
+                </div>
             </div>
         );
     };

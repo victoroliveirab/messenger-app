@@ -7,16 +7,19 @@ import { connect } from "react-redux";
 import "./messageapp.style.css";
 
 const MainPage = () => (
-    <div className="container-fluid">
-        <div className="row no-gutters top-bar-container">
-            <TopBar />
-        </div>
-        <div className="row no-gutters bottom-bar">
-            <div className="col-3 full-height">
-                <LeftBar />
+    <div class="main-wrapper">
+        <div className="red-rectangle"></div>
+        <div className="container-fluid">
+            <div className="row no-gutters top-bar-container">
+                <TopBar />
             </div>
-            <div className="col-9 full-height">
-                <RightBar />
+            <div className="row no-gutters bottom-bar">
+                <div className="col-4 full-height">
+                    <LeftBar />
+                </div>
+                <div className="col-8 full-height">
+                    <RightBar />
+                </div>
             </div>
         </div>
     </div>

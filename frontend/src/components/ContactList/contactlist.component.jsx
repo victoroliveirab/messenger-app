@@ -13,6 +13,7 @@ import {
 } from "../../utils/sort";
 
 import "./contactlist.style.css";
+import "../../utils/customscrollbar.css";
 
 const axios = require("axios");
 
@@ -76,7 +77,7 @@ class ContactList extends Component {
             case "/message":
                 console.log(this.props.contactList);
                 return (
-                    <div className="contact-list-wrapper">
+                    <div className="contact-list-wrapper custom-scrollbar">
                         <div className="contact-list">
                             {this.props.contactList.map(contact => {
                                 return (
@@ -92,7 +93,7 @@ class ContactList extends Component {
                 );
             default:
                 return (
-                    <div className="contact-list-wrapper">
+                    <div className="contact-list-wrapper custom-scrollbar">
                         <div className="contact-list">
                             {this.props.chatList.map((entry, i) => {
                                 return (
