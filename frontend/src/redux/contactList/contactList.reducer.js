@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
     contactSelected: null,
-    contactSelectedObj: null,
+    contactSelectedRef: null,
     contacts: [],
     chats: [],
     loading: true
@@ -8,15 +8,15 @@ const INITIAL_STATE = {
 
 const contactList = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case "SELECT_CONTACT":
+        case "SET_CONTACT":
             return {
                 ...state,
                 contactSelected: action.payload
             };
-        case "SET_CONTACT_OBJ":
+        case "SET_CONTACT_REF":
             return {
                 ...state,
-                contactSelectedObj: action.payload
+                contactSelectedRef: action.payload
             };
         case "SET_CONTACT_LIST":
             return {

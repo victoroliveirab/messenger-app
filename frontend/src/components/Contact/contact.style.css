@@ -42,3 +42,11 @@
 .others {
     margin-top: 10px;
 }
+
+.contact__selected {
+    background-color: var(--main-regular-gray);
+}
+
+.contact__selected:hover {
+    background-color: var(--main-dark-gray);
+}

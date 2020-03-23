@@ -3,8 +3,8 @@ import Avatar from "../Avatar/avatar.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import {
-    selectContact,
-    setContactObj
+    setContact,
+    setContactRef
 } from "../../redux/contactList/contactList.actions";
 import { setMessages } from "../../redux/chat/chat.actions";
 import { formatSendDateAndTime } from "../../utils/formatSendDate";
@@ -55,8 +55,16 @@ class Contact extends React.Component {
                             contactName
                         );
                         this.props.setMessages(messages);
-                        this.props.selectContact(this.contact);
-                        this.props.setContactObj(this.ref);
+                        this.props.setContact(this.contact);
+                        //todo - refactor this. This should not be responsibility of contact.
+                        if (this.props.contactSelectedRef)
+                            this.props.contactSelectedRef.classList.remove(
+                                "contact__selected"
+                            );
+                        this.props.setContactRef(this.ref.current);
+                        this.props.contactSelectedRef.classList.add(
+                            "contact__selected"
+                        );
                     }
                 }}
                 ref={this.ref}
@@ -95,13 +103,13 @@ class Contact extends React.Component {
 const mapStateToProps = state => ({
     auth: state.user.auth,
     username: state.user.username,
-    currentContact: state.contactList.contactSelected,
-    messages: state.chat.messages
+    contactSelected: state.contactList.contactSelected,
+    contactSelectedRef: state.contactList.contactSelectedRef
 });
 
 const mapDispatchToProps = dispatch => ({
-    selectContact: contactName => dispatch(selectContact(contactName)),
-    setContactObj: contact => dispatch(setContactObj(contact)),
+    setContact: contactName => dispatch(setContact(contactName)),
+    setContactRef: contact => dispatch(setContactRef(contact)),
     setMessages: messages => dispatch(setMessages(messages))
 });
 

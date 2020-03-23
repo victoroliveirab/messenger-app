@@ -1,10 +1,10 @@
-export const selectContact = contactName => ({
-    type: "SELECT_CONTACT",
+export const setContact = contactName => ({
+    type: "SET_CONTACT",
     payload: contactName
 });
 
-export const setContactObj = contact => ({
-    type: "SET_CONTACT_OBJ",
+export const setContactRef = contact => ({
+    type: "SET_CONTACT_REF",
     payload: contact
 });
 
