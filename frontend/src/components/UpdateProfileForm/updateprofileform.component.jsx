@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import "./updateprofileform.style.css";
 
 class UpdateProfileForm extends React.Component {
@@ -13,7 +15,7 @@ class UpdateProfileForm extends React.Component {
                 <form noValidate>
                     <div className="row">
                         <div className="col-6">
-                            <label for="name">Name</label>
+                            <label htmlFor="name">Full Name</label>
                             <input
                                 type="text"
                                 className="form-control update-profile-form__field"
@@ -22,7 +24,17 @@ class UpdateProfileForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-6">
-                            <label for="email">E-mail</label>
+                            <label htmlFor="username">Username</label>
+                            <input
+                                type="text"
+                                className="form-control update-profile-form__field"
+                                value={this.props.user}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-6">
+                            <label htmlFor="email">E-mail</label>
                             <input
                                 type="email"
                                 className="form-control update-profile-form__field"
@@ -31,14 +43,14 @@ class UpdateProfileForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-6">
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 className="form-control update-profile-form__field"
                             />
                         </div>
                         <div className="col-6">
-                            <label for="password-confirmation">
+                            <label htmlFor="password-confirmation">
                                 Confirm Password
                             </label>
                             <input
@@ -60,4 +72,8 @@ class UpdateProfileForm extends React.Component {
     }
 }
 
-export default UpdateProfileForm;
+const mapStateToProps = state => ({
+    user: state.user.username
+});
+
+export default connect(mapStateToProps)(UpdateProfileForm);

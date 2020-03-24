@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import "./messageapp.style.css";
 
 const MainPage = () => (
-    <div class="main-wrapper">
+    <div className="main-wrapper">
         <div className="red-rectangle"></div>
         <div className="container-fluid">
             <div className="row no-gutters top-bar-container">
