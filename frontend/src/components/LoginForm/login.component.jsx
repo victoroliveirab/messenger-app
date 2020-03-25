@@ -8,7 +8,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
-import { setCurrentUser } from "../../redux/user/user.actions";
+import {
+    setCurrentUsername,
+    setCurrentUser
+} from "../../redux/user/user.actions";
 import { addFlash } from "../../redux/flashList/flashList.actions";
 
 const axios = require("axios");
@@ -51,6 +54,13 @@ class LoginForm extends Component {
             sessionStorage.setItem("pitangUsername", username);
             sessionStorage.setItem("pitangAuth", auth);
             this.props.login({ auth, username });
+            const userInfo = await axios.get(`/users/${username}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: auth
+                }
+            });
+            this.props.setCurrentUser(userInfo.data);
         } catch (err) {
             this.props.addFlash({
                 type: "danger",
@@ -131,8 +141,9 @@ class LoginForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    login: user => dispatch(setCurrentUser(user)),
-    addFlash: flash => dispatch(addFlash(flash))
+    login: user => dispatch(setCurrentUsername(user)),
+    addFlash: flash => dispatch(addFlash(flash)),
+    setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginForm));

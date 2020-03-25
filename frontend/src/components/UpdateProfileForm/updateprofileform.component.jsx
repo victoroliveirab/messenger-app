@@ -19,6 +19,7 @@ class UpdateProfileForm extends React.Component {
                             <input
                                 type="text"
                                 className="form-control update-profile-form__field"
+                                value={this.props.info.name}
                             />
                         </div>
                     </div>
@@ -28,7 +29,7 @@ class UpdateProfileForm extends React.Component {
                             <input
                                 type="text"
                                 className="form-control update-profile-form__field"
-                                value={this.props.user}
+                                value={this.props.info.username}
                             />
                         </div>
                     </div>
@@ -38,6 +39,7 @@ class UpdateProfileForm extends React.Component {
                             <input
                                 type="email"
                                 className="form-control update-profile-form__field"
+                                value={this.props.info.email}
                             />
                         </div>
                     </div>
@@ -67,13 +69,20 @@ class UpdateProfileForm extends React.Component {
                         </div>
                     </div>
                 </form>
+                <div className="row delete-profile">
+                    <button type="button" className="btn btn-danger">
+                        Delete Account
+                    </button>
+                    <p>Be careful, this will delete your account permanently</p>
+                </div>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    user: state.user.username
+    user: state.user.username,
+    info: state.user.user
 });
 
 export default connect(mapStateToProps)(UpdateProfileForm);

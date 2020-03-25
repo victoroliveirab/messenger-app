@@ -56,28 +56,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         String username = ((User) authResult.getPrincipal()).getUsername();
-        String id = "test";
         Date expiration = new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME);
         String token = Jwts.builder().setSubject(username).setExpiration(expiration)
                 .signWith(SecurityConstants.TOKEN_SECURITY).compact();
         response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-        //response.addHeader("user_id", username); // make it better later TODO
-        response.addHeader("id", id);
     }
-
-    /*
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        String username = ((User) authResult.getPrincipal()).getUsername();
-        String token = Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME)).signWith(getSigningKey()).compact();
-        response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-    }
-
-    private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SecurityConstants.TOKEN_SECURITY);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-     */
 }
