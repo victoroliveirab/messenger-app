@@ -15,12 +15,12 @@ class Avatar extends React.Component {
         this.img = null;
     }
 
-    fetchAvatar = async (username, auth) => {
+    fetchAvatar = async (username, token) => {
         try {
             const response = await axios.get(`/avatar/${username}`, {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: auth
+                    Authorization: token
                 },
                 timeout: 8000
             });
@@ -33,7 +33,7 @@ class Avatar extends React.Component {
     };
 
     componentDidMount = async () =>
-        this.fetchAvatar(this.props.username, this.props.auth);
+        this.fetchAvatar(this.props.username, this.props.token);
 
     render() {
         if (this.state.loading) {
@@ -52,6 +52,6 @@ class Avatar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.user.auth
+    token: state.user.token
 });
 export default connect(mapStateToProps)(Avatar);

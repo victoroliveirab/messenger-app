@@ -1,18 +1,18 @@
 const INITIAL_STATE = {
-    auth: sessionStorage.getItem("pitangAuth"),
-    username: sessionStorage.getItem("pitangUsername"),
+    token: null,
     user: null
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case "SET_CURRENT_USERNAME":
+        case "SET_TOKEN":
+            console.log("SET_TOKEN");
             return {
                 ...state,
-                auth: action.payload.auth,
-                username: action.payload.username
+                token: action.payload
             };
-        case "SET_CURRENT_USER":
+        case "SET_USER":
+            console.log("SET_USER");
             return {
                 ...state,
                 user: action.payload
@@ -20,8 +20,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         case "LOG_OUT":
             return {
                 ...state,
-                auth: null,
-                username: null
+                token: null,
+                user: null
             };
         default:
             return state;

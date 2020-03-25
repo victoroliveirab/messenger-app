@@ -17,7 +17,7 @@ const leftBar = props => {
                     <SearchBox className="searchbox-container" />
                     <ContactList
                         className="contact-list-container"
-                        auth={sessionStorage.getItem("pitangAuth")}
+                        token={sessionStorage.getItem("pitangAuth")}
                     />
                 </div>
             );

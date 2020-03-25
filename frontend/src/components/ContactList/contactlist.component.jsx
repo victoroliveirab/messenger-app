@@ -30,7 +30,7 @@ class ContactList extends Component {
             const response = await axios.get("/contacts", {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: this.props.auth
+                    Authorization: this.props.token
                 }
             });
             const contactList = sortObjectsByStringValue(
@@ -53,7 +53,7 @@ class ContactList extends Component {
                     {
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: this.props.auth
+                            Authorization: this.props.token
                         }
                     }
                 );
@@ -112,7 +112,7 @@ class ContactList extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.user.auth,
+    token: state.user.token,
     contactList: state.contactList.contacts,
     chatList: state.contactList.chats,
     loading: state.contactList.loading,

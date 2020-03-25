@@ -11,7 +11,7 @@ const signUpPage = ({ loggedIn }) => {
 };
 
 const mapStateToProps = state => ({
-    loggedIn: state.user.auth
+    loggedIn: state.user.token
 });
 
 export default connect(mapStateToProps)(signUpPage);

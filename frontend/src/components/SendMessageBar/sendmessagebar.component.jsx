@@ -36,7 +36,7 @@ class SendMessageBar extends React.Component {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: this.props.auth
+                        Authorization: this.props.token
                     }
                 }
             );
@@ -79,7 +79,7 @@ class SendMessageBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.user.auth,
+    token: state.user.token,
     destination: state.contactList.contactSelected
 });
 

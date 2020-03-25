@@ -52,7 +52,7 @@ class Chat extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.user.auth,
+    token: state.user.token,
     username: state.user.username,
     currentContact: state.contactList.contactSelected,
     messages: state.chat.messages

@@ -26,7 +26,7 @@ class SetProfilePic extends React.Component {
             const response = await axios.post("/avatar", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: this.props.auth
+                    Authorization: this.props.token
                 }
             });
             console.log(response);
@@ -65,7 +65,7 @@ class SetProfilePic extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.user.auth
+    token: state.user.token
 });
 
 export default connect(mapStateToProps)(SetProfilePic);

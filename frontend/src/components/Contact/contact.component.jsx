@@ -17,13 +17,13 @@ const axios = require("axios");
 const findContactName = target =>
     target.current.children[1].firstChild.textContent;
 
-const fetchMessagesToContact = async (auth, contactName) => {
+const fetchMessagesToContact = async (token, contactName) => {
     let messages;
     try {
         const response = await axios.get(`/msg/${contactName}`, {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: auth
+                Authorization: token
             }
         });
         messages = response.data;
@@ -51,7 +51,7 @@ class Contact extends React.Component {
                     const contactName = findContactName(this.ref);
                     if (contactName) {
                         const messages = await fetchMessagesToContact(
-                            this.props.auth,
+                            this.props.token,
                             contactName
                         );
                         this.props.setMessages(messages);
@@ -72,7 +72,7 @@ class Contact extends React.Component {
                 <div className="contact__photo">
                     <Avatar
                         username={this.contact.username}
-                        auth={this.props.auth}
+                        token={this.props.token}
                     />
                 </div>
                 <div className="contact__main">
@@ -101,7 +101,7 @@ class Contact extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.user.auth,
+    token: state.user.token,
     username: state.user.username,
     contactSelected: state.contactList.contactSelected,
     contactSelectedRef: state.contactList.contactSelectedRef
