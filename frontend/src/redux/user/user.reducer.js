@@ -1,12 +1,14 @@
+import Cookies from "js-cookie";
+
 const INITIAL_STATE = {
-    token: null,
+    token: Cookies.get("jwtPitang"),
     user: null
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "SET_TOKEN":
-            console.log("SET_TOKEN");
+            Cookies.set("jwtPitang", action.payload);
             return {
                 ...state,
                 token: action.payload
@@ -18,6 +20,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 user: action.payload
             };
         case "LOG_OUT":
+            Cookies.remove("jwtPitang");
             return {
                 ...state,
                 token: null,

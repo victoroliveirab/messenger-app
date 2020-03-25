@@ -8,6 +8,6 @@ export const setUser = user => ({
     payload: user
 });
 
-export const logOut = () => ({
+export const logout = () => ({
     type: "LOG_OUT"
 });

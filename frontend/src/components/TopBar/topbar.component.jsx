@@ -9,6 +9,7 @@ import {
     faCircleNotch,
     faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
+import { logout } from "../../redux/user/user.actions";
 
 import "./topbar.style.css";
 
@@ -34,7 +35,7 @@ const TopBar = props => {
                                 <Avatar
                                     className="top-bar__avatar"
                                     rounded={true}
-                                    username={props.username}
+                                    username={props.user.username}
                                 />
                             </Link>
                         </div>
@@ -90,11 +91,12 @@ const TopBar = props => {
                                             Help
                                         </button>
                                     </Link>
-                                    <Link to="/logout">
-                                        <button className="dropdown-item">
-                                            Sign Out
-                                        </button>
-                                    </Link>
+                                    <button
+                                        className="dropdown-item"
+                                        onClick={() => props.logout()}
+                                    >
+                                        Sign Out
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +138,11 @@ const TopBar = props => {
 
 const mapStateToProps = state => ({
     path: state.router.location.pathname,
-    username: state.user.username
+    user: state.user.user
 });
 
-export default connect(mapStateToProps)(TopBar);
+const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
