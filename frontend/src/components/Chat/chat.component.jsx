@@ -17,7 +17,7 @@ class Chat extends Component {
         return (
             <div className="chat custom-scrollbar">
                 {this.props.messages.map(message =>
-                    message.sourceUsername === this.props.username ? (
+                    message.sourceUsername === this.props.user.username ? (
                         <div className="message-container message-owner">
                             <Message key={message.id} {...message} />
                         </div>
@@ -38,7 +38,7 @@ class Chat extends Component {
         if (this.props.currentContact === null) {
             return (
                 <div className="chat-no-contact-selected">
-                    <h2>Hello, {this.props.username}!</h2>
+                    <h2>Hello, {this.props.user.username}!</h2>
                     <p>Select a friend you'd like to chat with!</p>
                 </div>
             );
@@ -53,7 +53,7 @@ class Chat extends Component {
 
 const mapStateToProps = state => ({
     token: state.user.token,
-    username: state.user.username,
+    user: state.user.user,
     currentContact: state.contactList.contactSelected,
     messages: state.chat.messages
 });
