@@ -30,6 +30,7 @@ class UpdateProfileForm extends React.Component {
                                 type="text"
                                 className="form-control update-profile-form__field"
                                 value={this.props.info.username}
+                                disabled
                             />
                         </div>
                     </div>
