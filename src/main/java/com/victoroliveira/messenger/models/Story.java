@@ -26,6 +26,9 @@ public class Story {
     @Column
     private byte[] backgroundImage;
 
+    @Column
+    private String gradient;
+
     public Story() {
     }
 
@@ -75,5 +78,13 @@ public class Story {
 
     public void setBackgroundImage(byte[] backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public String getGradient() {
+        return gradient;
+    }
+
+    public void setGradient(String gradient) {
+        this.gradient = gradient;
     }
 }

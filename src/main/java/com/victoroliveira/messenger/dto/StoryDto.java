@@ -5,11 +5,12 @@ import java.time.LocalDateTime;
 
 public class StoryDto {
     private Long id;
-    private Profile profile;
+    private String username;
     private LocalDateTime postTime;
     private String text;
     private boolean onlyBestFriends;
     private byte[] backgroundImage;
+    private String gradient;
 
     public StoryDto() {
     }
@@ -22,12 +23,12 @@ public class StoryDto {
         this.id = id;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public String getUsername() {
+        return username;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public LocalDateTime getPostTime() {
@@ -60,5 +61,13 @@ public class StoryDto {
 
     public void setBackgroundImage(byte[] backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public String getGradient() {
+        return gradient;
+    }
+
+    public void setGradient(String gradient) {
+        this.gradient = gradient;
     }
 }
