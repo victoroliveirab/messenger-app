@@ -55,18 +55,13 @@ public class StoryServiceImpl implements StoryService {
     private void cronDeleteStory(Story story) {
         storyRepository.delete(story);
     }
-    //@Scheduled(initialDelay = 1000, fixedRate = 300000) 5 minutes with 1 second of initial delay
-    @Scheduled(initialDelay = 1000, fixedRate = 10000)
+    @Scheduled(initialDelay = 1000, fixedRate = 300000) // 5 minutes with 1 second of initial delay
     private void deleteExpiredStories() {
         List<Story> stories = storyRepository.findAll();
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        int count = 0;
         while (stories.size() > 0 && yesterday.isAfter(stories.get(0).getPostTime())) {
             this.cronDeleteStory(stories.get(0));
             stories.remove(0);
-            ++count;
         }
-        System.out.println("Number of stories deleted: " + count);
-        System.out.println("Current time is :: " + LocalDateTime.now());
     }
 }
