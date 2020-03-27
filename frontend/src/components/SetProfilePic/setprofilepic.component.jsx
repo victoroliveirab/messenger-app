@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-import "./setprofilepic.style.css";
+import { dispatchPost } from "../../utils/request";
 
-const axios = require("axios");
+import "./setprofilepic.style.css";
 
 class SetProfilePic extends React.Component {
     constructor(props) {
@@ -22,17 +22,9 @@ class SetProfilePic extends React.Component {
         console.log(this.state);
         const formData = new FormData();
         formData.append("file", this.state.file);
-        try {
-            const response = await axios.post("/avatar", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: this.props.token
-                }
-            });
-            console.log(response);
-        } catch (err) {
-            console.error(err);
-        }
+        await dispatchPost("/avatar", formData, this.props.token).catch(err =>
+            console.error(err)
+        );
     };
 
     handleChange = event => {

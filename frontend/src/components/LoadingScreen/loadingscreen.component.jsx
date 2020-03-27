@@ -1,17 +1,11 @@
 import React from "react";
 import { setToken, setUser } from "../../redux/user/user.actions";
 import { connect } from "react-redux";
-const axios = require("axios");
+import { dispatchGet } from "../../utils/request";
 
 class LoadingScreen extends React.Component {
     componentDidMount = async () => {
-        axios
-            .get("/users", {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: this.props.token
-                }
-            })
+        dispatchGet("/users", this.props.token)
             .then(response => {
                 this.props.setUser(response.data);
             })

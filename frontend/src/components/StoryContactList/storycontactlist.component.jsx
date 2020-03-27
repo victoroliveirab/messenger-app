@@ -9,9 +9,9 @@ import {
     sortObjectsByStringValue
 } from "../../utils/sort";
 
-import "../../utils/customscrollbar.css";
+import { dispatchGet } from "../../utils/request";
 
-const axios = require("axios");
+import "../../utils/customscrollbar.css";
 
 class StoryContactList extends Component {
     constructor(props) {
@@ -23,12 +23,7 @@ class StoryContactList extends Component {
 
     async fetchContactList() {
         try {
-            const response = await axios.get("/contacts", {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: this.props.token
-                }
-            });
+            const response = await dispatchGet("/contacts", this.props.token);
             const contactList = sortObjectsByStringValue(
                 response.data,
                 "username"
@@ -40,15 +35,13 @@ class StoryContactList extends Component {
     }
 
     async componentDidMount() {
-        console.log("componentDidMount");
         if (this.props.contactList.length === 0) {
             await this.fetchContactList();
         }
-        console.log("here");
         await this.fetchContactList();
         const storiesList = [];
         for (let contact of this.props.contactList) {
-            const response = await axios.get(`/story/${contact.username}`, {
+            const response = await dispatchGet(`/story/${contact.username}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: this.props.token

@@ -9,8 +9,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
+import { dispatchPost } from "../../utils/request";
+
 import "./signupform.style.css";
-const axios = require("axios");
 
 const styles = theme => ({
     form: {
@@ -47,21 +48,13 @@ class Signup extends Component {
             return;
         }
         const birthday = this.state.birthday.replace(/\//g, "-");
-        try {
-            const response = await axios.post(
-                "/signup",
-                {
-                    name,
-                    username,
-                    password,
-                    email,
-                    birthday
-                },
-                { headers: { "Content-Type": "application/json" } }
-            );
-        } catch (err) {
-            console.log(err.response.data);
-        }
+        await dispatchPost("/signup", {
+            name,
+            username,
+            password,
+            email,
+            birthday
+        }).catch(err => console.error(err));
     };
 
     handleChange = event => {

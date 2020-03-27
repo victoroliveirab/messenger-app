@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { setToken, setUser } from "../../redux/user/user.actions";
 import { addFlash } from "../../redux/flashList/flashList.actions";
 
-const axios = require("axios");
+import { dispatchGet, dispatchPost } from "../../utils/request";
 
 const styles = theme => ({
     form: {
@@ -34,35 +34,26 @@ class LoginForm extends Component {
     handleSubmit = async event => {
         event.preventDefault();
         const { username, password } = this.state;
-        try {
-            const response = await axios.post(
-                "/login",
-                {
-                    username,
-                    password
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+        let token;
+        await dispatchPost("/login", { username, password })
+            .then(response => {
+                token = response.headers.authorization;
+                this.props.setToken(token);
+            })
+            .catch(() =>
+                this.props.addFlash({
+                    type: "danger",
+                    message: "Wrong Username and/or password"
+                })
             );
-            const token = response.headers.authorization;
-            this.props.setToken(token);
-            const user = await axios.get(`/users`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token
-                }
+        await dispatchGet("/users", token)
+            .then(response => this.props.setUser(response.data))
+            .catch(err => {
+                this.props.addFlash({
+                    type: "danger",
+                    message: "Unknown"
+                });
             });
-            this.props.setUser(user.data);
-        } catch (err) {
-            this.props.addFlash({
-                type: "danger",
-                message: "Wrong Username and/or Password"
-            });
-            console.error(err);
-        }
     };
 
     handleChange = event => {

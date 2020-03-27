@@ -1,10 +1,9 @@
 import React from "react";
-//import eric from "../../utils/eric.jpg";
 import { connect } from "react-redux";
 
 import "./avatar.style.css";
 
-const axios = require("axios");
+import { dispatchGet } from "../../utils/request";
 
 class Avatar extends React.Component {
     constructor(props) {
@@ -15,22 +14,16 @@ class Avatar extends React.Component {
         this.img = null;
     }
 
-    fetchAvatar = async (username, token) => {
-        try {
-            const response = await axios.get(`/avatar/${username}`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token
-                },
-                timeout: 8000
+    fetchAvatar = async (username, token) =>
+        dispatchGet(`/avatar/${username}`, token)
+            .then(response => {
+                this.img = response.data.image;
+                this.setState({ loading: false });
+            })
+            .catch(err => {
+                //todo Add flash message to page when error occured (with relevant message)
+                console.error(err);
             });
-            this.img = response.data.image;
-            this.setState({ loading: false });
-        } catch (err) {
-            //todo Add flash message to page when error occured (with relevant message)
-            console.error(err);
-        }
-    };
 
     componentDidMount = async () =>
         this.fetchAvatar(this.props.username, this.props.token);

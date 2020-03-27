@@ -10,27 +10,21 @@ import { setMessages } from "../../redux/chat/chat.actions";
 import { formatSendDateAndTime } from "../../utils/formatSendDate";
 import { connect } from "react-redux";
 
-import "./contact.style.css";
+import { dispatchGet } from "../../utils/request";
 
-const axios = require("axios");
+import "./contact.style.css";
 
 const findContactName = target =>
     target.current.children[1].firstChild.textContent;
 
 const fetchMessagesToContact = async (token, contactName) => {
     let messages;
-    try {
-        const response = await axios.get(`/msg/${contactName}`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token
-            }
+    await dispatchGet(`/msg/${contactName}`, token)
+        .then(response => (messages = response.data))
+        .catch(err => {
+            console.log(`Error while fetching chat with ${contactName}`);
+            console.error(err);
         });
-        messages = response.data;
-    } catch (err) {
-        console.log(`Error while fetching chat with ${contactName}`);
-        console.error(err);
-    }
     return messages;
 };
 

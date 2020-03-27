@@ -6,9 +6,9 @@ import { appendMessage } from "../../redux/chat/chat.actions";
 import { reorderCurrentToFirst } from "../../redux/contactList/contactList.actions";
 import { connect } from "react-redux";
 
-import "./sendmessagebar.style.css";
+import { dispatchPost } from "../../utils/request";
 
-const axios = require("axios");
+import "./sendmessagebar.style.css";
 
 class SendMessageBar extends React.Component {
     constructor(props) {
@@ -27,25 +27,17 @@ class SendMessageBar extends React.Component {
         const { destination } = this.props;
         const message = this.state.message;
         if (!message || !destination) return;
-        try {
-            const response = await axios.post(
-                `/msg/${destination.username}`,
-                {
-                    message
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: this.props.token
-                    }
-                }
-            );
-            this.props.appendMessage(response.data);
-            this.setState({ message: "" });
-            this.props.changeOrder();
-        } catch (err) {
-            console.error(err);
-        }
+        await dispatchPost(
+            `/msg/${destination.username}`,
+            { message },
+            this.props.token
+        )
+            .then(response => {
+                this.props.appendMessage(response.data);
+                this.setState({ message: "" });
+                this.props.changeOrder();
+            })
+            .catch(err => console.log(err));
     };
 
     render() {
