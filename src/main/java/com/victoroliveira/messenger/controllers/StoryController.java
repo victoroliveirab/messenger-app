@@ -1,7 +1,6 @@
 package com.victoroliveira.messenger.controllers;
 
 import com.victoroliveira.messenger.dto.StoryDto;
-import com.victoroliveira.messenger.models.Profile;
 import com.victoroliveira.messenger.models.Story;
 import com.victoroliveira.messenger.service.StoryService;
 import com.victoroliveira.messenger.utils.converters.StoryDtoToStoryConverter;
@@ -13,16 +12,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 public class StoryController {
     @Autowired
     private StoryService storyService;
 
+    @GetMapping("/story")
+    public ResponseEntity<List<StoryDto>> getStories() {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @GetMapping("/story/{username}")
+    public ResponseEntity<List<StoryDto>> getStoriesOfAnUser(@PathVariable String username) {
+        List<Story> storiesOfUser = storyService.allStoriesOfSomeone(username);
+        List<StoryDto> storiesOfUserDto = StoryToStoryDtoConverter.convertAll(storiesOfUser);
+        return new ResponseEntity<>(storiesOfUserDto, HttpStatus.OK);
+    }
+
     @PostMapping("/story")
     @ResponseBody
     public ResponseEntity<StoryDto> createNewStory(@RequestHeader(name = "Authorization") String token,
                                                    @RequestBody StoryDto storyDto) {
-        System.out.println("Creating new story");
         String username = TokenToUsernameConverter.convert(token);
         Story story = storyService.createStory(StoryDtoToStoryConverter.convert(storyDto), username);
         StoryDto newDto = StoryToStoryDtoConverter.convert(story);

@@ -47,7 +47,9 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public List<Story> allStoriesOfSomeone(String username) {
-        return null;
+        Profile profile = profileService.findByUsername(username);
+        List<Story> storiesByProfile = storyRepository.findAllByProfile(profile);
+        return storiesByProfile;
     }
 
     private void cronDeleteStory(Story story) {
