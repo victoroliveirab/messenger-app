@@ -2,20 +2,20 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute.component";
 import "./App.css";
-import loginPage from "./pages/login/login.page";
-import signUpPage from "./pages/signup/signup.page";
+import LoginPage from "./pages/login/login.page";
+import SignUpPage from "./pages/signup/signup.page";
 import StoryPage from "./pages/story/story.page";
-import mainPage from "./pages/messageApp/messageapp.page";
+import MainPage from "./pages/messageApp/messageapp.page";
 
 function App() {
     return (
         <Switch>
-            <PrivateRoute exact path="/" component={mainPage} />
-            <PrivateRoute exact path="/profile" component={mainPage} />
-            <PrivateRoute exact path="/message" component={mainPage} />
+            <PrivateRoute exact path="/" component={MainPage} />
+            <PrivateRoute exact path="/profile" component={MainPage} />
+            <PrivateRoute exact path="/message" component={MainPage} />
             <PrivateRoute exact path="/stories" component={StoryPage} />
-            <Route exact path="/login" component={loginPage} />
-            <Route exact path="/signup" component={signUpPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/signup" component={SignUpPage} />
         </Switch>
     );
 }

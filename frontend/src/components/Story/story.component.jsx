@@ -11,4 +11,4 @@ const mapStateToProps = state => ({
     currentStory: state.story.currentStory
 });
 
-export default Story;
+export default connect(mapStateToProps)(Story);
