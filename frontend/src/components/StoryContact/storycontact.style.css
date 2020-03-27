@@ -1,0 +1,33 @@
+.story-contact {
+    height: 60px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.2s ease-in-out;
+    overflow-wrap: break-word;
+    background-color: var(--main-darker-gray);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+    color: var(--main-light-gray);
+}
+
+.story-contact__photo {
+    padding-left: 20px;
+}
+
+.story-contact__main {
+    font-size: 0.8rem;
+}
+
+.story-contact:hover {
+    background-color: var(--main-dark-gray);
+    cursor: pointer;
+}
+
+.story-contact__selected {
+    background-color: var(--main-dark-gray);
+}
+
+.story-contact__selected:hover {
+    background-color: var(--main-light-gray);
+}

@@ -13,6 +13,7 @@ body {
 /* GLOBAL STUFF */
 
 :root {
+    --main-darker-red: #761f13;
     --main-dark-red: #ea8779;
     --main-light-red: #f4c2bb;
 
@@ -24,6 +25,7 @@ body {
     --main-dark-white: #eeeeee;
     --main-white: #ffffff;
     --main-transparent: #ffffff00;
+    --main-black: #000000;
 
     --main-light-gray-shade: #f8f8f83b;
 }

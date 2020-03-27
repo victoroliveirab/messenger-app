@@ -1,0 +1,10 @@
+body::-webkit-scrollbar {
+    width: 100px;
+}
+
+.story-contact-list-wrapper {
+    overflow-y: auto;
+    height: 100%;
+    width: inherit;
+    background: var(--main-black);
+}

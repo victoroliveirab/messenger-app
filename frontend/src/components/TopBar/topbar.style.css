@@ -14,6 +14,12 @@
     justify-content: space-between;
 }
 
+.top-bar__main-black {
+    background-color: var(--main-black);
+    color: var(--main-white);
+    grid-template-columns: 16.67% 83.33%;
+}
+
 .top-bar__main > div * {
     cursor: pointer;
 }

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import Contact from "../Contact/contact.component";
+import StoryContact from "../StoryContact/storycontact.component";
 import { setContactList } from "../../redux/contactList/contactList.actions";
 import { setStoryList } from "../../redux/story/story.actions";
 import { connect } from "react-redux";
+
+import "./storycontactlist.style.css";
 
 import {
     sortObjectsByTimeValue,
@@ -41,25 +43,30 @@ class StoryContactList extends Component {
         await this.fetchContactList();
         const storiesList = [];
         for (let contact of this.props.contactList) {
-            const response = await dispatchGet(`/story/${contact.username}`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: this.props.token
-                }
-            });
+            const response = await dispatchGet(
+                `/story/${contact.username}`,
+                this.props.token
+            );
             const stories = response.data;
             if (stories.length > 0) storiesList.push({ contact, stories });
         }
         this.props.setStoryList(storiesList);
-        console.log(storiesList);
         this.setState({ loading: false });
     }
 
     render() {
-        if (this.props.loading) {
+        if (this.state.loading) {
             return "fetching...";
         }
-        return "done...";
+        return (
+            <div className="story-contact-list-wrapper">
+                <div className="story-contact-list">
+                    {this.props.storiesList.map(entry => (
+                        <StoryContact contact={entry.contact} />
+                    ))}
+                </div>
+            </div>
+        );
     }
 }
 
