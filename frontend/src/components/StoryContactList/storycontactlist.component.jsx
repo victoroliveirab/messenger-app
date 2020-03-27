@@ -6,10 +6,7 @@ import { connect } from "react-redux";
 
 import "./storycontactlist.style.css";
 
-import {
-    sortObjectsByTimeValue,
-    sortObjectsByStringValue
-} from "../../utils/sort";
+import { sortObjectsByStringValue } from "../../utils/sort";
 
 import { dispatchGet } from "../../utils/request";
 

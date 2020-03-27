@@ -12,6 +12,10 @@ body {
 
 /* GLOBAL STUFF */
 
+button:focus {
+    outline: none;
+}
+
 :root {
     --main-darker-red: #761f13;
     --main-dark-red: #ea8779;

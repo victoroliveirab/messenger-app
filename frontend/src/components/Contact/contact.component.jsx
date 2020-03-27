@@ -1,5 +1,6 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -42,6 +43,13 @@ class Contact extends React.Component {
             <div
                 className="contact"
                 onClick={async event => {
+                    if (
+                        event.target.tagName === "svg" ||
+                        event.target.tagName === "path"
+                    ) {
+                        console.log("hehehe");
+                        return;
+                    }
                     const contactName = findContactName(this.ref);
                     if (contactName) {
                         const messages = await fetchMessagesToContact(
@@ -85,7 +93,27 @@ class Contact extends React.Component {
                             {formatSendDateAndTime(this.lastMessage.sendTime)}
                         </span>
                         <div className="others">
-                            <FontAwesomeIcon icon={faCaretDown} size="2x" />
+                            <div className="dropdown">
+                                <button
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    className="top-bar__button"
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faCaretDown}
+                                        size="2x"
+                                    />
+                                </button>
+                                <div className="dropdown-menu">
+                                    <Link to="/profile">
+                                        <button className="dropdown-item">
+                                            Delete Chat
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
