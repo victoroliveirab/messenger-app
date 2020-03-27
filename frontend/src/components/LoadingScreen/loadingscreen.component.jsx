@@ -13,13 +13,9 @@ class LoadingScreen extends React.Component {
                 }
             })
             .then(response => {
-                console.log("Success!!! Response: ");
-                console.log(response);
                 this.props.setUser(response.data);
             })
-            .catch(error => {
-                console.log("Error.");
-                console.log(error);
+            .catch(() => {
                 this.props.setToken(null);
             });
     };

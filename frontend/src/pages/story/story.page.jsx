@@ -1,14 +1,14 @@
 import React from "react";
 import TopBar from "../../components/TopBar/topbar.component";
-import LeftBar from "../../components/LeftBar/leftbar.component";
+import ContactList from "../../components/ContactList/contactlist.component";
 import RightBar from "../../components/RightBar/rightbar.component";
 import LoadingScreen from "../../components/LoadingScreen/loadingscreen.component";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import "./messageapp.style.css";
+import "./story.style.css";
 
-const MainPage = props => {
+const StoryPage = props => {
     if (!props.user) {
         return <LoadingScreen />;
     } else if (!props.token) {
@@ -22,19 +22,16 @@ const MainPage = props => {
         );
     }
     return (
-        <div className="main-wrapper">
-            <div className="red-rectangle"></div>
-            <div className="container-fluid main">
-                <div className="row no-gutters top-bar-container">
-                    <TopBar />
+        <div className="container-fluid">
+            <div className="row no-gutters top-bar-container">
+                <TopBar />
+            </div>
+            <div className="row no-gutters bottom-bar-full">
+                <div className="col-4 full-height">
+                    <ContactList />
                 </div>
-                <div className="row no-gutters bottom-bar">
-                    <div className="col-4 full-height">
-                        <LeftBar />
-                    </div>
-                    <div className="col-8 full-height">
-                        <RightBar />
-                    </div>
+                <div className="col-8 full-height">
+                    <RightBar />
                 </div>
             </div>
         </div>
@@ -47,4 +44,4 @@ const mapStateToProps = state => ({
     path: state.router.location.pathname
 });
 
-export default connect(mapStateToProps)(MainPage);
+export default connect(mapStateToProps)(StoryPage);
