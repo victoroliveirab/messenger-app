@@ -1,7 +1,7 @@
 import React from "react";
 import TopBar from "../../components/TopBar/topbar.component";
-import ContactList from "../../components/ContactList/contactlist.component";
-import RightBar from "../../components/RightBar/rightbar.component";
+import StoryContactList from "../../components/StoryContactList/storycontactlist.component";
+import Story from "../../components/Story/story.component";
 import LoadingScreen from "../../components/LoadingScreen/loadingscreen.component";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -27,11 +27,11 @@ const StoryPage = props => {
                 <TopBar />
             </div>
             <div className="row no-gutters bottom-bar-full">
-                <div className="col-4 full-height">
-                    <ContactList />
+                <div className="col-2 full-height">
+                    <StoryContactList />
                 </div>
-                <div className="col-8 full-height">
-                    <RightBar />
+                <div className="col-10 full-height">
+                    <Story />
                 </div>
             </div>
         </div>

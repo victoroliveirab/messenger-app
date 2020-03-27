@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Contact from "../Contact/contact.component";
 import {
     setContactList,
-    setChatList,
-    unsetLoading
+    setChatList
 } from "../../redux/contactList/contactList.actions";
+import { setStoryList } from "../../redux/story/story.actions";
 import { connect } from "react-redux";
 
 import {
@@ -44,8 +44,11 @@ class ContactList extends Component {
     }
 
     async componentDidMount() {
-        if (this.props.path === "/" || this.props.contactList.length === 0) {
+        console.log("componentDidMount");
+        if (this.props.contactList.length === 0) {
             await this.fetchContactList();
+        }
+        if (this.props.path === "/" || this.props.contactList.length === 0) {
             const chatList = [];
             for (let contact of this.props.contactList) {
                 const response = await axios.get(
@@ -65,17 +68,31 @@ class ContactList extends Component {
                 "sendTime"
             );
             this.props.setChatList(chatListSortedByLastMessage);
+        } else if (this.props.path === "/stories") {
+            console.log("here");
+            await this.fetchContactList();
+            const storiesList = [];
+            for (let contact of this.props.contactList) {
+                const response = await axios.get(`/story/${contact.username}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: this.props.token
+                    }
+                });
+                const stories = response.data;
+                if (stories.length > 0) storiesList.push({ contact, stories });
+            }
+            this.props.setStoryList(storiesList);
         }
-        this.props.unsetLoading();
+        this.setState({ loading: false });
     }
 
     render() {
-        if (this.props.loading) {
+        if (this.state.loading) {
             return "fetching...";
         }
         switch (this.props.path) {
             case "/message":
-                console.log(this.props.contactList);
                 return (
                     <div className="contact-list-wrapper custom-scrollbar">
                         <div className="contact-list">
@@ -122,7 +139,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setContactList: contacts => dispatch(setContactList(contacts)),
     setChatList: chats => dispatch(setChatList(chats)),
-    unsetLoading: () => dispatch(unsetLoading())
+    setStoryList: stories => dispatch(setStoryList(stories))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

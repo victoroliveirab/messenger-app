@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     contactSelectedRef: null,
     contacts: [],
     chats: [],
+    stories: [],
     loading: true
 };
 

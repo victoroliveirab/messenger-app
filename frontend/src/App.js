@@ -4,6 +4,7 @@ import PrivateRoute from "./utils/PrivateRoute.component";
 import "./App.css";
 import loginPage from "./pages/login/login.page";
 import signUpPage from "./pages/signup/signup.page";
+import StoryPage from "./pages/story/story.page";
 import mainPage from "./pages/messageApp/messageapp.page";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
             <PrivateRoute exact path="/" component={mainPage} />
             <PrivateRoute exact path="/profile" component={mainPage} />
             <PrivateRoute exact path="/message" component={mainPage} />
+            <PrivateRoute exact path="/stories" component={StoryPage} />
             <Route exact path="/login" component={loginPage} />
             <Route exact path="/signup" component={signUpPage} />
         </Switch>

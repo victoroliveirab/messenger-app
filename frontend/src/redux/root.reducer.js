@@ -3,6 +3,7 @@ import { connectRouter } from "connected-react-router";
 import userReducer from "./user/user.reducer";
 import contactListReducer from "./contactList/contactList.reducer";
 import chatReducer from "./chat/chat.reducer";
+import storyReducer from "./story/story.reducer";
 import flashListReducer from "./flashList/flashList.reducer";
 
 const rootReducer = history =>
@@ -11,6 +12,7 @@ const rootReducer = history =>
         user: userReducer,
         contactList: contactListReducer,
         chat: chatReducer,
+        story: storyReducer,
         flashList: flashListReducer
     });
 
