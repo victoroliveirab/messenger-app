@@ -50,3 +50,9 @@
 .contact__selected:hover {
     background-color: var(--main-dark-gray);
 }
+
+.contact__other-options {
+    background-color: var(--main-transparent);
+    border: 0;
+    color: var(--main-dark-gray);
+}

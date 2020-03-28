@@ -11,19 +11,26 @@ class Chat extends Component {
         this.state = {
             loading: true
         };
+        this.ref = React.createRef();
     }
 
     showMessages = () => {
         return (
-            <div className="chat custom-scrollbar">
+            <div ref={this.ref} className="chat custom-scrollbar">
                 {this.props.messages.map(message =>
                     message.sourceUsername === this.props.user.username ? (
-                        <div className="message-container message-owner">
-                            <Message key={message.id} {...message} />
+                        <div
+                            key={message.id}
+                            className="message-container message-owner"
+                        >
+                            <Message {...message} />
                         </div>
                     ) : (
-                        <div className="message-container message-other">
-                            <Message key={message.id} {...message} />
+                        <div
+                            key={message.id}
+                            className="message-container message-other"
+                        >
+                            <Message {...message} />
                         </div>
                     )
                 )}
@@ -33,6 +40,18 @@ class Chat extends Component {
             </div>
         );
     };
+
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.currentContact !== prevProps.currentContact ||
+            this.props.messages.length !== prevProps.messages.length
+        ) {
+            if (this.ref.current) {
+                console.log(this.ref);
+                this.ref.current.scrollTop = 100000;
+            }
+        }
+    }
 
     render() {
         if (this.props.currentContact === null) {

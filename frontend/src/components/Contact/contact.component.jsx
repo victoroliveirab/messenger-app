@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from "../Avatar/avatar.component";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import {
     setContact,
     setContactRef
@@ -99,10 +99,10 @@ class Contact extends React.Component {
                                     data-toggle="dropdown"
                                     aria-haspopup="true"
                                     aria-expanded="false"
-                                    className="top-bar__button"
+                                    className="contact__other-options"
                                 >
                                     <FontAwesomeIcon
-                                        icon={faCaretDown}
+                                        icon={faAngleDown}
                                         size="2x"
                                     />
                                 </button>
