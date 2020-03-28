@@ -46,38 +46,27 @@ const contactList = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false
             };
-        case "CHANGE_ORDER" /* 
-            console.log(state.contactSelected);
-            const toChange = state.contacts.findIndex(
-                contact => contact.id === state.contactSelected.id
-            );
-            const firstArr = state.contacts.slice(0, toChange);
-            const secondArr = state.contacts.slice(toChange + 1);
-            console.log(firstArr);
-            console.log("toChange = " + toChange);
-            console.log(secondArr); */:
-            //For now, just throwing last element to the top kkkk
-            const first = state.contacts[state.contacts.length - 1];
-            const newList = [first].concat(
-                state.contacts.slice(0, state.contacts.length - 1)
-            );
-            return {
-                ...state,
-                contacts: newList
-            };
         case "REORDER_CURRENT_TO_FIRST":
             if (
                 !state.chats.find(
                     e => e.contact.username === state.contactSelected.username
                 )
             ) {
-                console.log(
-                    state.contactSelected.username +
-                        " is not in the chat list... yet!"
-                );
                 return state;
             }
-            return state;
+            const currentPosition = state.chats.findIndex(
+                ({ contact }) =>
+                    contact.username === state.contactSelected.username
+            );
+            const firstContact = { ...state.chats[currentPosition] };
+            firstContact.lastMessage = action.payload;
+            const otherContacts = state.chats
+                .slice(0, currentPosition)
+                .concat(state.chats.slice(currentPosition + 1));
+            return {
+                ...state,
+                chats: [firstContact].concat(otherContacts)
+            };
         default:
             return state;
     }

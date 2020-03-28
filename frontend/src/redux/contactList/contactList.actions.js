@@ -36,6 +36,7 @@ export const changeOrder = () => ({
     type: "CHANGE_ORDER"
 });
 
-export const reorderCurrentToFirst = () => ({
-    type: "REORDER_CURRENT_TO_FIRST"
+export const reorderCurrentToFirst = newLastMessage => ({
+    type: "REORDER_CURRENT_TO_FIRST",
+    payload: newLastMessage
 });

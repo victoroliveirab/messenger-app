@@ -34,7 +34,6 @@ class Contact extends React.Component {
         super(props);
         this.ref = React.createRef();
         this.contact = props.contact;
-        this.lastMessage = props.lastMessage;
         this.simplified = props.simplified;
     }
 
@@ -82,7 +81,7 @@ class Contact extends React.Component {
                     <div className="contact__message-wrapper">
                         {!this.simplified && (
                             <p className="contact__message-preview">
-                                {this.lastMessage.message}
+                                {this.props.lastMessage.message}
                             </p>
                         )}
                     </div>
@@ -90,7 +89,9 @@ class Contact extends React.Component {
                 {!this.simplified && (
                     <div className="contact__other">
                         <span className="contact__other-timestamp">
-                            {formatSendDateAndTime(this.lastMessage.sendTime)}
+                            {formatSendDateAndTime(
+                                this.props.lastMessage.sendTime
+                            )}
                         </span>
                         <div className="others">
                             <div className="dropdown">

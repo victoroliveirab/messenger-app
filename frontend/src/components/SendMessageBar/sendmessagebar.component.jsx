@@ -35,7 +35,7 @@ class SendMessageBar extends React.Component {
             .then(response => {
                 this.props.appendMessage(response.data);
                 this.setState({ message: "" });
-                this.props.changeOrder();
+                this.props.changeOrder(response.data);
             })
             .catch(err => console.log(err));
     };
@@ -77,7 +77,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     appendMessage: message => dispatch(appendMessage(message)),
-    changeOrder: () => dispatch(reorderCurrentToFirst())
+    changeOrder: newLastMessage =>
+        dispatch(reorderCurrentToFirst(newLastMessage))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendMessageBar);

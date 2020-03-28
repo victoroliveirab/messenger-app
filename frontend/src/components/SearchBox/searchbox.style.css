@@ -1,6 +1,7 @@
 .searchbox {
     background-color: var(--main-regular-gray);
     width: inherit;
+    border-bottom: 1px solid #f8f8f883;
 }
 
 .searchbox__form {
