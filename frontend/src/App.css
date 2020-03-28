@@ -12,6 +12,10 @@ body {
 
 /* GLOBAL STUFF */
 
+button {
+    border: 0;
+}
+
 button:focus {
     outline: none;
 }
@@ -32,6 +36,8 @@ button:focus {
     --main-black: #000000;
 
     --main-light-gray-shade: #f8f8f83b;
+
+    --main-dark-green: #4f8a24;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {

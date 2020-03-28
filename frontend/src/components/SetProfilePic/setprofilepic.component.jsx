@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-
 import { dispatchGet, dispatchPost } from "../../utils/request";
 
 import "./setprofilepic.style.css";
@@ -59,12 +56,7 @@ class SetProfilePic extends React.Component {
                     onSubmit={this.handleSubmit}
                 >
                     <div className="file-container">
-                        <button
-                            type="button"
-                            className="select-image btn btn-primary"
-                        >
-                            Select Photo
-                        </button>
+                        <button className="select-image">Select Photo</button>
                         <input
                             name="file"
                             type="file"

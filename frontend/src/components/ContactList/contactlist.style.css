@@ -4,6 +4,7 @@ body::-webkit-scrollbar {
 
 .contact-list-wrapper {
     overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
     width: inherit;
     background: var(--main-regular-gray);

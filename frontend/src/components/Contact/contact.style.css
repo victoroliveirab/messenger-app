@@ -1,7 +1,7 @@
 .contact {
     height: 100px;
     display: grid;
-    grid-template-columns: 15% 70% 15%;
+    grid-template-columns: minmax(70px, 15%) 70% minmax(70px, 15%);
     align-items: center;
     justify-content: space-around;
     transition: all 0.2s ease-in-out;
