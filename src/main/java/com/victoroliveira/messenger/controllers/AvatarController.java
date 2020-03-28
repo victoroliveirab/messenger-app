@@ -23,6 +23,20 @@ public class AvatarController {
     @Autowired
     private ProfileService profileService;
 
+    @GetMapping("/avatar")
+    public ResponseEntity<AvatarDto> getOwnAvatar(@RequestHeader(name = "Authorization") String token) {
+        String username = TokenToUsernameConverter.convert(token);
+        Profile profile = profileService.findByUsername(username);
+        Avatar avatar = avatarService.findByProfileId(profile);
+        if (avatar == null) {
+            System.out.println("user " + username + " does not have an avatarentend");
+            avatar = ImageToByteArray.defaultAvatar();
+            avatar.setProfile(profile);
+        }
+        AvatarDto avatarDto = AvatarToAvatarDtoConverter.convert(avatar);
+        return new ResponseEntity<>(avatarDto, HttpStatus.OK);
+    }
+
     @GetMapping("/avatar/{username}")
     public ResponseEntity<AvatarDto> getAvatar(@PathVariable String username) {
         Profile profile = profileService.findByUsername(username);

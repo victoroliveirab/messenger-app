@@ -8,7 +8,11 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
-import { setToken, setUser } from "../../redux/user/user.actions";
+import {
+    setToken,
+    setUser,
+    setRememberMe
+} from "../../redux/user/user.actions";
 import { addFlash } from "../../redux/flashList/flashList.actions";
 
 import { dispatchGet, dispatchPost } from "../../utils/request";
@@ -27,13 +31,14 @@ class LoginForm extends Component {
         super(props);
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            rememberMe: false
         };
     }
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { username, password } = this.state;
+        const { username, password, rememberMe } = this.state;
         let token;
         await dispatchPost("/login", { username, password })
             .then(response => {
@@ -54,10 +59,18 @@ class LoginForm extends Component {
                     message: "Unknown"
                 });
             });
+        this.props.setRememberMe(rememberMe);
     };
 
     handleChange = event => {
-        const { name, value } = event.target;
+        let name, value;
+        if (event.target.name === "rememberMe") {
+            name = "rememberMe";
+            value = event.target.checked;
+        } else {
+            name = event.target.name;
+            value = event.target.value;
+        }
         this.setState({ [name]: value });
     };
 
@@ -96,8 +109,10 @@ class LoginForm extends Component {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        value="acceptTerms"
+                                        name="rememberMe"
+                                        checked={this.state.rememberMe}
                                         color="primary"
+                                        onChange={this.handleChange}
                                     />
                                 }
                                 label="Remember Me"
@@ -129,7 +144,8 @@ class LoginForm extends Component {
 const mapDispatchToProps = dispatch => ({
     addFlash: flash => dispatch(addFlash(flash)),
     setUser: user => dispatch(setUser(user)),
-    setToken: token => dispatch(setToken(token))
+    setToken: token => dispatch(setToken(token)),
+    setRememberMe: rememberMe => dispatch(setRememberMe(rememberMe))
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginForm));

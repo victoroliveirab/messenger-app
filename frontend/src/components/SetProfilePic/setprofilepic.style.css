@@ -8,11 +8,29 @@
 }
 
 .set-profile-pic__outer-circle {
-    background-color: var(--main-dark-red);
-    color: var(--main-white);
     border-radius: 500px;
-    padding: 50px;
     margin-bottom: 25px;
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.set-profile-pic-form {
+    width: 100%;
+}
+
+.file-container {
+    position: relative;
+    width: 80%;
+    text-align: center;
+}
+
+.fileup {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .set-profile-pic__picture {

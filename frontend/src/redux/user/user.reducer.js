@@ -1,12 +1,26 @@
 import Cookies from "js-cookie";
 
+const rememberMeParsed = Cookies.get("rememberPitang") === "true";
+
 const INITIAL_STATE = {
-    token: Cookies.get("jwtPitang"),
+    rememberMe: rememberMeParsed,
+    token: null,
     user: null
 };
 
+INITIAL_STATE.token = INITIAL_STATE.rememberMe && Cookies.get("jwtPitang");
+
+console.log("INITIAL_STATE = ");
+console.log(INITIAL_STATE);
+
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case "SET_REMEMBER_ME":
+            Cookies.set("rememberPitang", action.payload);
+            return {
+                ...state,
+                rememberMe: action.payload
+            };
         case "SET_TOKEN":
             Cookies.set("jwtPitang", action.payload);
             return {
@@ -21,10 +35,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
             };
         case "LOG_OUT":
             Cookies.remove("jwtPitang");
+            Cookies.remove("rememberPitang");
             return {
                 ...state,
                 token: null,
-                user: null
+                user: null,
+                rememberMe: false
             };
         default:
             return state;

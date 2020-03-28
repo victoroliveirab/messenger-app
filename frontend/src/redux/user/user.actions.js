@@ -8,6 +8,11 @@ export const setUser = user => ({
     payload: user
 });
 
+export const setRememberMe = remember => ({
+    type: "SET_REMEMBER_ME",
+    payload: remember
+});
+
 export const logout = () => ({
     type: "LOG_OUT"
 });

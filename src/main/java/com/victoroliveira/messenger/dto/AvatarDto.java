@@ -1,7 +1,9 @@
 package com.victoroliveira.messenger.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.victoroliveira.messenger.models.Profile;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AvatarDto {
     private Long id;
     private Profile profile;
