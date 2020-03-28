@@ -1,13 +1,14 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
 import {
-    setContact,
-    setContactRef
-} from "../../redux/contactList/contactList.actions";
-import { setMessages } from "../../redux/chat/chat.actions";
+    setSelectedContact,
+    setSelectedContactRef
+} from "../../redux/story/story.actions";
 import { connect } from "react-redux";
 
 import "./storycontact.style.css";
+
+const retrieveUsername = ref => ref.current.children[1].textContent;
 
 class StoryContact extends React.Component {
     constructor(props) {
@@ -18,9 +19,27 @@ class StoryContact extends React.Component {
         this.simplified = props.simplified;
     }
 
+    handleClick = target => {
+        const selectedContact = retrieveUsername(target);
+        if (selectedContact !== this.props.selectedContact) {
+            this.props.setSelectedContact(selectedContact);
+            if (this.props.selectedContactRef) {
+                this.props.selectedContactRef.classList.remove(
+                    "contact__selected"
+                );
+            }
+            this.props.setSelectedContactRef(this.ref.current);
+            this.ref.current.classList.add("contact__selected");
+        }
+    };
+
     render() {
         return (
-            <div className="story-contact" ref={this.ref}>
+            <div
+                className="story-contact"
+                ref={this.ref}
+                onClick={() => this.handleClick(this.ref)}
+            >
                 <div className="story-contact__photo">
                     <Avatar
                         username={this.contact.username}
@@ -39,14 +58,15 @@ class StoryContact extends React.Component {
 const mapStateToProps = state => ({
     token: state.user.token,
     username: state.user.username,
-    contactSelected: state.contactList.contactSelected,
-    contactSelectedRef: state.contactList.contactSelectedRef
+    selectedContact: state.story.selectedContact,
+    selectedContactRef: state.story.selectedContactRef
 });
 
 const mapDispatchToProps = dispatch => ({
-    setContact: contactName => dispatch(setContact(contactName)),
-    setContactRef: contact => dispatch(setContactRef(contact)),
-    setMessages: messages => dispatch(setMessages(messages))
+    setSelectedContact: contactName =>
+        dispatch(setSelectedContact(contactName)),
+    setSelectedContactRef: contactRef =>
+        dispatch(setSelectedContactRef(contactRef))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryContact);

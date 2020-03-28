@@ -1,16 +1,54 @@
 .story-container {
-    height: 100%;
+    height: inherit;
+    width: inherit;
     background: var(--main-darker-red);
     background: linear-gradient(
         135deg,
         var(--main-darker-red) 0%,
         var(--main-dark-red) 100%
     );
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    align-content: center;
 }
 
 .story-title {
     font-size: 4.8rem;
+}
+
+.story-owner {
+    padding-left: 30px;
+    padding-right: 30px;
+    align-self: end;
+    display: flex;
+}
+
+.story-text {
+    justify-self: center;
+    align-self: center;
+    width: 80%;
+    text-align: center;
+}
+
+.story-owner__avatar {
+    position: relative;
+}
+
+.story-owner__info {
+    margin-left: 15px;
+}
+
+.story-owner__username {
+    color: var(--main-darker-gray);
+    margin: 0;
+}
+
+.story-owner__time-ago {
+    color: var(--main-dark-gray);
+    margin: 0;
+}
+
+.a {
+    height: 100%;
+    width: 100%;
 }

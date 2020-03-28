@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
     stories: [],
+    selectedContact: null,
+    selectedContactRef: null,
     currentStory: null
 };
 
@@ -14,6 +16,16 @@ const storyReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentStory: action.payload
+            };
+        case "SET_SELECTED_CONTACT":
+            return {
+                ...state,
+                selectedContact: action.payload
+            };
+        case "SET_SELECTED_CONTACT_REF":
+            return {
+                ...state,
+                selectedContactRef: action.payload
             };
         default:
             return state;

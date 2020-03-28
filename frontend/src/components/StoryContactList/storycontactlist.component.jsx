@@ -51,6 +51,10 @@ class StoryContactList extends Component {
         this.setState({ loading: false });
     }
 
+    handleClick = event => {
+        console.log(event.target);
+    };
+
     render() {
         if (this.state.loading) {
             return "fetching...";
@@ -59,7 +63,11 @@ class StoryContactList extends Component {
             <div className="story-contact-list-wrapper">
                 <div className="story-contact-list">
                     {this.props.storiesList.map(entry => (
-                        <StoryContact contact={entry.contact} />
+                        <StoryContact
+                            key={entry.contact.id}
+                            contact={entry.contact}
+                            onClick={this.handleClick}
+                        />
                     ))}
                 </div>
             </div>
