@@ -40,13 +40,18 @@ class Contact extends React.Component {
     render() {
         return (
             <div
-                className="contact"
+                className={`contact ${
+                    this.props.contactSelected &&
+                    this.props.contactSelected.username ===
+                        this.contact.username
+                        ? "contact__selected"
+                        : ""
+                } `}
                 onClick={async event => {
                     if (
                         event.target.tagName === "svg" ||
                         event.target.tagName === "path"
                     ) {
-                        console.log("hehehe");
                         return;
                     }
                     const contactName = findContactName(this.ref);

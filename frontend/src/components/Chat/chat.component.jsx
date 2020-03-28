@@ -41,13 +41,19 @@ class Chat extends Component {
         );
     };
 
+    componentDidMount() {
+        if (this.ref.current) {
+            this.ref.current.scrollTop = 100000;
+        }
+    }
+
     componentDidUpdate(prevProps) {
         if (
             this.props.currentContact !== prevProps.currentContact ||
-            this.props.messages.length !== prevProps.messages.length
+            this.props.messages.length !== prevProps.messages.length ||
+            this.props.path !== prevProps.path
         ) {
             if (this.ref.current) {
-                console.log(this.ref);
                 this.ref.current.scrollTop = 100000;
             }
         }
@@ -74,7 +80,8 @@ const mapStateToProps = state => ({
     token: state.user.token,
     user: state.user.user,
     currentContact: state.contactList.contactSelected,
-    messages: state.chat.messages
+    messages: state.chat.messages,
+    path: state.router.location.pathname
 });
 
 export default connect(mapStateToProps)(Chat);
