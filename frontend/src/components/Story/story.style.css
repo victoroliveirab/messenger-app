@@ -7,48 +7,85 @@
         var(--main-darker-red) 0%,
         var(--main-dark-red) 100%
     );
-    display: grid;
-    grid-template-rows: 10% 90%;
-    align-content: center;
+}
+
+.carousel-background {
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -10;
+}
+
+.carousel-title {
+    position: absolute;
+    left: 2%;
+    top: 3%;
+    display: flex;
+}
+
+.carousel-title__info {
+    margin-left: 10px;
+    text-align: left;
+}
+
+.carousel-title__owner {
+    color: #a09b9c; /* look for a color var that fits */
+}
+
+.carousel-title__time-ago {
+    color: var(--main-dark-gray);
+    font-size: 0.6rem;
+    margin-top: -4px;
+}
+
+.carousel-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+}
+
+.carousel-text__message {
+    font-size: 3.6rem;
 }
 
 .story-title {
     font-size: 4.8rem;
 }
 
-.story-owner {
-    padding-left: 30px;
-    padding-right: 30px;
-    align-self: end;
-    display: flex;
+/* Overriding default bootstrap styles */
+
+.carousel {
+    width: inherit;
+    height: inherit;
 }
 
-.story-text {
-    justify-self: center;
-    align-self: center;
-    width: 80%;
-    text-align: center;
-}
-
-.story-owner__avatar {
-    position: relative;
-}
-
-.story-owner__info {
-    margin-left: 15px;
-}
-
-.story-owner__username {
-    color: var(--main-darker-gray);
-    margin: 0;
-}
-
-.story-owner__time-ago {
-    color: var(--main-dark-gray);
-    margin: 0;
-}
-
-.a {
+.carousel-item {
     height: 100%;
+}
+
+.carousel-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
+    text-align: center;
+    height: 100%;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    top: 50%;
+    bottom: 50%;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    width: 40px;
+    height: 40px;
 }
