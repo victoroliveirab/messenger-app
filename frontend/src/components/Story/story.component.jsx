@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Avatar from "../Avatar/avatar.component";
+import { timeElapsedFromNow } from "../../utils/formatSendDate";
 
 import "./story.style.css";
 
@@ -36,6 +37,7 @@ const Story = props => {
                     </ol>
                     <div className="carousel-inner">
                         {stories.map((story, index) => {
+                            console.log(story);
                             const gradient = {
                                 background: `${story.gradient}`
                             };
@@ -61,7 +63,9 @@ const Story = props => {
                                                 {props.selectedContact}
                                             </h5>
                                             <h6 className="carousel-title__time-ago">
-                                                22 minutes ago
+                                                {timeElapsedFromNow(
+                                                    story.postTime
+                                                )}
                                             </h6>
                                         </div>
                                     </div>
