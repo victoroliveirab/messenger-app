@@ -9,32 +9,7 @@ const Story = props => {
         const current = props.stories.find(
             element => element.contact.username === props.selectedContact
         );
-        const currentStory = current.stories[0];
-        const colors = currentStory.gradient.split(",");
-        const divStyle = {
-            background: `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`
-        };
-        //Todo: avoid second api call to a file we already have (avatar)
-        // return (
-        //     <div className="story-container" style={divStyle}>
-        //         <div className="story-owner">
-        //             <div className="story-owner__avatar">
-        //                 <Avatar
-        //                     username={props.selectedContact}
-        //                     token={props.token}
-        //                     rounded
-        //                 />
-        //             </div>
-        //             <div className="story-owner__info">
-        //                 <h5 className="story-owner__username">
-        //                     {props.selectedContact}
-        //                 </h5>
-        //                 <h6 className="story-owner__time-ago">23 min ago</h6>
-        //             </div>
-        //         </div>
-        //         <h2 className="story-text">{currentStory.text}</h2>
-        //     </div>
-        // );
+        const stories = current.stories;
         return (
             <div className="story-container">
                 <div
@@ -47,67 +22,57 @@ const Story = props => {
                             data-target="#carouselStories"
                             data-slide-to="0"
                             className="active"
-                            data-interval="1000000"
+                            data-interval="10000"
+                            key={0}
                         ></li>
-                        <li
-                            data-target="#carouselStories"
-                            data-slide-to="1"
-                        ></li>
-                        <li
-                            data-target="#carouselStories"
-                            data-slide-to="2"
-                        ></li>
+                        {stories.slice(1).map((_, index) => (
+                            <li
+                                data-target="#carouselStories"
+                                data-interval="10000"
+                                data-slide-to={`${index + 1}`}
+                                key={index + 1}
+                            ></li>
+                        ))}
                     </ol>
                     <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <div
-                                className="carousel-background"
-                                style={divStyle}
-                            ></div>
-                            <div className="carousel-title">
-                                <Avatar
-                                    username={props.selectedContact}
-                                    token={props.token}
-                                    rounded
-                                />
-                                <div className="carousel-title__info">
-                                    <h5 className="carousel-title__owner">
-                                        {props.selectedContact}
-                                    </h5>
-                                    <h6 className="carousel-title__time-ago">
-                                        22 minutes ago
-                                    </h6>
+                        {stories.map((story, index) => {
+                            const gradient = {
+                                background: `${story.gradient}`
+                            };
+                            return (
+                                <div
+                                    className={`carousel-item ${
+                                        index === 0 ? "active" : null
+                                    }`}
+                                    key={story.id}
+                                >
+                                    <div
+                                        className="carousel-background"
+                                        style={gradient}
+                                    ></div>
+                                    <div className="carousel-title">
+                                        <Avatar
+                                            username={props.selectedContact}
+                                            token={props.token}
+                                            rounded
+                                        />
+                                        <div className="carousel-title__info">
+                                            <h5 className="carousel-title__owner">
+                                                {props.selectedContact}
+                                            </h5>
+                                            <h6 className="carousel-title__time-ago">
+                                                22 minutes ago
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-text">
+                                        <h2 className="carousel-text__message">
+                                            {story.text}
+                                        </h2>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="carousel-text">
-                                <h2 className="carousel-text__message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Quod minus aliquam commodi
-                                    possimus deleniti fugiat eaque aut iste.
-                                    Tempora distinctio molestias eos eius esse
-                                    doloremque consequuntur aut culpa? Qui,
-                                    consectetur!
-                                </h2>
-                            </div>
-                        </div>
-                        <div className="carousel-item">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Sunt incidunt minima nobis
-                                recusandae cupiditate ipsum libero omnis eos
-                                sequi ipsam explicabo fugiat similique autem
-                                nemo, rerum obcaecati fuga. Aliquid, eligendi!
-                            </p>
-                        </div>
-                        <div className="carousel-item">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Officiis accusamus esse odit
-                                ex quod, amet, asperiores pariatur neque nobis
-                                eos nemo, explicabo laboriosam. Dolores numquam
-                                odit minus, in illo eveniet.
-                            </p>
-                        </div>
+                            );
+                        })}
                     </div>
                     <a
                         className="carousel-control-prev"
