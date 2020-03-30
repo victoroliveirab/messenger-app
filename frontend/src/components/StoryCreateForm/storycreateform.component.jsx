@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { dispatchPost } from "../../utils/request";
 import {
     setSelectedContact,
-    unsetCreateNewStory
+    unsetCreateNewStory,
+    appendOwnStories
 } from "../../redux/story/story.actions";
 
 import "./storycreateform.style.css";
@@ -47,8 +48,6 @@ const colors = [
     }
 ];
 
-// TODO make options as radio buttons
-
 class StoryCreateForm extends React.Component {
     constructor(props) {
         super(props);
@@ -63,13 +62,14 @@ class StoryCreateForm extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        console.log(this.state.backgroundConfig);
         const request = {
             text: this.state.value,
-            gradient: this.state.backgroundConfig.gradient,
+            gradient: this.state.backgroundConfig.background,
             whiteFont: this.state.backgroundConfig.whiteFont
         };
-        await dispatchPost("/story", request, this.props.token);
+        await dispatchPost("/story", request, this.props.token)
+            .then(response => this.props.appendOwnStories(response.data))
+            .catch(err => console.error(err));
 
         this.props.setSelectedContact(null);
         this.props.unsetCreateNewStory();
@@ -191,7 +191,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setSelectedContact: contactName =>
         dispatch(setSelectedContact(contactName)),
-    unsetCreateNewStory: () => dispatch(unsetCreateNewStory())
+    unsetCreateNewStory: () => dispatch(unsetCreateNewStory()),
+    appendOwnStories: story => dispatch(appendOwnStories(story))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryCreateForm);

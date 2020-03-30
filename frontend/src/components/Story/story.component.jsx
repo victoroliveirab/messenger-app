@@ -7,11 +7,16 @@ import "./story.style.css";
 
 const Story = props => {
     if (props.selectedContact) {
-        const current = props.stories.find(
-            element => element.contact.username === props.selectedContact
-        );
-        const info = {
-            stories: current.stories,
+        let info;
+        const stories =
+            props.selectedContact === props.user.username
+                ? props.ownStories
+                : props.stories.find(
+                      element =>
+                          element.contact.username === props.selectedContact
+                  ).stories;
+        info = {
+            stories,
             selectedContact: props.selectedContact,
             token: props.token
         };
@@ -29,9 +34,11 @@ const Story = props => {
 
 const mapStateToProps = state => ({
     token: state.user.token,
+    user: state.user.user,
     selectedContact: state.story.selectedContact,
     stories: state.story.stories,
-    createNewStory: state.story.createNewStory
+    createNewStory: state.story.createNewStory,
+    ownStories: state.story.ownStories
 });
 
 export default connect(mapStateToProps)(Story);

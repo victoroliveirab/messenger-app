@@ -3,7 +3,8 @@ const INITIAL_STATE = {
     selectedContact: null,
     selectedContactRef: null,
     currentStory: null,
-    createNewStory: false
+    createNewStory: false,
+    ownStories: []
 };
 
 const storyReducer = (state = INITIAL_STATE, action) => {
@@ -12,6 +13,18 @@ const storyReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 stories: action.payload
+            };
+        case "SET_OWN_STORIES":
+            console.log(action.payload);
+            return {
+                ...state,
+                ownStories: action.payload
+            };
+        case "APPEND_OWN_STORIES":
+            const newOwnStories = state.ownStories.concat([action.payload]);
+            return {
+                ...state,
+                ownStories: newOwnStories
             };
         case "SET_CURRENT_STORY":
             return {

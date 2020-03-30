@@ -3,6 +3,16 @@ export const setStoryList = storyList => ({
     payload: storyList
 });
 
+export const setOwnStories = stories => ({
+    type: "SET_OWN_STORIES",
+    payload: stories
+});
+
+export const appendOwnStories = story => ({
+    type: "APPEND_OWN_STORIES",
+    payload: story
+});
+
 export const setCurrentStory = story => ({
     type: "SET_CURRENT_STORY",
     payload: story

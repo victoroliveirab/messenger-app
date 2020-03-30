@@ -20,8 +20,10 @@ public class StoryController {
     private StoryService storyService;
 
     @GetMapping("/story")
-    public ResponseEntity<List<StoryDto>> getStories() {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<List<StoryDto>> getStories(@RequestHeader(name = "Authorization") String token) {
+        List<Story> ownedStories = storyService.allStoriesOfSomeone(TokenToUsernameConverter.convert(token));
+        List<StoryDto> ownedStoriesDto = StoryToStoryDtoConverter.convertAll(ownedStories);
+        return new ResponseEntity<>(ownedStoriesDto, HttpStatus.OK);
     }
 
     @GetMapping("/story/{username}")

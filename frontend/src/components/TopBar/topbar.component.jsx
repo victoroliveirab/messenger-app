@@ -12,7 +12,10 @@ import {
     faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "../../redux/user/user.actions";
-import { setCreateNewStory } from "../../redux/story/story.actions";
+import {
+    setSelectedContact,
+    setCreateNewStory
+} from "../../redux/story/story.actions";
 
 import "./topbar.style.css";
 
@@ -113,13 +116,19 @@ const TopBar = props => {
                 >
                     <div className="top-bar__main">
                         <div>
-                            <Link to="/profile">
+                            <button
+                                onClick={() =>
+                                    props.setSelectedContact(
+                                        props.user.username
+                                    )
+                                }
+                            >
                                 <Avatar
                                     className="top-bar__avatar"
                                     rounded={true}
                                     username={props.user.username}
                                 />
-                            </Link>
+                            </button>
                         </div>
 
                         <div className="top-bar__other-icons">
@@ -151,7 +160,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     logout: () => dispatch(logout()),
-    setCreateNewStory: () => dispatch(setCreateNewStory())
+    setCreateNewStory: () => dispatch(setCreateNewStory()),
+    setSelectedContact: selectedContact =>
+        dispatch(setSelectedContact(selectedContact))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
