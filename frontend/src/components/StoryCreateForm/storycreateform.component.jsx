@@ -47,27 +47,38 @@ const colors = [
 class StoryCreateForm extends React.Component {
     constructor(props) {
         super(props);
-        this.background = React.createRef();
         this.textarea = React.createRef();
+        const randomBackground = Math.floor(Math.random() * colors.length);
         this.state = {
             value: "",
-            rows: 1
+            rows: 1,
+            backgroundConfig: colors[randomBackground]
         };
     }
 
     changeColor = color => {
-        this.background.current.style.background = color.background;
-        if (color.whiteFont) {
-            this.textarea.current.style.color = "#ffffff";
-            this.textarea.current.classList.add(
-                "story-textarea-whiteplaceholder"
-            );
-        } else {
-            this.textarea.current.style.color = "#000000";
-            this.textarea.current.classList.remove(
-                "story-textarea-whiteplaceholder"
-            );
-        }
+        this.setState({ backgroundConfig: color });
+        // if (color.whiteFont) {
+        //     this.textarea.current.classList.add(
+        //         "story-textarea-whiteplaceholder"
+        //     );
+        // } else {
+        //     this.textarea.current.classList.remove(
+        //         "story-textarea-whiteplaceholder"
+        //     );
+        // }
+        // this.background.current.style.background = color.background;
+        // if (color.whiteFont) {
+        //     this.textarea.current.style.color = "#ffffff";
+        //     this.textarea.current.classList.add(
+        //         "story-textarea-whiteplaceholder"
+        //     );
+        // } else {
+        //     this.textarea.current.style.color = "#000000";
+        //     this.textarea.current.classList.remove(
+        //         "story-textarea-whiteplaceholder"
+        //     );
+        // }
     };
 
     handleChange = event => {
@@ -90,8 +101,10 @@ class StoryCreateForm extends React.Component {
         return (
             <div className="create-story-container">
                 <div
-                    ref={this.background}
                     className="new-story-background"
+                    style={{
+                        background: this.state.backgroundConfig.background
+                    }}
                 ></div>
                 <div className="create-story__title">
                     <Avatar
@@ -99,17 +112,35 @@ class StoryCreateForm extends React.Component {
                         token={this.props.token}
                         rounded
                     />
-                    <div className="carousel-title__info">
-                        <h5 className="carousel-title__owner">
+                    <div className="story-title__info">
+                        <h5
+                            className={`story-title__owner ${
+                                this.state.backgroundConfig.whiteFont
+                                    ? "story-title__owner-whitefont"
+                                    : null
+                            }`}
+                        >
                             {this.props.user.username}
                         </h5>
-                        <h6 className="carousel-title__time-ago">now</h6>
+                        <h6
+                            className={`story-timeago ${
+                                this.state.backgroundConfig.whiteFont
+                                    ? "story-timeago-whitefont"
+                                    : null
+                            }`}
+                        >
+                            now
+                        </h6>
                     </div>
                 </div>
                 <form noValidate className="story-create-form">
                     <textarea
                         maxLength="280"
-                        className="story-textarea"
+                        className={`story-textarea ${
+                            this.state.backgroundConfig.whiteFont
+                                ? "story-textarea-whiteplaceholder"
+                                : null
+                        }`}
                         name="storyText"
                         rows={this.state.rows}
                         value={this.state.value}
@@ -119,12 +150,22 @@ class StoryCreateForm extends React.Component {
                     ></textarea>
                     <div className="story-gradient-options">
                         {colors.map(color => (
-                            <div
+                            <label
                                 key={color.id}
-                                className={`gradient-option option-${color.id}`}
-                                style={{ background: color.background }}
-                                onClick={() => this.changeColor(color)}
-                            ></div>
+                                className="gradient-picker-container"
+                            >
+                                <input
+                                    type="radio"
+                                    name="picker"
+                                    className="gradient-picker"
+                                />
+                                <span
+                                    className="picker"
+                                    id={`color-${color.id}`}
+                                    style={{ background: color.background }}
+                                    onClick={() => this.changeColor(color)}
+                                ></span>
+                            </label>
                         ))}
                     </div>
                     <button type="submit" className="story-submit">
