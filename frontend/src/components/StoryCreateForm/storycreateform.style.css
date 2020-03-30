@@ -33,39 +33,48 @@
     border: none;
     height: auto;
     border-radius: 5px;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     resize: none;
     text-align: center;
+    background: #aabbcc;
+    color: var(--main-white);
 }
 
 .story-textarea:focus {
     outline: none;
 }
 
+.story-textarea::placeholder {
+    color: var(--main-black);
+    font-style: italic;
+    opacity: 1;
+}
+
+.story-textarea-whiteplaceholder::placeholder {
+    color: var(--main-white);
+}
+
 .story-gradient-options {
     margin: 0 auto;
     width: 50%;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .gradient-option {
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     display: inline-block;
+    cursor: pointer;
 }
 
 .gradient-option ~ .gradient-option {
     margin-left: 10px;
 }
 
-.option-1 {
-    background-color: green;
-}
-
-.option-2 {
-    background-color: red;
-}
-
-.option-3 {
-    background-color: blue;
+.story-submit {
+    width: 25%;
+    padding: 10px;
+    background-color: #123;
+    color: var(--main-white);
 }

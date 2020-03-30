@@ -7,6 +7,7 @@
         var(--main-darker-red) 0%,
         var(--main-dark-red) 100%
     );
+    position: relative;
 }
 
 .carousel-background {
@@ -55,6 +56,11 @@
 
 .story-title {
     font-size: 4.8rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
 }
 
 /* Overriding default bootstrap styles */

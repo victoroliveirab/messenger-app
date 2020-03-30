@@ -109,7 +109,7 @@ const Story = props => {
     return (
         <div className="story-container">
             <div></div>
-            <h2 className="story-title">Select a story to start</h2>
+            <h2 className="story-title">Select a story to start!</h2>
         </div>
     );
 };
