@@ -11,6 +11,7 @@ public class StoryDto {
     private boolean onlyBestFriends;
     private byte[] backgroundImage;
     private String gradient;
+    private boolean whiteFont;
 
     public StoryDto() {
     }
@@ -69,5 +70,13 @@ public class StoryDto {
 
     public void setGradient(String gradient) {
         this.gradient = gradient;
+    }
+
+    public boolean isWhiteFont() {
+        return whiteFont;
+    }
+
+    public void setWhiteFont(boolean whiteFont) {
+        this.whiteFont = whiteFont;
     }
 }

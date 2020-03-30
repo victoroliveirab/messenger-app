@@ -1,63 +1,13 @@
 .story-container {
     height: inherit;
     width: inherit;
-    background: var(--main-darker-red);
-    background: linear-gradient(
-        135deg,
-        var(--main-darker-red) 0%,
-        var(--main-dark-red) 100%
-    );
     position: relative;
 }
 
-.carousel-background {
-    width: inherit;
-    height: inherit;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: -10;
-}
-
-.story-title {
-    position: absolute;
-    left: 2%;
-    top: 3%;
-    display: flex;
-}
-
-.story-title__info {
-    margin-left: 10px;
-    text-align: left;
-}
-
-.story-title__owner {
-    color: #a09b9c; /* look for a color var that fits */
-}
-
-.story-title__time-ago {
-    font-size: 0.6rem;
-    margin-top: -4px;
-}
-
-.story-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-}
-
 .story-text__message {
-    font-size: 3.6rem;
+    color: var(--main-black);
 }
 
-.story-call {
-    font-size: 4.8rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
+.story-text__message-white {
+    color: var(--main-white);
 }

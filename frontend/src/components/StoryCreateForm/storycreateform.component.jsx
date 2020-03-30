@@ -1,6 +1,11 @@
 import React from "react";
 import Avatar from "../Avatar/avatar.component";
 import { connect } from "react-redux";
+import { dispatchPost } from "../../utils/request";
+import {
+    setSelectedContact,
+    unsetCreateNewStory
+} from "../../redux/story/story.actions";
 
 import "./storycreateform.style.css";
 
@@ -56,29 +61,18 @@ class StoryCreateForm extends React.Component {
         };
     }
 
-    changeColor = color => {
-        this.setState({ backgroundConfig: color });
-        // if (color.whiteFont) {
-        //     this.textarea.current.classList.add(
-        //         "story-textarea-whiteplaceholder"
-        //     );
-        // } else {
-        //     this.textarea.current.classList.remove(
-        //         "story-textarea-whiteplaceholder"
-        //     );
-        // }
-        // this.background.current.style.background = color.background;
-        // if (color.whiteFont) {
-        //     this.textarea.current.style.color = "#ffffff";
-        //     this.textarea.current.classList.add(
-        //         "story-textarea-whiteplaceholder"
-        //     );
-        // } else {
-        //     this.textarea.current.style.color = "#000000";
-        //     this.textarea.current.classList.remove(
-        //         "story-textarea-whiteplaceholder"
-        //     );
-        // }
+    handleSubmit = async event => {
+        event.preventDefault();
+        console.log(this.state.backgroundConfig);
+        const request = {
+            text: this.state.value,
+            gradient: this.state.backgroundConfig.gradient,
+            whiteFont: this.state.backgroundConfig.whiteFont
+        };
+        await dispatchPost("/story", request, this.props.token);
+
+        this.props.setSelectedContact(null);
+        this.props.unsetCreateNewStory();
     };
 
     handleChange = event => {
@@ -133,7 +127,11 @@ class StoryCreateForm extends React.Component {
                         </h6>
                     </div>
                 </div>
-                <form noValidate className="story-create-form">
+                <form
+                    noValidate
+                    className="story-create-form"
+                    onSubmit={this.handleSubmit}
+                >
                     <textarea
                         maxLength="280"
                         className={`story-textarea ${
@@ -158,12 +156,20 @@ class StoryCreateForm extends React.Component {
                                     type="radio"
                                     name="picker"
                                     className="gradient-picker"
+                                    defaultChecked={
+                                        color.id ===
+                                        this.state.backgroundConfig.id
+                                    }
                                 />
                                 <span
                                     className="picker"
                                     id={`color-${color.id}`}
                                     style={{ background: color.background }}
-                                    onClick={() => this.changeColor(color)}
+                                    onClick={() =>
+                                        this.setState({
+                                            backgroundConfig: color
+                                        })
+                                    }
                                 ></span>
                             </label>
                         ))}
@@ -182,4 +188,10 @@ const mapStateToProps = state => ({
     user: state.user.user
 });
 
-export default connect(mapStateToProps)(StoryCreateForm);
+const mapDispatchToProps = dispatch => ({
+    setSelectedContact: contactName =>
+        dispatch(setSelectedContact(contactName)),
+    unsetCreateNewStory: () => dispatch(unsetCreateNewStory())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoryCreateForm);

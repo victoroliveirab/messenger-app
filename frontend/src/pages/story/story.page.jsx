@@ -1,7 +1,6 @@
 import React from "react";
 import TopBar from "../../components/TopBar/topbar.component";
 import StoryContactList from "../../components/StoryContactList/storycontactlist.component";
-import StoryCreateForm from "../../components/StoryCreateForm/storycreateform.component";
 import Story from "../../components/Story/story.component";
 import LoadingScreen from "../../components/LoadingScreen/loadingscreen.component";
 import { Redirect } from "react-router-dom";
@@ -32,7 +31,7 @@ const StoryPage = props => {
                     <StoryContactList />
                 </div>
                 <div className="col-10 full-height">
-                    {props.createNewStory ? <StoryCreateForm /> : <Story />}
+                    <Story />
                 </div>
             </div>
         </div>

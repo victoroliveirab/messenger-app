@@ -29,6 +29,9 @@ public class Story {
     @Column
     private String gradient;
 
+    @Column
+    private boolean whiteFont;
+
     public Story() {
     }
 
@@ -86,5 +89,13 @@ public class Story {
 
     public void setGradient(String gradient) {
         this.gradient = gradient;
+    }
+
+    public boolean isWhiteFont() {
+        return whiteFont;
+    }
+
+    public void setWhiteFont(boolean whiteFont) {
+        this.whiteFont = whiteFont;
     }
 }

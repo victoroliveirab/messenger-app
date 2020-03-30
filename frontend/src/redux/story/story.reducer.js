@@ -29,6 +29,8 @@ const storyReducer = (state = INITIAL_STATE, action) => {
                 selectedContactRef: action.payload
             };
         case "SET_CREATE_NEW_STORY":
+            if (state.selectedContactRef)
+                state.selectedContactRef.classList.remove("contact__selected");
             return {
                 ...state,
                 selectedContact: null,

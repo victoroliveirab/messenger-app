@@ -10,9 +10,6 @@ const INITIAL_STATE = {
 
 INITIAL_STATE.token = INITIAL_STATE.rememberMe && Cookies.get("jwtPitang");
 
-console.log("INITIAL_STATE = ");
-console.log(INITIAL_STATE);
-
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "SET_REMEMBER_ME":
@@ -28,7 +25,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 token: action.payload
             };
         case "SET_USER":
-            console.log("SET_USER");
             return {
                 ...state,
                 user: action.payload

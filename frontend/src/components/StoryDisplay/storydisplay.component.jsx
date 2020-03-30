@@ -2,6 +2,7 @@ import React from "react";
 import Avatar from "../Avatar/avatar.component";
 import { timeElapsedFromNow } from "../../utils/formatSendDate";
 import "./storydisplay.style.css";
+import "../Story/story.style.css";
 import "./carousel.style.css";
 
 const StoryDisplay = props => {
@@ -52,16 +53,34 @@ const StoryDisplay = props => {
                                         rounded
                                     />
                                     <div className="story-title__info">
-                                        <h5 className="story-title__owner">
+                                        <h5
+                                            className={`story-title__owner ${
+                                                story.whiteFont
+                                                    ? "story-title__owner-whitefont"
+                                                    : null
+                                            }`}
+                                        >
                                             {props.selectedContact}
                                         </h5>
-                                        <h6 className="story-title__time-ago">
+                                        <h6
+                                            className={`story-timeago ${
+                                                story.whiteFont
+                                                    ? "story-timeago-whitefont"
+                                                    : null
+                                            }`}
+                                        >
                                             {timeElapsedFromNow(story.postTime)}
                                         </h6>
                                     </div>
                                 </div>
                                 <div className="story-text">
-                                    <h2 className="story-text__message">
+                                    <h2
+                                        className={`story-text__message ${
+                                            story.whiteFont
+                                                ? "story-text__message-white"
+                                                : ""
+                                        }`}
+                                    >
                                         {story.text}
                                     </h2>
                                 </div>
