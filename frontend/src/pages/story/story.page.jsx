@@ -9,6 +9,22 @@ import { connect } from "react-redux";
 import "./story.style.css";
 
 const StoryPage = props => {
+    const [toHome, setToHome] = React.useState(false);
+    React.useEffect(() => {
+        const handleKey = event => {
+            console.log(toHome);
+            if (event.keyCode === 27) {
+                console.log("ESC PRESSED");
+                setToHome(true);
+            }
+        };
+        window.addEventListener("keydown", handleKey);
+
+        return () => {
+            window.removeEventListener("keydown", handleKey);
+        };
+    }, [toHome]);
+
     if (!props.user) {
         return <LoadingScreen />;
     } else if (!props.token) {
@@ -17,6 +33,15 @@ const StoryPage = props => {
                 to={{
                     pathname: "/login",
                     state: { from: "/" }
+                }}
+            />
+        );
+    } else if (toHome) {
+        return (
+            <Redirect
+                to={{
+                    pathname: "/",
+                    state: { from: "/story" }
                 }}
             />
         );
