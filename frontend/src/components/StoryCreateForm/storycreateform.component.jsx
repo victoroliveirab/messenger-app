@@ -108,7 +108,6 @@ class StoryCreateForm extends React.Component {
                 </div>
                 <form noValidate className="story-create-form">
                     <textarea
-                        cols="40"
                         maxLength="280"
                         className="story-textarea"
                         name="storyText"

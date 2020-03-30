@@ -27,6 +27,7 @@
 .story-create-form {
     text-align: center;
     position: relative;
+    width: 100%;
 }
 
 .story-textarea {
@@ -36,8 +37,9 @@
     font-size: 1.8rem;
     resize: none;
     text-align: center;
-    background: #aabbcc;
+    background: transparent;
     color: var(--main-white);
+    width: 75%;
 }
 
 .story-textarea:focus {
