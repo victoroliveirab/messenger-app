@@ -101,7 +101,7 @@ class StoryCreateForm extends React.Component {
         return (
             <div className="create-story-container">
                 <div
-                    className="new-story-background"
+                    className="story-background"
                     style={{
                         background: this.state.backgroundConfig.background
                     }}
