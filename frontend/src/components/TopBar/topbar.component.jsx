@@ -12,6 +12,7 @@ import {
     faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "../../redux/user/user.actions";
+import { setCreateNewStory } from "../../redux/story/story.actions";
 
 import "./topbar.style.css";
 
@@ -77,12 +78,10 @@ const renderDefaultRightTopBarIcons = () => (
     </div>
 );
 
-const renderStoriesLeftTopBarIcons = () => (
-    <Link to="/">
-        <button type="button" className="btn" href="/">
-            <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
-    </Link>
+const renderStoriesLeftTopBarIcons = dispatchFn => (
+    <button type="button" className="btn" onClick={() => dispatchFn(true)}>
+        <FontAwesomeIcon icon={faPlus} size="2x" />
+    </button>
 );
 
 const renderStoriesRightTopBarIcons = () => (
@@ -129,7 +128,9 @@ const TopBar = props => {
                                       props.path,
                                       props.logout
                                   )
-                                : renderStoriesLeftTopBarIcons()}
+                                : renderStoriesLeftTopBarIcons(
+                                      props.setCreateNewStory
+                                  )}
                         </div>
                     </div>
 
@@ -149,7 +150,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    setCreateNewStory: () => dispatch(setCreateNewStory())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopBar);

@@ -1,0 +1,71 @@
+.create-story-container {
+    height: inherit;
+    width: inherit;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-story-background {
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -10;
+}
+
+.create-story__title {
+    position: absolute;
+    left: 2%;
+    top: 3%;
+    display: flex;
+}
+
+.story-create-form {
+    text-align: center;
+    position: relative;
+}
+
+.story-textarea {
+    border: none;
+    height: auto;
+    border-radius: 5px;
+    font-size: 1.6rem;
+    resize: none;
+    text-align: center;
+}
+
+.story-textarea:focus {
+    outline: none;
+}
+
+.story-gradient-options {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+}
+
+.gradient-option {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+}
+
+.gradient-option ~ .gradient-option {
+    margin-left: 10px;
+}
+
+.option-1 {
+    background-color: green;
+}
+
+.option-2 {
+    background-color: red;
+}
+
+.option-3 {
+    background-color: blue;
+}

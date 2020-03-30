@@ -1,6 +1,7 @@
 import React from "react";
 import TopBar from "../../components/TopBar/topbar.component";
 import StoryContactList from "../../components/StoryContactList/storycontactlist.component";
+import StoryCreateForm from "../../components/StoryCreateForm/storycreateform.component";
 import Story from "../../components/Story/story.component";
 import LoadingScreen from "../../components/LoadingScreen/loadingscreen.component";
 import { Redirect } from "react-router-dom";
@@ -31,7 +32,7 @@ const StoryPage = props => {
                     <StoryContactList />
                 </div>
                 <div className="col-10 full-height">
-                    <Story />
+                    {props.createNewStory ? <StoryCreateForm /> : <Story />}
                 </div>
             </div>
         </div>
@@ -41,7 +42,8 @@ const StoryPage = props => {
 const mapStateToProps = state => ({
     token: state.user.token,
     user: state.user.user,
-    path: state.router.location.pathname
+    path: state.router.location.pathname,
+    createNewStory: state.story.createNewStory
 });
 
 export default connect(mapStateToProps)(StoryPage);

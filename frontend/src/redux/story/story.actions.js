@@ -17,3 +17,11 @@ export const setSelectedContactRef = contactRef => ({
     type: "SET_SELECTED_CONTACT_REF",
     payload: contactRef
 });
+
+export const setCreateNewStory = () => ({
+    type: "SET_CREATE_NEW_STORY"
+});
+
+export const unsetCreateNewStory = () => ({
+    type: "UNSET_CREATE_NEW_STORY"
+});
