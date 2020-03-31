@@ -25,7 +25,9 @@ button:focus {
     --main-dark-red: #ea8779;
     --main-light-red: #f4c2bb;
 
+    /* refactor the name of these colors */
     --main-darker-gray: #3e3e3e;
+    --main-mid-darker-gray: #cbcbcb;
     --main-dark-gray: #d2d2d2;
     --main-regular-gray: #e5e5e5;
     --main-light-gray: #f8f8f8;
