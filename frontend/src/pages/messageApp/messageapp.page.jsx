@@ -3,7 +3,9 @@ import TopBar from "../../components/TopBar/topbar.component";
 import LeftBar from "../../components/LeftBar/leftbar.component";
 import RightBar from "../../components/RightBar/rightbar.component";
 import LoadingScreen from "../../components/LoadingScreen/loadingscreen.component";
+import Modal from "../../components/Modal/modal.component";
 import { Redirect } from "react-router-dom";
+
 import { connect } from "react-redux";
 
 import "../mainlayout.css";
@@ -25,7 +27,18 @@ const MainPage = props => {
     return (
         <div className="main-wrapper">
             <div className="red-rectangle"></div>
-            <div className="container-fluid main">
+            <div className="modal-wrapper">
+                <Modal
+                    type={props.type}
+                    onClose={props.toggleShow}
+                    show={props.show}
+                />
+            </div>
+            <div
+                className={`container-fluid main ${
+                    props.show ? "main-hide" : null
+                }`}
+            >
                 <div className="row no-gutters top-bar-container">
                     <TopBar />
                 </div>
@@ -45,7 +58,8 @@ const MainPage = props => {
 const mapStateToProps = state => ({
     token: state.user.token,
     user: state.user.user,
-    path: state.router.location.pathname
+    path: state.router.location.pathname,
+    show: state.modal.show
 });
 
 export default connect(mapStateToProps)(MainPage);

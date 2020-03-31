@@ -3,6 +3,15 @@
     padding-top: 10vh;
     padding-bottom: 5vh;
     height: inherit;
+    z-index: 0;
+}
+
+.modal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .red-rectangle {
