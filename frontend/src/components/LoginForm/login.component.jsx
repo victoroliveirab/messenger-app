@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import Container from "@material-ui/core/Container";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
     setToken,
@@ -14,17 +7,11 @@ import {
     setRememberMe
 } from "../../redux/user/user.actions";
 import { addFlash } from "../../redux/flashList/flashList.actions";
+import logo from "./logo.png";
 
 import { dispatchGet, dispatchPost } from "../../utils/request";
 
-const styles = theme => ({
-    form: {
-        width: "100%"
-    },
-    submit: {
-        margin: theme.spacing(1, 0, 2)
-    }
-});
+import "./login.style.css";
 
 class LoginForm extends Component {
     constructor(props) {
@@ -39,6 +26,7 @@ class LoginForm extends Component {
     handleSubmit = async event => {
         event.preventDefault();
         const { username, password, rememberMe } = this.state;
+        console.log(this.state);
         let token;
         await dispatchPost("/login", { username, password })
             .then(response => {
@@ -63,80 +51,78 @@ class LoginForm extends Component {
     };
 
     handleChange = event => {
-        let name, value;
-        if (event.target.name === "rememberMe") {
-            name = "rememberMe";
-            value = event.target.checked;
-        } else {
-            name = event.target.name;
-            value = event.target.value;
-        }
-        this.setState({ [name]: value });
+        const id = event.target.id;
+        const value =
+            id === "rememberMe" ? event.target.checked : event.target.value;
+        this.setState({ [id]: value });
     };
 
     render() {
-        const { classes } = this.props;
         return (
-            <Container maxWidth="xs">
-                <form
-                    className={classes.form}
-                    noValidate
-                    onSubmit={this.handleSubmit}
-                >
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                name="username"
-                                label="Username"
-                                required
-                                placeholder="Username"
-                                fullWidth
-                                onChange={this.handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                name="password"
-                                label="Password"
-                                required
-                                placeholder="Password"
-                                fullWidth
-                                type="password"
-                                onChange={this.handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        name="rememberMe"
-                                        checked={this.state.rememberMe}
-                                        color="primary"
-                                        onChange={this.handleChange}
-                                    />
-                                }
-                                label="Remember Me"
-                            />
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="/signup" variant="body2">
-                                    Don't have an account? Sign up!
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </form>
-            </Container>
+            <div className="signup-wrapper">
+                <div className="signup-form-container container-fluid">
+                    <div className="form-img-wrapper">
+                        <img src={logo} alt="" className="form-img" />
+                    </div>
+                    <div className="signup-form">
+                        <div className="signup-form__header">
+                            <h2 className="signup-form__title">Sign In</h2>
+                        </div>
+                        <form noValidate onSubmit={this.handleSubmit}>
+                            <div className="form-group">
+                                <label
+                                    className="form-label"
+                                    htmlFor="username"
+                                >
+                                    Username
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="username"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label
+                                    className="form-label"
+                                    htmlFor="password"
+                                >
+                                    Password
+                                </label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="password"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="form-group form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="rememberMe"
+                                    onChange={this.handleChange}
+                                />
+                                <label
+                                    className="form-check-label"
+                                    htmlFor="rememberMe"
+                                >
+                                    Remember me
+                                </label>
+                            </div>
+                            <button type="submit" className="btn form-submit">
+                                Sign In
+                            </button>
+                        </form>
+                        <Link to="/signup">
+                            <button type="button" className="btn form-submit">
+                                Sign Up
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
         );
     }
 }
@@ -148,4 +134,4 @@ const mapDispatchToProps = dispatch => ({
     setRememberMe: rememberMe => dispatch(setRememberMe(rememberMe))
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(LoginForm));
+export default connect(null, mapDispatchToProps)(LoginForm);

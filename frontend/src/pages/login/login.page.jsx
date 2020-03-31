@@ -4,9 +4,18 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser } from "../../redux/user/user.actions";
 
+import "../mainlayout.css";
+
 const LoginPage = ({ loggedIn }) => {
-    if (loggedIn) return <Redirect to="/" />;
-    return <LoginForm />;
+    if (loggedIn) {
+        return <Redirect to="/" />;
+    }
+    return (
+        <div className="main-wrapper">
+            <div className="red-rectangle"></div>
+            <LoginForm />
+        </div>
+    );
 };
 
 const mapStateToProps = state => ({

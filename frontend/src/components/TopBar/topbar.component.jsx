@@ -116,19 +116,31 @@ const TopBar = props => {
                 >
                     <div className="top-bar__main">
                         <div>
-                            <button
-                                onClick={() =>
-                                    props.setSelectedContact(
-                                        props.user.username
-                                    )
-                                }
-                            >
-                                <Avatar
-                                    className="top-bar__avatar"
-                                    rounded={true}
-                                    username={props.user.username}
-                                />
-                            </button>
+                            {props.path === "/stories" ? (
+                                <button
+                                    onClick={() =>
+                                        props.setSelectedContact(
+                                            props.user.username
+                                        )
+                                    }
+                                >
+                                    <Avatar
+                                        className="top-bar__avatar"
+                                        rounded={true}
+                                        username={props.user.username}
+                                    />
+                                </button>
+                            ) : (
+                                <Link to="/profile">
+                                    <button>
+                                        <Avatar
+                                            className="top-bar__avatar"
+                                            rounded={true}
+                                            username={props.user.username}
+                                        />
+                                    </button>
+                                </Link>
+                            )}
                         </div>
 
                         <div className="top-bar__other-icons">

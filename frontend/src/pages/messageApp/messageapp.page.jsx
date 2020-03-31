@@ -6,6 +6,7 @@ import LoadingScreen from "../../components/LoadingScreen/loadingscreen.componen
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+import "../mainlayout.css";
 import "./messageapp.style.css";
 
 const MainPage = props => {

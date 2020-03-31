@@ -1,22 +1,6 @@
-.main-wrapper {
-    position: relative;
-    padding-top: 10vh;
-    padding-bottom: 5vh;
-}
-
 .main {
     max-width: 1366px;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-}
-
-.red-rectangle {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    top: 60%;
-    right: 0;
-    background-color: var(--main-dark-red);
-    z-index: -9999 !important;
 }
 
 .top-bar-container {

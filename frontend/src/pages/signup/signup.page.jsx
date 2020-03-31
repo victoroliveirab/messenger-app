@@ -4,10 +4,15 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const SignUpPage = ({ loggedIn }) => {
-    if (loggedIn || sessionStorage.getItem("pitangAuth")) {
+    if (loggedIn) {
         return <Redirect to="/" />;
     }
-    return <SignUpForm />;
+    return (
+        <div className="main-wrapper">
+            <div className="red-rectangle"></div>
+            <SignUpForm />
+        </div>
+    );
 };
 
 const mapStateToProps = state => ({

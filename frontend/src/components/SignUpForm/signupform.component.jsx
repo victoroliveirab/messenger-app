@@ -44,7 +44,6 @@ class Signup extends React.Component {
         //TODO when leave email or username field, async a get from the server to see if
         // entry already in use!
         const { id, value } = event.target;
-        console.log(id + ": " + value);
         this.setState({ [id]: value });
     };
 
@@ -52,8 +51,7 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <div className="main-wrapper signup-wrapper">
-                <div className="red-rectangle"></div>
+            <div className="signup-wrapper">
                 <div className="signup-form-container container-fluid">
                     <div className="form-img-wrapper">
                         <img src={logo} alt="" className="form-img" />
